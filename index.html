@@ -19,11 +19,10 @@
         }
 
         body {
-            /* استفاده از Vazirmatn برای متن بدنه */
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #0A0A0A; 
+            background-color: #0A0A0A; /* مشکی عمیق */
             color: #f1f5f9;
-            line-height: 1.8; /* افزایش کمی ارتفاع خط برای خوانایی بهتر */
+            line-height: 1.8;
             
             border-top: 15px solid #8b5cf6;
             border-bottom: 15px solid #8b5cf6;
@@ -48,10 +47,9 @@
         }
 
         .brand-name {
-            /* استفاده از Lalezar برای عناوین اصلی برای جلب توجه */
             font-family: 'Lalezar', cursive;
             font-size: 2.5rem;
-            font-weight: normal; /* فونت لاله زار وزن مشخصی ندارد */
+            font-weight: normal;
             color: #8b5cf6;
             margin-bottom: 5px;
             letter-spacing: 1px;
@@ -60,7 +58,7 @@
         .brand-name-fa {
             font-family: 'Vazirmatn', sans-serif;
             font-size: 1.4rem;
-            font-weight: 700; /* Vazirmatn bold */
+            font-weight: 700;
             color: #a78bfa;
             margin-bottom: 15px;
         }
@@ -72,11 +70,12 @@
         }
 
         .bio-text {
-            background: #334155;
+            /* کنتراست باکس با پس زمینه مشکی بهتر شده */
+            background: #1e293b; 
             padding: 20px;
             border-radius: 12px;
             font-size: 1rem;
-            border: 1px solid #475569;
+            border: 1px solid #334155;
             max-width: 800px;
             margin: 0 auto;
         }
@@ -88,7 +87,7 @@
             text-align: center;
             margin: 50px 0 30px 0;
             font-size: 1.4rem;
-            border-bottom: 2px solid #475569;
+            border-bottom: 2px solid #334155;
             padding-bottom: 10px;
             display: inline-block;
             width: 100%;
@@ -102,7 +101,7 @@
         }
 
         .product-card {
-            background-color: #0f172a; 
+            background-color: #1a1a1a; /* کمی روشن‌تر از زمینه برای عمق */
             border-radius: 16px;
             padding: 20px;
             text-align: center;
@@ -130,7 +129,7 @@
         .product-title {
             font-size: 1.1rem;
             margin-bottom: 15px;
-            font-weight: 700; /* Vazirmatn bold */
+            font-weight: 700;
         }
 
         /* دکمه‌ها */
@@ -150,7 +149,7 @@
 
         .btn-buy {
             background-color: #fbbf24;
-            color: #0f172a;
+            color: #0A0A0A;
         }
 
         .btn-buy:hover {
@@ -177,12 +176,13 @@
             width: 100%;
             max-width: 450px;
             text-align: center;
-            background: linear-gradient(145deg, #1e293b, #0f172a);
+            background: linear-gradient(145deg, #1e293b, #0A0A0A);
             padding: 30px;
             border-radius: 20px;
             border: 2px solid #fbbf24;
         }
 
+        /* استایل جدید برای پاورقی و نمادها */
         footer {
             font-family: 'Vazirmatn', sans-serif;
             text-align: center;
@@ -192,12 +192,24 @@
             margin-top: auto;
         }
 
-        /* تنظیمات موبایل (ریسپانسیو) */
+        .trust-badges {
+            display: flex;
+            justify-content: center; /* وسط چین شدن کلی نمادها */
+            gap: 25px; /* فاصله بین دو نماد */
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap; /* برای ریسپانسیو بودن در موبایل */
+        }
+
+        .badge-container {
+            /* این خطوط برای جلوگیری از مشکل نمایش اینماد حیاتی است */
+            line-height: 0; 
+            max-width: 130px; /* حداکثر اندازه برای هر نماد */
+        }
+        
+        /* ریسپانسیو برای نمادها */
         @media (max-width: 768px) {
-            .brand-name { font-size: 1.8rem; }
-            .brand-name-fa { font-size: 1.2rem; }
-            .container { padding: 30px 15px; }
-            
+             /* در موبایل، چیدمان عمودی را حفظ می‌کنیم اما فاصله کمی بیشتر می‌شود */
             .products-grid { 
                 grid-template-columns: 1fr; 
                 gap: 20px;
@@ -253,7 +265,19 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 AI with Artemis. All rights reserved.</p>
+        <div class="trust-badges">
+            
+            <div class="badge-container">
+                <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=5235097&Code=MyyIUtreVArtL5ET5SGMPAYDhF0Fb4AT'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=5235097&Code=MyyIUtreVArtL5ET5SGMPAYDhF0Fb4AT' alt='نماد اعتماد' style='cursor:pointer; width: 100%; height: auto;' code='MyyIUtreVArtL5ET5SGMPAYDhF0Fb4AT'></a>
+            </div>
+
+            <div class="badge-container">
+                <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+            </div>
+
+        </div>
+
+        <p>&copy; 2024 AI with Artemis. تمامی حقوق محفوظ است.</p>
     </footer>
 
 </body>
