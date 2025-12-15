@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow"> <title>AI with Artemis | استراتژیست هوشمند امتحانات</title>
+    <meta name="robots" content="noindex, nofollow">
+    <title>AI with Artemis | استراتژیست هوشمند امتحانات</title>
     <style>
-        /* تنظیمات کلی و ریست */
+        /* تنظیمات کلی */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,12 +14,13 @@
         }
 
         body {
-            font-family: 'Tahoma', 'Segoe UI', sans-serif; /* فونت ساده و خوانا */
-            background-color: #0f172a; /* سرمه‌ای تیره */
-            color: #f1f5f9; /* سفید مایل به خاکستری */
+            font-family: 'Tahoma', 'Segoe UI', sans-serif;
+            /* رنگ زمینه روشن‌تر شده (Slate 800) به جای رنگ قبلی (Slate 900) */
+            background-color: #1e293b; 
+            color: #f1f5f9;
             line-height: 1.6;
             
-            /* حاشیه ۱۵ پیکسلی بالا و پایین با رنگ بنفش آرتمیس */
+            /* حاشیه ۱۵ پیکسلی بالا و پایین */
             border-top: 15px solid #8b5cf6;
             border-bottom: 15px solid #8b5cf6;
             min-height: 100vh;
@@ -26,9 +28,9 @@
             flex-direction: column;
         }
 
-        /* کانتینر اصلی برای وسط‌چین کردن محتوا */
+        /* عرض محتوا به ۱۰۵۰ پیکسل افزایش یافت */
         .container {
-            max-width: 800px;
+            max-width: 1050px;
             margin: 0 auto;
             padding: 40px 20px;
             width: 100%;
@@ -42,11 +44,19 @@
         }
 
         .brand-name {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            color: #8b5cf6; /* بنفش */
-            margin-bottom: 10px;
+            color: #8b5cf6;
+            margin-bottom: 5px;
             letter-spacing: 1px;
+        }
+
+        /* استایل عنوان فارسی اضافه شده */
+        .brand-name-fa {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #a78bfa; /* کمی روشن‌تر از بنفش اصلی */
+            margin-bottom: 15px;
         }
 
         .tagline {
@@ -56,19 +66,21 @@
         }
 
         .bio-text {
-            background: #1e293b;
-            padding: 15px;
+            background: #334155; /* رنگ باکس متن هم کمی روشن‌تر شد تا با زمینه جدید کنتراست داشته باشد */
+            padding: 20px;
             border-radius: 12px;
-            font-size: 0.95rem;
-            border: 1px solid #334155;
+            font-size: 1rem;
+            border: 1px solid #475569;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        /* استایل محصولات (Grid System) */
+        /* استایل محصولات */
         .section-title {
             text-align: center;
-            margin: 40px 0 20px 0;
-            font-size: 1.3rem;
-            border-bottom: 2px solid #334155;
+            margin: 50px 0 30px 0;
+            font-size: 1.4rem;
+            border-bottom: 2px solid #475569;
             padding-bottom: 10px;
             display: inline-block;
             width: 100%;
@@ -76,18 +88,23 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
+            /* تغییر مهم: اجبار به ۳ ستون در حالت دسکتاپ */
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px;
             margin-bottom: 50px;
         }
 
         .product-card {
-            background-color: #1e293b;
+            /* کارت‌ها کمی تیره‌تر از زمینه اصلی باشند تا عمق ایجاد شود */
+            background-color: #0f172a; 
             border-radius: 16px;
             padding: 20px;
             text-align: center;
             transition: transform 0.2s ease;
             border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .product-card:hover {
@@ -95,18 +112,17 @@
             border-color: #8b5cf6;
         }
 
-        /* تصاویر */
         .product-image {
             width: 100%;
-            aspect-ratio: 1 / 1; /* مربعی */
-            background-color: #334155; /* رنگ جایگزین قبل از لود عکس */
+            aspect-ratio: 1 / 1;
+            background-color: #334155;
             border-radius: 12px;
             margin-bottom: 15px;
             object-fit: cover;
         }
 
         .product-title {
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 15px;
             font-weight: bold;
         }
@@ -126,7 +142,7 @@
         }
 
         .btn-buy {
-            background-color: #fbbf24; /* زرد طلایی */
+            background-color: #fbbf24;
             color: #0f172a;
         }
 
@@ -135,7 +151,7 @@
         }
 
         .btn-special {
-            background-color: #8b5cf6; /* بنفش */
+            background-color: #8b5cf6;
             color: white;
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
         }
@@ -144,29 +160,41 @@
             background-color: #7c3aed;
         }
 
-        /* بخش ویژه (Special Offer) */
+        /* بخش ویژه تکی */
+        .special-offer-container {
+            display: flex;
+            justify-content: center;
+        }
+
         .special-offer {
-            max-width: 400px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 450px; /* کمی عریض‌تر */
             text-align: center;
             background: linear-gradient(145deg, #1e293b, #0f172a);
             padding: 30px;
             border-radius: 20px;
-            border: 2px solid #fbbf24; /* حاشیه طلایی برای تمایز */
+            border: 2px solid #fbbf24;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: #64748b;
+            padding: 30px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: auto;
         }
 
-        /* موبایل */
-        @media (max-width: 600px) {
-            .brand-name { font-size: 1.5rem; }
+        /* تنظیمات موبایل (ریسپانسیو) */
+        @media (max-width: 768px) {
+            .brand-name { font-size: 1.8rem; }
+            .brand-name-fa { font-size: 1.2rem; }
             .container { padding: 30px 15px; }
-            .products-grid { grid-template-columns: 1fr; } /* در موبایل تک ستونه شود */
+            
+            /* در موبایل ستون‌ها یکی شوند */
+            .products-grid { 
+                grid-template-columns: 1fr; 
+                gap: 20px;
+            } 
         }
     </style>
 </head>
@@ -175,41 +203,44 @@
     <div class="container">
         <header>
             <div class="brand-name">AI with Artemis</div>
+            <div class="brand-name-fa">هوش مصنوعی با آرتمیس</div>
             <p class="tagline">استراتژیست هوشمند امتحانات | ویژه پایه ۱۰ تا ۱۲</p>
             <div class="bio-text">
                 <p>روش‌های قدیمی مثل هایلایت کردن را دور بریزید. با سیستم هوشمند ما، نمره ۲۰ نهایی را با نصف زمان مطالعه تضمین کنید.</p>
             </div>
         </header>
 
-        <h2 class="section-title">بسته‌های هک نمره (۹۹ هزار تومان)</h2>
+        <h2 class="section-title">بسته‌های هک نمره</h2>
         
         <div class="products-grid">
             <div class="product-card">
-                <img src="math.webp" alt="هک ریاضی پایه دهم" class="product-image" onerror="this.src='https://placehold.co/400x400/334155/FFF?text=Math+AI'">
+                <img src="math.webp" alt="هک ریاضی پایه دهم" class="product-image" onerror="this.src='https://placehold.co/400x400/1e293b/FFF?text=Math'">
                 <h3 class="product-title">هک ریاضی پایه دهم با AI</h3>
                 <a href="#" class="btn btn-buy">خرید و دانلود</a>
             </div>
 
             <div class="product-card">
-                <img src="physics.webp" alt="هک فیزیک پایه دهم" class="product-image" onerror="this.src='https://placehold.co/400x400/334155/FFF?text=Physics+AI'">
+                <img src="physics.webp" alt="هک فیزیک پایه دهم" class="product-image" onerror="this.src='https://placehold.co/400x400/1e293b/FFF?text=Physics'">
                 <h3 class="product-title">هک فیزیک پایه دهم با AI</h3>
                 <a href="#" class="btn btn-buy">خرید و دانلود</a>
             </div>
 
             <div class="product-card">
-                <img src="chemistry.webp" alt="هک شیمی پایه دهم" class="product-image" onerror="this.src='https://placehold.co/400x400/334155/FFF?text=Chemistry+AI'">
+                <img src="chemistry.webp" alt="هک شیمی پایه دهم" class="product-image" onerror="this.src='https://placehold.co/400x400/1e293b/FFF?text=Chemistry'">
                 <h3 class="product-title">هک شیمی پایه دهم با AI</h3>
                 <a href="#" class="btn btn-buy">خرید و دانلود</a>
             </div>
         </div>
 
-        <h2 class="section-title" style="border-color: #fbbf24;">پیشنهاد ویژه (ظرفیت محدود)</h2>
+        <h2 class="section-title" style="border-color: #fbbf24;">عضویت ویژه</h2>
         
-        <div class="special-offer">
-            <img src="special.webp" alt="عضویت ویژه" class="product-image" onerror="this.src='https://placehold.co/400x400/8b5cf6/FFF?text=VIP+Access'">
-            <h3 class="product-title" style="font-size: 1.2rem;">عضویت ویژه ۳ ماهه (سیستم کامل)</h3>
-            <p style="font-size: 0.9rem; margin-bottom: 20px; color: #cbd5e1;">دسترسی به تمام ابزارها، پرامپت‌ها و آپدیت‌های جدید</p>
-            <a href="#" class="btn btn-special">عضو ویژه می‌شوم</a>
+        <div class="special-offer-container">
+            <div class="special-offer">
+                <img src="special.webp" alt="عضویت ویژه" class="product-image" onerror="this.src='https://placehold.co/400x400/8b5cf6/FFF?text=VIP'">
+                <h3 class="product-title" style="font-size: 1.2rem;">عضویت ویژه ۳ ماهه</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 20px; color: #cbd5e1;">دسترسی به تمام ابزارها، پرامپت‌ها و آپدیت‌های جدید</p>
+                <a href="#" class="btn btn-special">عضو ویژه می‌شوم</a>
+            </div>
         </div>
 
     </div>
