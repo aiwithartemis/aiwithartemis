@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>در حال انتقال...</title>
+</head>
+<body>
+    <script>
+        // این اسکریپت تمام پارامترهایی که زرین‌پال به این صفحه می‌فرستد را می‌گیرد
+        // و به وب‌هوک n8n شما پاس می‌دهد
+        const urlParams = new URLSearchParams(window.location.search);
+        const n8nWebhookUrl = "https://59650-4dfov.s5.irann8n.com/webhook/pay-verify";
+        
+        // هدایت کاربر به n8n همراه با دیتاها
+        window.location.href = n8nWebhookUrl + "?" + urlParams.toString();
+    </script>
+    <p>لطفاً منتظر بمانید، در حال تکمیل فرآیند پرداخت...</p>
+</body>
+</html>
