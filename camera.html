@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Shot Prompts Reference</title>
+    <title>مرجع نماهای دوربین برای تولید تصویر (Prompt Library)</title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -52,16 +52,35 @@
                         <i class="ph-fill ph-camera text-2xl"></i>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold tracking-tight text-white">مرجع پرامپت دوربین</h1>
+                        <h1 class="text-xl font-bold tracking-tight text-white">مرجع نماهای دوربین برای تولید تصویر (Prompt Library)</h1>
                         <p class="text-xs text-gray-400">کلیک کنید تا پرامپت کامل کپی شود</p>
                     </div>
                 </div>
 
-                <!-- Search -->
-                <div class="relative w-full md:w-96">
-                    <i class="ph ph-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
-                    <input type="text" id="searchInput" placeholder="جستجو (مثلاً Low Angle یا نمای پایین)..." 
-                        class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl py-2.5 pr-10 pl-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder-gray-500">
+                <!-- Inputs Container -->
+                <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto items-center">
+                    
+                    <!-- Subject Input (New Feature) -->
+                    <div class="relative w-full md:w-60 group">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="ph ph-text-t text-gray-400 text-lg group-focus-within:text-indigo-500 transition-colors"></i>
+                        </div>
+                        <input type="text" id="subjectInput" placeholder="موضوع (Subject)..." 
+                            class="w-full bg-gray-800 border border-indigo-500/40 text-white text-sm rounded-xl py-2.5 pr-10 pl-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder-gray-500 text-left dir-ltr shadow-sm focus:shadow-indigo-500/20">
+                        <!-- Tooltip for Subject -->
+                        <div class="absolute -bottom-8 right-0 text-[10px] text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none bg-gray-900 px-2 py-1 rounded border border-gray-700">
+                            جایگزین [SUBJECT] می‌شود
+                        </div>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-60">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="جستجو..." 
+                            class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl py-2.5 pr-10 pl-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder-gray-500">
+                    </div>
                 </div>
             </div>
 
@@ -649,12 +668,26 @@
         // --- State ---
         let currentCategory = 'all';
         let searchQuery = '';
+        let customSubject = localStorage.getItem('cameraPromptSubject') || '';
 
         // --- Logic ---
         function init() {
             renderCategoryNav();
             renderGrid();
             
+            // Initialize subject input if saved
+            const subjectInput = document.getElementById('subjectInput');
+            if (customSubject) {
+                subjectInput.value = customSubject;
+            }
+
+            // Subject Input Listener
+            subjectInput.addEventListener('input', (e) => {
+                customSubject = e.target.value;
+                localStorage.setItem('cameraPromptSubject', customSubject);
+            });
+            
+            // Search Input Listener
             document.getElementById('searchInput').addEventListener('input', (e) => {
                 searchQuery = e.target.value.toLowerCase();
                 renderGrid();
@@ -721,7 +754,15 @@
                     card.className = 'card-hover bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden cursor-pointer group flex flex-col h-full relative';
                     
                     // On Click: Copy the `copyPrompt` field
-                    card.onclick = () => copyToClipboard(item.copyPrompt);
+                    // MODIFIED: Replace [SUBJECT] with customSubject if available
+                    card.onclick = () => {
+                        let textToCopy = item.copyPrompt;
+                        if (customSubject && customSubject.trim() !== "") {
+                            // Replace [SUBJECT] with [User Input] keeping brackets as per request
+                            textToCopy = textToCopy.replace("[SUBJECT]", `[${customSubject.trim()}]`);
+                        }
+                        copyToClipboard(textToCopy);
+                    };
 
                     card.innerHTML = `
                         <!-- Image Container: Aspect Ratio 544:960 (approx 9:16 vertical) -->
