@@ -797,7 +797,7 @@
                 
                 filtered.forEach(item => {
                     const filename = item.tag.toUpperCase().replace(/ /g, '_') + ".webp";
-                    const primaryUrl = "/images2/" + filename;
+                    const primaryUrl = "images2/" + filename;
                     
                     // Fallback using placehold.co text, styled for "Light" theme (amber text)
                     const fallbackUrl = `https://placehold.co/544x960/1f2937/fbbf24?text=${encodeURIComponent(item.tag)}`;
@@ -888,6 +888,7 @@
 </body>
 
 </html>
+
 
 
 
