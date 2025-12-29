@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Light Prompts Reference</title>
+	<meta name="robots" content="noindex, nofollow">
+    <title>مرجع پرامپت نورپردازی</title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -796,7 +797,7 @@
                 
                 filtered.forEach(item => {
                     const filename = item.tag.toUpperCase().replace(/ /g, '_') + ".webp";
-                    const primaryUrl = "images/" + filename;
+                    const primaryUrl = "images2/" + filename;
                     
                     // Fallback using placehold.co text, styled for "Light" theme (amber text)
                     const fallbackUrl = `https://placehold.co/544x960/1f2937/fbbf24?text=${encodeURIComponent(item.tag)}`;
@@ -887,5 +888,6 @@
 </body>
 
 </html>
+
 
 
