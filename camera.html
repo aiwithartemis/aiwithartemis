@@ -133,149 +133,149 @@
         // Database with Persian Descriptions (uiDesc) and English Prompts (copyPrompt)
         const database = [
             // --- ANGLES ---
-            { 
-                tag: "Low Angle", 
+			{ 
+				tag: "Low Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه پایین: دوربین پایین‌تر از سطح چشم قرار می‌گیرد و به بالا نگاه می‌کند. حس قدرت و عظمت به سوژه می‌دهد.",
-                copyPrompt: "[SUBJECT](Low-angle shot: camera positioned below eye level, looking up at the subject. Creates a sense of power, dominance, and monumentality. appears larger, more imposing against the background.)"
+                copyPrompt: "A low-angle shot of [SUBJECT] with the camera positioned below eye level, looking up. This creates a sense of power, dominance, and monumentality, making the subject appear larger and more imposing against the background."
             },
             { 
                 tag: "High Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه بالا: دوربین بالاتر از سطح چشم است و به پایین نگاه می‌کند. سوژه را کوچک و آسیب‌پذیر نشان می‌دهد.",
-                copyPrompt: "[SUBJECT](High-angle shot: camera positioned above eye level, looking down at the subject. Creates vulnerability, smallness, or overview perspective. Subject appears diminished or subordinate in the frame.)"
+                copyPrompt: "A high-angle shot of [SUBJECT], with the camera positioned above eye level looking down. This perspective creates a sense of vulnerability and smallness, making the subject appear diminished or subordinate in the frame."
             },
             { 
                 tag: "Eye Level", 
                 category: "Angles", 
                 uiDesc: "هم‌سطح چشم: دوربین در ارتفاع چشم سوژه قرار دارد. زاویه‌ای خنثی و طبیعی که حس برابری ایجاد می‌کند.",
-                copyPrompt: "[SUBJECT](Eye-level shot: camera positioned at the subject's eye height, creating neutral, natural perspective. Establishes equality and realism, neither empowering nor diminishing the subject.)"
+                copyPrompt: "An eye-level shot of [SUBJECT], captured with the camera positioned at the subject's eye height. This creates a neutral, natural perspective that establishes equality and realism, neither empowering nor diminishing the subject."
             },
             { 
                 tag: "Extreme Low Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه بسیار پایین: دوربین چسبیده به زمین و رو به بالا. ایجاد اعوجاج و حس تسلط شدید سوژه.",
-                copyPrompt: "[SUBJECT](Extreme low-angle shot: camera positioned very close to ground level, looking sharply upward. Creates dramatic scale distortion, towering effect, and powerful sense of dominance or intimidation.)"
+                copyPrompt: "An extreme low-angle shot of [SUBJECT], captured with the camera positioned very close to ground level looking sharply upward. This perspective creates dramatic scale distortion, giving the subject a towering effect and a powerful sense of dominance and intimidation."
             },
             { 
                 tag: "Extreme High Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه بسیار بالا: دوربین از ارتفاع بسیار زیاد به پایین نگاه می‌کند (نمای خداگونه). سوژه در محیط گم می‌شود.",
-                copyPrompt: "[SUBJECT](Extreme high-angle shot: camera positioned far above subject, looking steeply downward. Creates isolation, vulnerability, or god's-eye perspective. Subject appears tiny within vast environment.)"
+                copyPrompt: "An extreme high-angle shot of [SUBJECT], taken from far above looking steeply downward. This creates a god's-eye perspective that emphasizes isolation and vulnerability, making the subject appear tiny within the vast environment."
             },
             { 
                 tag: "Worm-Eye View", 
                 category: "Angles", 
                 uiDesc: "دید کرم: نمای اغراق شده از روی زمین به سمت بالا. تاکید بر بلندی و عظمت سوژه.",
-                copyPrompt: "[SUBJECT](View from below the subject, worm's-eye perspective, camera close to ground, looking up. Exaggerated scale, low-angle composition, emphasizing height and dominance of the subject.)"
+                copyPrompt: "A worm's-eye perspective view from below [SUBJECT], with the camera placed close to the ground looking up. The low-angle composition creates an exaggerated scale, strictly emphasizing the height and dominance of the subject."
             },
             { 
                 tag: "Bird-Eye View", 
                 category: "Angles", 
                 uiDesc: "دید پرنده: نمای هوایی ملایم، دوربین بالای سر سوژه است و مستقیم به پایین نگاه می‌کند.",
-                copyPrompt: "[SUBJECT](Mild aerial viewpoint: the camera is placed above the subject, angled downward to create a clear bird's-eye view without distortion.)"
+                copyPrompt: "A mild aerial viewpoint of [SUBJECT], where the camera is placed above and angled downward. This creates a clear bird's-eye view without distortion."
             },
             { 
                 tag: "Dutch Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه کج (داچ): دوربین کمی روی محور خود کج شده است. حس پویایی یا عدم تعادل ایجاد می‌کند.",
-                copyPrompt: "[SUBJECT](Mild Dutch camera angle: the camera is intentionally tilted off-balance on the roll axis, giving the composition a diagonal, dynamic feel, but with only a small tilt—not a full rotation.)"
+                copyPrompt: "A shot of [SUBJECT] with a mild Dutch camera angle. The camera is intentionally tilted off-balance on the roll axis, giving the composition a diagonal and dynamic feel with a subtle tilt."
             },
             { 
                 tag: "Dutch Tilt", 
                 category: "Angles", 
                 uiDesc: "تیلت داچ: چرخش دوربین برای ایجاد خط افق کج. ایجاد تنش و حس دلهره.",
-                copyPrompt: "[SUBJECT](Dutch tilt composition: camera rolled on its axis, creating slanted horizon line and diagonal perspective. Generates tension, disorientation, or psychological unease in the frame.)"
+                copyPrompt: "A Dutch tilt composition of [SUBJECT], where the camera is rolled on its axis to create a slanted horizon line and diagonal perspective. This generates tension, disorientation, and psychological unease in the frame."
             },
             { 
                 tag: "Canted Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه اریب: مشابه داچ، دوربین به پهلو کج شده تا کادربندی مورب و پرانرژی ایجاد کند.",
-                copyPrompt: "(Canted angle shot: camera tilted sideways off horizontal axis, creating oblique composition. Conveys instability, tension, or dynamic energy through off-kilter framing.)"
+                copyPrompt: "A canted angle shot of [SUBJECT], with the camera tilted sideways off the horizontal axis to create an oblique composition. This off-kilter framing conveys instability, tension, and dynamic energy."
             },
-            { 
+	        { 
                 tag: "Overhead Angle", 
                 category: "Angles", 
                 uiDesc: "نمای سقفی: دوربین دقیقاً بالای سر سوژه و عمود بر زمین. کادربندی تخت و گرافیکی.",
-                copyPrompt: "[SUBJECT](Overhead shot: camera positioned directly above subject, pointing straight down. Creates flat, graphic composition showing spatial relationships and patterns from above.)"
+                copyPrompt: "An overhead shot of [SUBJECT], captured with the camera positioned directly above and pointing straight down. This creates a flat, graphic composition that highlights spatial relationships and patterns from above."
             },
             { 
                 tag: "Top-Down Angle", 
                 category: "Angles", 
                 uiDesc: "نمای بالا به پایین: تاکید بر چیدمان و طراحی فضایی با پرسپکتیو تخت.",
-                copyPrompt: "[SUBJECT](Top-down perspective: camera looking directly downward onto subject from above. Emphasizes layout, arrangement, and spatial design with flattened perspective.)"
+                copyPrompt: "A top-down perspective view of [SUBJECT], where the camera looks directly downward onto the subject from above. This emphasizes the layout, arrangement, and spatial design with a flattened perspective."
             },
             { 
                 tag: "Oblique Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه مایل: دوربین با زاویه نسبت به سوژه قرار دارد (نه موازی نه عمود). ایجاد عمق سه بعدی.",
-                copyPrompt: "[SUBJECT](Oblique angle shot: camera positioned at diagonal angle to subject, neither parallel nor perpendicular. Creates depth, dimension, and dynamic three-dimensional perspective.)"
+                copyPrompt: "An oblique angle shot of [SUBJECT], with the camera positioned at a diagonal angle—neither parallel nor perpendicular. This creates depth, dimension, and a dynamic three-dimensional perspective."
             },
             { 
                 tag: "Side Angle", 
                 category: "Angles", 
                 uiDesc: "نمای جانبی: دوربین عمود بر پهلوی سوژه. نمایش نیم‌رخ کامل و خطوط محیطی.",
-                copyPrompt: "[SUBJECT](Side-angle shot: camera positioned perpendicular to subject, capturing pure profile view. Emphasizes silhouette, outline, and lateral dimension of subject.)"
+                copyPrompt: "A side-angle shot of [SUBJECT], with the camera positioned perpendicular to the subject to capture a pure profile view. This emphasizes the silhouette, outline, and lateral dimension."
             },
             { 
                 tag: "Front Angle", 
                 category: "Angles", 
                 uiDesc: "نمای روبرو: دوربین دقیقاً روبروی سوژه. ایجاد حس صمیمیت، تقابل یا معرفی رسمی.",
-                copyPrompt: "[SUBJECT](Front-facing angle: camera positioned directly in front of subject, creating symmetrical frontal view. Establishes direct confrontation, intimacy, or formal presentation.)"
+                copyPrompt: "A front-facing angle shot of [SUBJECT], with the camera positioned directly in front to create a symmetrical view. This establishes direct confrontation, intimacy, or a formal presentation style."
             },
             { 
                 tag: "Back Angle", 
                 category: "Angles", 
                 uiDesc: "نمای پشت: دوربین پشت سر سوژه. ایجاد رمز و راز یا همراهی با نگاه سوژه به روبرو.",
-                copyPrompt: "[SUBJECT](Back-angle shot: camera positioned behind subject, showing rear view. Creates mystery, anonymity, or shares subject's perspective of what lies ahead.)"
+                copyPrompt: "A back-angle shot of [SUBJECT], captured with the camera positioned behind to show a rear view. This creates a sense of mystery, anonymity, or shares the subject's perspective of what lies ahead."
             },
             { 
                 tag: "Three-Quarter Angle", 
                 category: "Angles", 
                 uiDesc: "نمای سه رخ: زاویه ۴۵ درجه نسبت به سوژه. نمایش همزمان روبرو و پهلو برای عمق بهتر.",
-                copyPrompt: "[SUBJECT](Three-quarter angle shot: camera positioned at 45-degree angle to subject, showing both front and side. Creates depth, dimensionality, and natural, flattering perspective.)"
+                copyPrompt: "A three-quarter angle shot of [SUBJECT], with the camera positioned at a 45-degree angle to show both the front and side. This creates depth, dimensionality, and a natural, flattering perspective."
             },
             { 
                 tag: "Profile Angle", 
                 category: "Angles", 
                 uiDesc: "نمای پروفایل (نیم‌رخ): تاکید بر خطوط صورت و بدن در برابر پس‌زمینه.",
-                copyPrompt: "[SUBJECT](Profile shot: camera capturing subject from pure side view, showing complete silhouette. Emphasizes facial features, body contour, and outline against background.)"
+                copyPrompt: "A profile shot of [SUBJECT], capturing a pure side view that displays a complete silhouette. This emphasizes facial features, body contours, and the outline against the background."
             },
             { 
                 tag: "Diagonal Angle", 
                 category: "Angles", 
                 uiDesc: "زاویه قطری: قرارگیری سوژه در راستای قطر کادر برای افزایش انرژی بصری.",
-                copyPrompt: "[SUBJECT](Strong diagonal layout: the composition positions the subject along a bold diagonal path, enhancing energy and flow within the frame.)"
+                copyPrompt: "A shot of [SUBJECT] composed with a strong diagonal layout. The subject is positioned along a bold diagonal path, enhancing the visual energy and flow within the frame."
             },
             { 
                 tag: "Tilt-Up Angle", 
                 category: "Angles", 
                 uiDesc: "تیلت رو به بالا: چرخش دوربین از پایین به بالا برای آشکار کردن تدریجی سوژه.",
-                copyPrompt: "[SUBJECT](Tilt-up composition: camera angled upward from lower position, gradually revealing subject from bottom to top. Creates anticipation, grandeur, or revealing movement.)"
+                copyPrompt: "A tilt-up composition shot of [SUBJECT], where the camera is angled upward from a lower position to reveal the subject from bottom to top. This creates a sense of anticipation, grandeur, or revealing movement."
             },
-            { 
+			{ 
                 tag: "Tilt-Down Angle", 
                 category: "Angles", 
                 uiDesc: "تیلت رو به پایین: چرخش دوربین از بالا به پایین. برای بررسی یا ارزیابی سوژه.",
-                copyPrompt: "[SUBJECT](Tilt-down composition: camera angled downward from higher position, showing subject from top descending. Creates survey, assessment, or descending perspective.)"
+                copyPrompt: "A tilt-down composition shot of [SUBJECT], with the camera angled downward from a higher position to show the subject descending from the top. This creates a survey, assessment, or descending perspective."
             },
             { 
                 tag: "POV Angle", 
                 category: "Angles", 
                 uiDesc: "نمای دید اول شخص (POV): دوربین جای چشم شخصیت قرار می‌گیرد. تجربه غوطه‌وری.",
-                copyPrompt: "[SUBJECT](Point-of-view shot: camera positioned to replicate exact perspective of a character's eyes. Creates immersive, subjective experience of seeing through character's viewpoint.)"
+                copyPrompt: "A point-of-view (POV) shot of [SUBJECT], where the camera is positioned to replicate the exact perspective of a character's eyes. This creates an immersive, subjective experience of seeing through the character's viewpoint."
             },
             { 
                 tag: "Reverse POV Angle", 
                 category: "Angles", 
                 uiDesc: "نمای معکوس POV: نشان می‌دهد چه چیزی به شخصیت نگاه می‌کند. تکمیل کننده مکالمه بصری.",
-                copyPrompt: "[SUBJECT](Reverse POV shot: camera showing what is looking at the POV character. Reveals the subject of character's gaze, completing visual conversation between perspectives.)"
+                copyPrompt: "A reverse POV shot of [SUBJECT], showing what is looking back at the perspective character. This reveals the subject of the gaze, completing the visual conversation between perspectives."
             },
             { 
                 tag: "Back-To-Camera Angle", 
                 category: "Angles", 
                 uiDesc: "پشت به دوربین: سوژه پشتش به دوربین است. ایجاد حس ناشناسی یا تفکر.",
-                copyPrompt: "[SUBJECT](Back-to-camera shot: subject positioned with back toward camera, facing away. Creates anonymity, contemplation, or shares subject's forward-looking perspective.)"
+                copyPrompt: "A back-to-camera shot of [SUBJECT], positioned with their back toward the lens and facing away. This creates a sense of anonymity or contemplation, sharing the subject's forward-looking perspective."
             },
 
             // --- SHOTS ---
@@ -283,257 +283,257 @@
                 tag: "Extreme Wide Shot", 
                 category: "Shots", 
                 uiDesc: "نمای بسیار باز: سوژه در محیطی وسیع بسیار کوچک دیده می‌شود. تاکید بر مقیاس محیط.",
-                copyPrompt: "[SUBJECT](Extreme wide shot: camera positioned very far from subject, showing vast environment. Subject appears small within expansive landscape, emphasizing scale and context.)"
+                copyPrompt: "An extreme wide shot of [SUBJECT], captured with the camera positioned very far away to show the vast environment. The subject appears small within the expansive landscape, emphasizing scale and context."
             },
             { 
                 tag: "Wide Shot", 
                 category: "Shots", 
                 uiDesc: "نمای باز: نمایش کامل سوژه و فضای اطراف آن. مشخص کردن موقعیت مکانی.",
-                copyPrompt: "[SUBJECT](Wide shot: camera captures subject fully within environment, showing complete body and surrounding space. Establishes location, context, and spatial relationships.)"
+                copyPrompt: "A wide shot of [SUBJECT], capturing the full figure within the environment and surrounding space. This establishes the location, context, and spatial relationships."
             },
             { 
                 tag: "Long Shot", 
                 category: "Shots", 
                 uiDesc: "لانگ شات: نمایش تمام قد سوژه با مقداری فضای اطراف. تعادل بین سوژه و محیط.",
-                copyPrompt: "[SUBJECT](Long shot: camera positioned at distance showing full subject from head to toe with surrounding space. Balances subject presence with environmental context.)"
+                copyPrompt: "A long shot of [SUBJECT], with the camera positioned at a distance to show the full figure from head to toe. This composition balances the subject's presence with the surrounding environmental context."
             },
             { 
                 tag: "Full Body Shot", 
                 category: "Shots", 
                 uiDesc: "نمای تمام قد: کادربندی دقیق از سر تا پای سوژه. نمایش کامل زبان بدن و لباس.",
-                copyPrompt: "[SUBJECT](Full body shot: camera framing captures subject's entire body from head to feet. Shows complete physical presence, posture, and body language within frame.)"
+                copyPrompt: "A full body shot of [SUBJECT], where the camera framing captures the entire body from head to feet. This displays the complete physical presence, posture, and body language within the frame."
             },
             { 
                 tag: "Medium Long Shot", 
                 category: "Shots", 
                 uiDesc: "مدیوم لانگ شات (نمای کابوی): برش از زانو به بالا. مناسب برای نمایش اکشن و چهره.",
-                copyPrompt: "[SUBJECT](Medium long shot: camera frames subject from approximately knees upward. Often called \"cowboy shot,\" balancing body language visibility with facial detail.)"
+                copyPrompt: "A medium long shot of [SUBJECT], framing the figure from approximately the knees upward. Often called a 'cowboy shot,' this balances body language visibility with facial detail."
             },
             { 
                 tag: "Medium Shot", 
                 category: "Shots", 
                 uiDesc: "نمای متوسط (مدیوم): از کمر به بالا. تعادل عالی بین حالات چهره و حرکات دست.",
-                copyPrompt: "[SUBJECT](Medium shot: camera frames subject from waist up, showing torso, arms, and head. Balances facial expression with body language and gestures.)"
+                copyPrompt: "A medium shot of [SUBJECT], framing the figure from the waist up to show the torso, arms, and head. This balances facial expressions with body language and gestures."
             },
             { 
                 tag: "Medium Close-Up", 
                 category: "Shots", 
                 uiDesc: "مدیوم کلوزآپ: از سینه به بالا. تاکید بر چهره ضمن حفظ شانه و بخشی از بدن.",
-                copyPrompt: "[SUBJECT](Medium close-up shot: camera frames subject from chest upward, emphasizing face while including shoulders. Intimate yet maintaining some physical context.)"
+                copyPrompt: "A medium close-up shot of [SUBJECT], framing the figure from the chest upward. This emphasizes the face while including the shoulders, creating an intimate view that maintains some physical context."
             },
             { 
                 tag: "Close-Up", 
                 category: "Shots", 
                 uiDesc: "نمای نزدیک (کلوزآپ): کادر با سر سوژه پر می‌شود. تمرکز کامل روی احساسات.",
-                copyPrompt: "[SUBJECT](Close-up: the camera is positioned very near the subject, capturing all subject in the frame.)"
+                copyPrompt: "A close-up shot of [SUBJECT], with the camera positioned very near to capture the details of the face or object. This fills the frame to focus entirely on emotions or specific features."
             },
             { 
                 tag: "Extreme Close-Up", 
                 category: "Shots", 
                 uiDesc: "نمای بسیار نزدیک: تمرکز روی یک جزئیات خاص مثل چشم یا لب. صمیمیت شدید.",
-                copyPrompt: "[SUBJECT](Extreme close-up shot: camera frames very tight on specific detail—eyes, mouth, hands, or object. Creates intense intimacy, emphasis, or dramatic focus.)"
+                copyPrompt: "An extreme close-up shot of [SUBJECT], framing very tight on a specific detail like eyes, mouth, or hands. This creates intense intimacy, emphasis, and a dramatic focus."
             },
             { 
                 tag: "Macro Shot", 
                 category: "Shots", 
                 uiDesc: "نمای ماکرو: بزرگنمایی شدید سوژه‌های ریز با لنز ماکرو. آشکار کردن بافت‌های نامرئی.",
-                copyPrompt: "[SUBJECT](Macro shot: camera with macro lens positioned extremely close to small subject, revealing minute details invisible to naked eye. Creates abstract, detailed, magnified perspective.)"
+                copyPrompt: "A macro shot of [SUBJECT], taken with a macro lens positioned extremely close to reveal minute details invisible to the naked eye. This creates an abstract, highly detailed, and magnified perspective."
             },
             { 
                 tag: "Cowboy Shot", 
                 category: "Shots", 
                 uiDesc: "نمای کابوی: برش از وسط ران. کلاسیک وسترن برای نمایش اسلحه و گارد بدن.",
-                copyPrompt: "[SUBJECT](Cowboy shot: camera frames subject from mid-thigh upward, traditionally showing gunbelt in Western films. Emphasizes stance, readiness, and body language.)"
+                copyPrompt: "A cowboy shot of [SUBJECT], framing the figure from mid-thigh upward. This classic cinematic framing emphasizes stance, readiness, and body language."
             },
             { 
                 tag: "Knee Shot", 
                 category: "Shots", 
                 uiDesc: "نمای زانو: برش از زانو به بالا. حس حضور فیزیکی قوی.",
-                copyPrompt: "[SUBJECT](Knee shot: camera frames subject from knees upward, showing most of body while maintaining facial detail. Provides strong sense of physical presence.)"
+                copyPrompt: "A knee shot of [SUBJECT], framing the figure from the knees upward. This shows most of the body while maintaining facial detail, providing a strong sense of physical presence."
             },
             { 
                 tag: "Shoulder Shot", 
                 category: "Shots", 
                 uiDesc: "نمای شانه: برش از شانه به بالا. تمرکز روی سر و گردن.",
-                copyPrompt: "[SUBJECT](Shoulder shot: camera frames subject from shoulders up, focusing on face and upper torso. Creates intimacy while maintaining personal space boundary.)"
+                copyPrompt: "A shoulder shot of [SUBJECT], framing from the shoulders up to focus on the face and upper torso. This creates intimacy while maintaining a personal space boundary."
             },
             { 
                 tag: "Bust Shot", 
                 category: "Shots", 
                 uiDesc: "نمای نیم‌تنه: برش از سینه به بالا. کادر کلاسیک پرتره.",
-                copyPrompt: "[SUBJECT](Bust shot: camera frames subject from chest upward, capturing head, neck, and upper torso. Classic portrait framing emphasizing facial expression and upper body.)"
+                copyPrompt: "A bust shot of [SUBJECT], framing from the chest upward to capture the head, neck, and upper torso. This is a classic portrait framing that emphasizes facial expression."
             },
             { 
                 tag: "Headshot", 
                 category: "Shots", 
                 uiDesc: "هدشات: کادربندی فقط صورت. بیشترین جزئیات چهره و صمیمیت عاطفی.",
-                copyPrompt: "[SUBJECT](Headshot: camera tightly frames subject's head and face, filling frame from top of head to just below chin. Maximum facial detail and emotional intimacy.)"
+                copyPrompt: "A headshot of [SUBJECT], where the camera tightly frames the head and face from the top of the head to just below the chin. This provides maximum facial detail and emotional intimacy."
             },
             { 
                 tag: "Tight Shot", 
                 category: "Shots", 
                 uiDesc: "نمای تنگ: کادربندی بسیار بسته با حداقل فضای خالی. حس خفگی یا تمرکز بالا.",
-                copyPrompt: "[SUBJECT](Tight shot: camera framed extremely close to subject with minimal surrounding space. Creates claustrophobic, intense, or highly focused composition.)"
+                copyPrompt: "A tight shot of [SUBJECT], framed extremely close with minimal surrounding space. This creates a claustrophobic, intense, or highly focused composition."
             },
-
-            // --- COMPOSITION ---
+			
+			// --- COMPOSITION ---
             { 
                 tag: "Centered Composition", 
                 category: "Composition", 
                 uiDesc: "کادربندی مرکزی: سوژه دقیقاً در مرکز تصویر. ایجاد تقارن، تعادل و رسمیت.",
-                copyPrompt: "[SUBJECT](Centered composition: subject positioned in exact center of frame, creating symmetrical, balanced, formal arrangement. Emphasizes subject importance and stability.)"
+                copyPrompt: "A centered composition of [SUBJECT], with the figure positioned in the exact center of the frame to create a symmetrical and balanced arrangement. This formal layout emphasizes the subject's importance and stability."
             },
             { 
                 tag: "Rule-Of-Thirds Composition", 
                 category: "Composition", 
                 uiDesc: "قانون یک‌سوم: قرارگیری سوژه روی خطوط فرضی یک‌سوم. کادری چشم‌نواز و طبیعی.",
-                copyPrompt: "[SUBJECT](Rule-of-thirds composition: frame divided into 3x3 grid, subject positioned along gridlines or intersections. Creates balanced, natural, visually pleasing arrangement.)"
+                copyPrompt: "A shot of [SUBJECT] composed using the rule-of-thirds, where the subject is positioned along the intersecting gridlines rather than the center. This creates a balanced, natural, and visually pleasing arrangement."
             },
             { 
                 tag: "Symmetrical Shot", 
                 category: "Composition", 
                 uiDesc: "نمای متقارن: تعادل آینه‌ای در دو طرف کادر. حس هارمونی و کمال.",
-                copyPrompt: "[SUBJECT](Symmetrical shot: composition with balanced elements mirrored on either side of central axis. Creates harmony, formality, and aesthetic perfection.)"
+                copyPrompt: "A symmetrical shot of [SUBJECT], featuring a composition with balanced elements mirrored on either side of the central axis. This creates a sense of harmony, formality, and aesthetic perfection."
             },
             { 
                 tag: "Asymmetrical Shot", 
                 category: "Composition", 
                 uiDesc: "نمای نامتقارن: توزیع نامتعادل عناصر. ایجاد تنش بصری و پویایی.",
-                copyPrompt: "[SUBJECT](Asymmetrical shot: composition with unbalanced element distribution, creating visual tension. Generates dynamic interest through intentional imbalance.)"
+                copyPrompt: "An asymmetrical shot of [SUBJECT], utilizing an unbalanced distribution of elements to create visual tension. This generates dynamic interest through intentional imbalance."
             },
             { 
                 tag: "Minimalist Shot", 
                 category: "Composition", 
                 uiDesc: "نمای مینیمالیست: عناصر کم، فضای خالی زیاد. تاکید بر سوژه با حذف اضافات.",
-                copyPrompt: "[SUBJECT](Minimalist shot: composition with minimal elements, abundant empty space, simple forms. Emphasizes subject through reduction and negative space.)"
+                copyPrompt: "A minimalist shot of [SUBJECT], composed with minimal elements, simple forms, and abundant empty space. This emphasizes the subject through reduction and the use of negative space."
             },
             { 
                 tag: "Busy Composition", 
                 category: "Composition", 
                 uiDesc: "کادر شلوغ: پر از جزئیات و عناصر. ایجاد حس پیچیدگی یا آشفتگی انرژی.",
-                copyPrompt: "[SUBJECT](Busy composition: frame filled with multiple elements, details, and visual information. Creates complexity, energy, or overwhelming sensory experience.)"
+                copyPrompt: "A busy composition featuring [SUBJECT], where the frame is filled with multiple elements, intricate details, and visual information. This creates complexity, high energy, and an overwhelming sensory experience."
             },
             { 
                 tag: "Negative Space Shot", 
                 category: "Composition", 
                 uiDesc: "فضای منفی: استفاده از فضای خالی اطراف سوژه به عنوان عنصر طراحی.",
-                copyPrompt: "[SUBJECT](Negative space shot: composition emphasizing empty areas around subject, using emptiness as design element. Creates isolation, focus, or breathing room.)"
+                copyPrompt: "A negative space shot of [SUBJECT], emphasizing the large empty areas around the figure using emptiness as a design element. This creates a sense of isolation, focus, and breathing room."
             },
             { 
                 tag: "Leading Lines Shot", 
                 category: "Composition", 
                 uiDesc: "خطوط هدایت‌گر: استفاده از خطوط محیط برای هدایت چشم بیننده به سمت سوژه.",
-                copyPrompt: "[SUBJECT](Leading lines composition: visual lines within frame guide viewer's eye toward subject. Creates depth, direction, and purposeful visual flow.)"
+                copyPrompt: "A shot of [SUBJECT] utilizing leading lines composition, where visual lines within the environment guide the viewer's eye directly toward the subject. This creates depth, direction, and a purposeful visual flow."
             },
             { 
                 tag: "Foreground Framing Shot", 
                 category: "Composition", 
                 uiDesc: "قاب در قاب: استفاده از عناصر پیش‌زمینه برای قاب گرفتن دور سوژه.",
-                copyPrompt: "[SUBJECT](Foreground framing shot: elements in foreground create natural frame around subject. Adds depth, context, and directs attention to main subject.)"
+                copyPrompt: "A foreground framing shot of [SUBJECT], where elements in the immediate foreground form a natural frame around the figure. This adds depth, context, and directs attention to the main subject."
             },
             { 
                 tag: "Over-The-Shoulder Shot", 
                 category: "Composition", 
                 uiDesc: "از روی شانه: دوربین پشت شانه یک نفر و رو به دیگری. ایجاد حس گفتگو.",
-                copyPrompt: "[SUBJECT](Over-the-shoulder shot: camera positioned behind one subject's shoulder, looking toward another. Creates conversational perspective and spatial relationship.)"
+                copyPrompt: "An over-the-shoulder shot showing [SUBJECT], with the camera positioned behind another character's shoulder looking towards them. This establishes a conversational perspective and spatial relationship."
             },
             { 
                 tag: "Reaction Shot", 
                 category: "Composition", 
                 uiDesc: "شات واکنش: ثبت عکس‌العمل احساسی سوژه به یک اتفاق خارج از کادر.",
-                copyPrompt: "[SUBJECT](Reaction shot: camera captures subject responding to off-screen action or dialogue. Emphasizes emotional response and character perspective.)"
+                copyPrompt: "A reaction shot of [SUBJECT], capturing the specific moment they respond to an off-screen action or dialogue. This emphasizes the emotional response and the character's perspective."
             },
             { 
                 tag: "Two-Shot", 
                 category: "Composition", 
                 uiDesc: "نمای دو نفره: قاب‌بندی دو سوژه در کنار هم. نمایش رابطه یا تعامل.",
-                copyPrompt: "[SUBJECT](Two-shot: camera frames two subjects within same composition. Establishes relationship, interaction, or comparison between characters.)"
+                copyPrompt: "A two-shot composition framing [SUBJECT] and another figure together within the same scene. This establishes the relationship, interaction, or comparison between the characters."
             },
             { 
                 tag: "Three-Shot", 
                 category: "Composition", 
                 uiDesc: "نمای سه نفره: قاب‌بندی سه سوژه. نمایش پویایی گروهی.",
-                copyPrompt: "[SUBJECT](Three-shot: camera frames three subjects within composition, showing group dynamic. Creates triangular visual relationship and social interaction.)"
+                copyPrompt: "A three-shot composition framing [SUBJECT] alongside two others, showing the group dynamic. This creates a triangular visual relationship and highlights social interaction."
             },
             { 
                 tag: "Group Shot", 
                 category: "Composition", 
                 uiDesc: "شات گروهی: نمایش جمعی از افراد. تاکید بر حضور جمعی یا تیم.",
-                copyPrompt: "[SUBJECT](Group shot: camera captures multiple subjects arranged together in frame. Emphasizes collective presence, community, or ensemble dynamic.)"
+                copyPrompt: "A group shot capturing [SUBJECT] among a gathering of people arranged together in the frame. This emphasizes the collective presence, community, or ensemble dynamic."
             },
-
-            // --- MOVEMENT ---
+			
+			// --- MOVEMENT ---
             { 
                 tag: "Tracking Shot", 
                 category: "Movement", 
                 uiDesc: "شات تعقیبی: القای حس حرکت دوربین پا به پای سوژه.",
-                copyPrompt: "[SUBJECT](Tracking shot aesthetic: composition suggesting camera movement following subject laterally. Creates dynamic sense of motion, pursuit, or accompaniment.)"
+                copyPrompt: "A tracking shot of [SUBJECT], with the composition suggesting the camera is moving laterally to follow the subject. This creates a dynamic sense of motion, pursuit, or accompaniment."
             },
             { 
                 tag: "Dolly Shot", 
                 category: "Movement", 
                 uiDesc: "دالی شات: القای حس حرکت فیزیکی دوربین به سمت جلو یا عقب (روی ریل).",
-                copyPrompt: "[SUBJECT](Dolly shot style: composition implying camera physically moving toward or away from subject on track. Creates smooth approach or retreat with depth change.)"
+                copyPrompt: "A dolly shot of [SUBJECT], where the camera appears to be physically moving toward or away from the subject on a track. This creates a smooth approach or retreat with a noticeable change in depth."
             },
             { 
                 tag: "Crane Shot", 
                 category: "Movement", 
                 uiDesc: "کرین شات: نمای با ارتفاع متغیر مثل جرثقیل سینمایی. دید باشکوه و وسیع.",
-                copyPrompt: "[SUBJECT](Crane shot perspective: composition suggesting camera positioned on crane, capable of sweeping vertical and horizontal movement. Creates grand, elevated, cinematic perspective.)"
+                copyPrompt: "A crane shot perspective of [SUBJECT], suggesting the camera is positioned on a crane capable of sweeping vertical and horizontal movement. This creates a grand, elevated, and cinematic perspective."
             },
             { 
                 tag: "Boom Shot", 
                 category: "Movement", 
                 uiDesc: "بوم شات: حرکت عمودی دوربین. برای آشکارسازی دراماتیک.",
-                copyPrompt: "[SUBJECT](Boom shot style: composition implying camera on boom arm, moving vertically. Creates rising or lowering perspective with dramatic reveal.)"
+                copyPrompt: "A boom shot of [SUBJECT], implying the camera is mounted on a boom arm and moving vertically. This creates a rising or lowering perspective, often used for a dramatic reveal."
             },
             { 
                 tag: "Zoom Shot", 
                 category: "Movement", 
                 uiDesc: "زوم شات: تغییر فاصله کانونی لنز. تغییر پرسپکتیو بدون حرکت دوربین.",
-                copyPrompt: "[SUBJECT](Zoom shot aesthetic: composition suggesting focal length change, appearing to move closer or farther. Creates intensity increase or dramatic distance change.)"
+                copyPrompt: "A zoom shot of [SUBJECT], suggesting a change in focal length that makes the camera appear to move closer or farther. This increases intensity or creates a dramatic change in distance without physical movement."
             },
             { 
                 tag: "Push-In Shot", 
                 category: "Movement", 
                 uiDesc: "پوش این (Push-In): حرکت آهسته دوربین به سمت سوژه. افزایش تمرکز و تنش.",
-                copyPrompt: "[SUBJECT](Push-in composition: framing suggesting camera moving steadily closer to subject. Creates building tension, intimacy, or focused attention.)"
+                copyPrompt: "A push-in shot of [SUBJECT], with framing suggesting the camera is moving steadily closer to the subject. This technique is used to build tension, create intimacy, or focus attention."
             },
             { 
                 tag: "Pull-Back Shot", 
                 category: "Movement", 
                 uiDesc: "پول بک (Pull-Back): عقب کشیدن دوربین برای آشکار کردن محیط و زمینه.",
-                copyPrompt: "[SUBJECT](Pull-back composition: framing suggesting camera moving away from subject, revealing context. Creates revelation, scope expansion, or isolation.)"
+                copyPrompt: "A pull-back shot of [SUBJECT], suggesting the camera is moving away to reveal the context. This creates a moment of revelation, expands the scope, or emphasizes isolation."
             },
             { 
                 tag: "Pan Shot", 
                 category: "Movement", 
                 uiDesc: "پن (Pan): چرخش افقی دوربین روی محور ثابت. بررسی صحنه.",
-                copyPrompt: "[SUBJECT](Pan shot style: composition implying horizontal camera rotation across scene. Creates sweeping survey, landscape revelation, or spatial exploration.)"
+                copyPrompt: "A pan shot of [SUBJECT], implying a horizontal camera rotation across the scene. This creates a sweeping survey, reveals the landscape, or explores the space."
             },
             { 
                 tag: "Tilt Shot", 
                 category: "Movement", 
                 uiDesc: "تیلت (Tilt): چرخش عمودی دوربین روی محور ثابت.",
-                copyPrompt: "[SUBJECT](Tilt shot aesthetic: composition suggesting vertical camera rotation, scanning up or down. Creates height revelation or vertical space exploration.)"
+                copyPrompt: "A tilt shot of [SUBJECT], suggesting a vertical camera rotation scanning up or down. This is used to reveal height or explore the vertical space."
             },
             { 
                 tag: "Arc Shot", 
                 category: "Movement", 
                 uiDesc: "آرک شات: حرکت دایره‌ای دور سوژه. نمایش سه بعدی فضا.",
-                copyPrompt: "[SUBJECT](Arc shot composition: framing suggesting camera moving in curved path around subject. Creates dimensional reveal, dynamic perspective, and circular motion.)"
+                copyPrompt: "An arc shot of [SUBJECT], with framing that suggests the camera is moving in a curved path around the subject. This reveals dimensionality, offers a dynamic perspective, and creates circular motion."
             },
             { 
                 tag: "360-Degree Shot", 
                 category: "Movement", 
                 uiDesc: "شات ۳۶۰ درجه: چرخش کامل دور سوژه. درک کامل فضایی.",
-                copyPrompt: "[SUBJECT](360-degree perspective: composition implying complete circular camera path around subject. Creates comprehensive spatial understanding and dynamic rotation.)"
+                copyPrompt: "A 360-degree shot of [SUBJECT], implying a complete circular camera path around the figure. This provides a comprehensive spatial understanding and dynamic rotation."
             },
             { 
                 tag: "Static Shot", 
                 category: "Movement", 
                 uiDesc: "شات ثابت: دوربین کاملاً بی حرکت. حس ثبات و مشاهده گر.",
-                copyPrompt: "[SUBJECT](Static shot: camera fixed in single position without movement. Creates stability, observation, and deliberate, contemplative framing.)"
+                copyPrompt: "A static shot of [SUBJECT], where the camera remains fixed in a single position without movement. This creates a sense of stability, observation, and deliberate, contemplative framing."
             },
 
             // --- LENS ---
@@ -541,49 +541,49 @@
                 tag: "Wide-Angle Shot", 
                 category: "Lens", 
                 uiDesc: "لنز واید: میدان دید باز با کمی اعوجاج. اغراق در فضا و عمق.",
-                copyPrompt: "[SUBJECT](Wide-angle lens shot: composition showing expanded field of view with slight barrel distortion. Exaggerates space, depth, and environmental scope.)"
+                copyPrompt: "A wide-angle lens shot of [SUBJECT], showing an expanded field of view with slight barrel distortion. This exaggerates the space, depth, and environmental scope."
             },
             { 
                 tag: "Ultra-Wide Shot", 
                 category: "Lens", 
                 uiDesc: "اولترا واید: میدان دید بسیار باز و اعوجاج محسوس. پرسپکتیو دراماتیک.",
-                copyPrompt: "[SUBJECT](Ultra-wide lens shot: composition with extremely expanded field of view and pronounced barrel distortion. Creates dramatic spatial exaggeration and immersive perspective.)"
+                copyPrompt: "An ultra-wide lens shot of [SUBJECT], featuring an extremely expanded field of view and pronounced barrel distortion. This creates dramatic spatial exaggeration and an immersive perspective."
             },
             { 
                 tag: "Fisheye Shot", 
                 category: "Lens", 
                 uiDesc: "فیش آی (چشم ماهی): اعوجاج کروی شدید و دایره‌ای. دید سوررئال.",
-                copyPrompt: "[SUBJECT](Fisheye lens shot: composition with spherical distortion creating circular, bulging perspective. Dramatically warps space, creating surreal, immersive viewpoint.)"
+                copyPrompt: "A fisheye lens shot of [SUBJECT], with spherical distortion that creates a circular, bulging perspective. This dramatically warps space, creating a surreal and immersive viewpoint."
             },
             { 
                 tag: "Telephoto Shot", 
                 category: "Lens", 
                 uiDesc: "لنز تله فوتو: فشرده‌سازی پرسپکتیو و عمق. جدا کردن سوژه از پس‌زمینه.",
-                copyPrompt: "[SUBJECT](Telephoto lens shot: composition with compressed perspective, flattened depth, and narrow field of view. Creates isolated subject with beautifully blurred background.)"
+                copyPrompt: "A telephoto lens shot of [SUBJECT], featuring compressed perspective, flattened depth, and a narrow field of view. This isolates the subject against a beautifully blurred background."
             },
             { 
                 tag: "Portrait-Lens Shot", 
                 category: "Lens", 
                 uiDesc: "لنز پرتره: عمق میدان کم، سوژه شارپ و پس‌زمینه مات (بوکه).",
-                copyPrompt: "[SUBJECT](Portrait-lens shot: composition with shallow depth of field, subject sharp against softly blurred background. Creates pleasing bokeh and subject isolation.)"
+                copyPrompt: "A portrait-lens shot of [SUBJECT], with a shallow depth of field where the subject is sharp against a softly blurred background. This creates pleasing bokeh and subject isolation."
             },
             { 
                 tag: "Macro-Lens Shot", 
                 category: "Lens", 
                 uiDesc: "لنز ماکرو: ثبت جزئیات میکروسکوپی از فاصله بسیار نزدیک.",
-                copyPrompt: "[SUBJECT](Macro-lens shot: composition capturing extreme detail of small subject at very close range. Reveals microscopic textures and details with minimal depth of field.)"
+                copyPrompt: "A macro-lens shot of [SUBJECT], capturing extreme detail of a small subject at very close range. This reveals microscopic textures and details with minimal depth of field."
             },
             { 
                 tag: "Tilt-Shift Shot", 
                 category: "Lens", 
                 uiDesc: "تیلت شیفت: فوکوس انتخابی که شهر را شبیه ماکت اسباب‌بازی نشان می‌دهد.",
-                copyPrompt: "[SUBJECT](Tilt-shift lens shot: composition with selective focus plane, creating miniature effect or corrected perspective. Produces dreamy, toy-like, or architecturally corrected view.)"
+                copyPrompt: "A tilt-shift lens shot of [SUBJECT], utilizing a selective focus plane to create a miniature effect. This produces a dreamy, toy-like appearance or an architecturally corrected view."
             },
             { 
                 tag: "Anamorphic Shot", 
                 category: "Lens", 
                 uiDesc: "لنز آنامورفیک: نسبت تصویر عریض سینمایی، فلر افقی و بوکه بیضی شکل.",
-                copyPrompt: "[SUBJECT](Anamorphic lens shot: composition with characteristic wide aspect ratio, horizontal lens flares, and oval bokeh. Creates cinematic, premium visual aesthetic.)"
+                copyPrompt: "An anamorphic lens shot of [SUBJECT], characterized by a wide cinematic aspect ratio, horizontal lens flares, and oval bokeh. This creates a premium, movie-like visual aesthetic."
             },
 
             // --- POV ---
@@ -591,67 +591,67 @@
                 tag: "First-Person Shot", 
                 category: "POV", 
                 uiDesc: "اول شخص: دیدن دنیا از چشم شخصیت. تجربه ذهنی.",
-                copyPrompt: "[SUBJECT](First-person perspective: camera represents character's own eyes, showing what they see. Creates immersive, subjective experience of being the character.)"
+                copyPrompt: "A first-person perspective shot of [SUBJECT], where the camera represents a character's own eyes showing exactly what they see. This creates an immersive, subjective experience of being the character."
             },
             { 
                 tag: "Third-Person Shot", 
                 category: "POV", 
                 uiDesc: "سوم شخص: مشاهده کاراکتر از بیرون (مثل بازی‌های ویدیویی). دید عینی.",
-                copyPrompt: "[SUBJECT](Third-person perspective: camera observing subject from outside their body. Creates objective viewpoint watching character from external position."
+                copyPrompt: "A third-person perspective shot of [SUBJECT], where the camera observes the subject from outside their body. This creates an objective viewpoint, watching the character from an external position."
             },
             { 
                 tag: "Object POV Shot", 
                 category: "POV", 
                 uiDesc: "دید اشیاء: دوربین از زاویه دید یک شیء بی جان (مثلاً داخل یخچال).",
-                copyPrompt: "[SUBJECT](Object POV shot: camera positioned at perspective of inanimate object, showing scene from object's \"viewpoint.\" Creates unusual, creative perspective.)"
+                copyPrompt: "An object POV shot of [SUBJECT], where the camera is positioned from the perspective of an inanimate object. This shows the scene from the object's 'viewpoint,' creating an unusual and creative perspective."
             },
             { 
                 tag: "Drone Shot", 
                 category: "POV", 
                 uiDesc: "هلی شات (درون): نمای هوایی شناور و نرم. پرسپکتیو وسیع.",
-                copyPrompt: "[SUBJECT](Drone shot perspective: elevated aerial view with smooth, floating quality. Creates sweeping, bird's-eye perspective with contemporary aesthetic.)"
+                copyPrompt: "A drone shot perspective of [SUBJECT], featuring an elevated aerial view with a smooth, floating quality. This creates a sweeping, bird's-eye perspective with a contemporary aesthetic."
             },
             { 
                 tag: "Surveillance Camera Shot", 
                 category: "POV", 
                 uiDesc: "دوربین امنیتی: زاویه بالا از گوشه اتاق، کیفیت دیجیتالی و اعوجاج واید.",
-                copyPrompt: "[SUBJECT](Surveillance camera angle: high-corner mounted perspective with wide-angle distortion, timestamp overlay aesthetic. Creates voyeuristic, security monitoring viewpoint.)"
+                copyPrompt: "A surveillance camera angle shot of [SUBJECT], captured from a high-corner mounted perspective with wide-angle distortion and a timestamp overlay aesthetic. This creates a voyeuristic, security monitoring viewpoint."
             },
             { 
                 tag: "Security Cam Angle", 
                 category: "POV", 
                 uiDesc: "دوربین مداربسته (CCTV): کیفیت گرینی و برفکی، زاویه بالا و ثابت.",
-                copyPrompt: "[SUBJECT](Security cam perspective: fixed high-angle viewpoint with grainy quality, suggesting CCTV footage. Creates documentary, monitoring, or found-footage aesthetic.)"
+                copyPrompt: "A security cam perspective shot of [SUBJECT], featuring a fixed high-angle viewpoint with a grainy quality suggesting CCTV footage. This creates a documentary, monitoring, or found-footage aesthetic."
             },
             { 
                 tag: "Dashcam Angle", 
                 category: "POV", 
                 uiDesc: "دشکم (Dashcam): نمای روبرو از داشبورد ماشین.",
-                copyPrompt: "[SUBJECT](Dashcam perspective: forward-facing view from vehicle dashboard, showing road ahead. Creates point-of-view from driver's position with characteristic wide angle.)"
+                copyPrompt: "A dashcam perspective shot of [SUBJECT], showing a forward-facing view from a vehicle dashboard. This creates a point-of-view from the driver's position with a characteristic wide angle."
             },
             { 
                 tag: "Bodycam Angle", 
                 category: "POV", 
                 uiDesc: "بادی کم (Bodycam): دوربین متصل به لباس پلیس یا ورزشکار. لرزش و پرش دارد.",
-                copyPrompt: "[SUBJECT](Bodycam perspective: chest-height POV with slight bounce, showing forward view with partial body visible. Creates documentary, law-enforcement, or action aesthetic.)"
+                copyPrompt: "A bodycam perspective shot of [SUBJECT], featuring a chest-height POV with slight bounce. It shows a forward view with parts of the body visible, creating a documentary, law-enforcement, or action aesthetic."
             },
             { 
                 tag: "Helmet Cam Shot", 
                 category: "POV", 
                 uiDesc: "دوربین کلاه ایمنی: نمای گوپرو (GoPro) از روی سر. مناسب ورزش‌های هیجانی.",
-                copyPrompt: "[SUBJECT](Helmet cam perspective: head-mounted viewpoint showing first-person view from subject's head position. Creates extreme sports, action, or immersive adventure aesthetic.)"
+                copyPrompt: "A helmet cam perspective shot of [SUBJECT], providing a head-mounted viewpoint that shows a first-person view from the subject's head position. This creates an extreme sports, action, or immersive adventure aesthetic."
             },
             { 
                 tag: "Microscope POV", 
                 category: "POV", 
                 uiDesc: "دید میکروسکوپی: بزرگنمایی شدید با حاشیه دایره‌ای سیاه.",
-                copyPrompt: "[SUBJECT](Microscope viewpoint: extreme magnification showing microscopic details with circular vignette. Creates scientific, detailed perspective of tiny subjects.)"
+                copyPrompt: "A microscope viewpoint shot of [SUBJECT], featuring extreme magnification that shows microscopic details with a circular vignette. This creates a scientific, detailed perspective of tiny subjects."
             },
             { 
                 tag: "Telescope POV", 
                 category: "POV", 
                 uiDesc: "دید تلسکوپی: دیدن دوردست‌ها از درون دایره سیاه دوربین.",
-                copyPrompt: "[SUBJECT](Telescope viewpoint: distant view through circular vignette, showing magnified far-away subjects. Creates astronomical, surveillance, or distant observation perspective.)"
+                copyPrompt: "A telescope viewpoint shot of [SUBJECT], showing a distant view through a circular vignette. This magnifies far-away subjects, creating an astronomical, surveillance, or distant observation perspective."
             }
         ];
 
@@ -819,3 +819,4 @@
     </script>
 </body>
 </html>
+
