@@ -796,7 +796,21 @@
                 noResults.classList.add('hidden');
                 
                 filtered.forEach(item => {
-                    const filename = item.tag.toUpperCase().replace(/ /g, '_') + ".webp";
+                    // const filename = item.tag.toUpperCase().replace(/ /g, '_') + ".webp";
+										// به این تغییر دهید:
+					const filename = item.tag
+					    .split(' ')
+					    .map(word => {
+					        if (word.includes('-')) {
+					            const [first, second] = word.split('-');
+					            return first + '-' + 
+					                   second.charAt(0).toUpperCase() + 
+					                   second.slice(1).toLowerCase();
+					        }
+					        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+					    })
+					    .join('_') + ".webp";
+					
                     const primaryUrl = "images2/" + filename;
                     
                     // Fallback using placehold.co text, styled for "Light" theme (amber text)
@@ -888,6 +902,7 @@
 </body>
 
 </html>
+
 
 
 
