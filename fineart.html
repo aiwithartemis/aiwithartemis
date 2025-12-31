@@ -447,7 +447,7 @@
         function updatePrompt() {
             const subjectInput = document.getElementById('subject-input').value || 'A person';
             const isSafetyOn = document.getElementById('safety-toggle').checked;
-            const safetyString = isSafetyOn ? "in professional attire, in a composed pose" : "";
+            const safetyString = isSafetyOn ? "in cohesive attire, engaging in a spontaneous pose" : "";
             
             const shot = selections.shot || '';
             const metaphor = selections.metaphor || '';
@@ -455,7 +455,7 @@
             const env = selections.env || '';
             const tech = selections.tech || '';
             
-            const fixedQuality = "Sharp focus, detailed, plain background, no text or logos";
+            const fixedQuality = "Sharp focus, extremely detailed, plain background, no text or logos";
             let promptParts = [shot, subjectInput, safetyString, metaphor, env, lighting, tech, fixedQuality];
             const finalPrompt = promptParts.filter(p => p !== '').join(', ') + ".";
             
@@ -482,8 +482,8 @@
             
             const subjectInput = document.getElementById('subject-input').value || 'A person';
             const isSafetyOn = document.getElementById('safety-toggle').checked;
-            const safetyString = isSafetyOn ? "in professional attire, in a composed pose" : "";
-            const fixedQuality = "sharp focus, extremely detailed, plain background, no text or logos";
+            const safetyString = isSafetyOn ? "in cohesive attire, engaging in a spontaneous pose" : "";
+            const fixedQuality = "Sharp focus, extremely detailed, plain background, no text or logos";
 
             for (let i = 0; i < count; i++) {
                 // انتخاب تصادفی برای هر دسته
@@ -560,4 +560,5 @@
 </body>
 
 </html>
+
 
