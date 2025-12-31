@@ -445,9 +445,9 @@
         }
 
         function updatePrompt() {
-            const subjectInput = document.getElementById('subject-input').value || 'A figure';
+            const subjectInput = document.getElementById('subject-input').value || 'A person';
             const isSafetyOn = document.getElementById('safety-toggle').checked;
-            const safetyString = isSafetyOn ? "An adult figure, fully clothed, modest attire, no nudity, no suggestive poses, safe for work" : "";
+            const safetyString = isSafetyOn ? "in professional attire, standing in a composed pose" : "";
             
             const shot = selections.shot || '';
             const metaphor = selections.metaphor || '';
@@ -455,7 +455,7 @@
             const env = selections.env || '';
             const tech = selections.tech || '';
             
-            const fixedQuality = "sharp focus, extremely detailed, no text, no watermark, no logos, plain background";
+            const fixedQuality = "Sharp focus, detailed, plain background, no text or logos";
             let promptParts = [shot, subjectInput, safetyString, metaphor, env, lighting, tech, fixedQuality];
             const finalPrompt = promptParts.filter(p => p !== '').join(', ') + ".";
             
@@ -558,4 +558,5 @@
         window.onload = init;
     </script>
 </body>
+
 </html>
