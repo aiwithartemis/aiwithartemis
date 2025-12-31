@@ -447,7 +447,7 @@
         function updatePrompt() {
             const subjectInput = document.getElementById('subject-input').value || 'A person';
             const isSafetyOn = document.getElementById('safety-toggle').checked;
-            const safetyString = isSafetyOn ? "in professional attire, standing in a composed pose" : "";
+            const safetyString = isSafetyOn ? "in professional attire, in a composed pose" : "";
             
             const shot = selections.shot || '';
             const metaphor = selections.metaphor || '';
@@ -480,10 +480,10 @@
             const count = parseInt(document.getElementById('batch-count').value) || 10;
             const output = [];
             
-            const subjectInput = document.getElementById('subject-input').value || 'A figure';
+            const subjectInput = document.getElementById('subject-input').value || 'A person';
             const isSafetyOn = document.getElementById('safety-toggle').checked;
-            const safetyString = isSafetyOn ? "An adult figure, fully clothed, modest attire, no nudity, no suggestive poses, safe for work" : "";
-            const fixedQuality = "sharp focus, extremely detailed, no text, no watermark, no logos, plain background";
+            const safetyString = isSafetyOn ? "in professional attire, in a composed pose" : "";
+            const fixedQuality = "sharp focus, extremely detailed, plain background, no text or logos";
 
             for (let i = 0; i < count; i++) {
                 // انتخاب تصادفی برای هر دسته
@@ -560,3 +560,4 @@
 </body>
 
 </html>
+
