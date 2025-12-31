@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex, nofollow">
+    <title>Z-Image Fine Art Prompt Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .option-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .option-card:hover {
+            transform: translateY(-4px);
+            border-color: #38bdf8;
+            box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.2);
+        }
+
+        .option-card.selected {
+            border-color: #38bdf8;
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .option-card img {
+            height: 300px; 
+            width: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            background-color: #1e293b;
+        }
+
+        .prompt-output {
+            font-family: 'Courier New', Courier, monospace;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .accordion-content {
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            overflow: hidden;
+        }
+
+        .accordion-content.closed {
+            max-height: 0;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px; width: 18px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #10b981; }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto space-y-8 pb-10">
+        
+        <!-- Header -->
+        <header class="text-center mb-12 pt-8">
+            <h1 class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-purple-400 to-sky-400 mb-4 tracking-tight drop-shadow-lg" style="font-family: 'Courier New', sans-serif;">
+                Z-Image Fine Art Prompt Builder
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl font-light tracking-wide bg-slate-800/50 inline-block px-4 py-1 rounded-full border border-slate-700/50">
+                (ابزار ساخت پرامپت آثار هنری برای Z-Image)
+            </p>
+        </header>
+
+        <!-- بخش خروجی پرامپت -->
+        <div class="bg-slate-800 rounded-2xl p-6 shadow-2xl border border-slate-700">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+                <h2 class="text-xl font-bold text-sky-400"><i class="fas fa-magic ml-2"></i> خروجی پرامپت نهایی</h2>
+                <div class="flex gap-2 w-full md:w-auto">
+                    <button onclick="clearSelections()" class="flex-1 md:flex-none bg-rose-600 hover:bg-rose-700 px-4 py-2 rounded-lg transition text-sm text-white" title="پاک کردن انتخاب‌ها">
+                        <i class="fas fa-trash-alt ml-2"></i> پاک کردن
+                    </button>
+                    <button onclick="randomizeAll()" class="flex-1 md:flex-none bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition text-sm text-white">
+                        <i class="fas fa-dice ml-2"></i> انتخاب تصادفی
+                    </button>
+                    <button onclick="copyPrompt(this)" class="flex-1 md:flex-none bg-sky-600 hover:bg-sky-700 px-4 py-2 rounded-lg transition text-sm text-white">
+                        <i class="fas fa-copy ml-2"></i> کپی پرامپت
+                    </button>
+                </div>
+            </div>
+            <textarea id="final-prompt" class="prompt-output w-full h-32 md:h-40 bg-slate-900 border border-slate-700 rounded-xl p-4 text-sky-300 text-sm md:text-base focus:ring-2 focus:ring-sky-500 outline-none resize-none" readonly></textarea>
+            <div class="mt-2 text-left">
+                <p class="text-xs text-slate-400">
+                    نکته: برای Z-Image Turbo تنظیمات را روی این مقادیر بگذارید: Guidance: 1 | Steps: 8-12
+                </p>
+            </div>
+        </div>
+
+        <!-- بخش ۱: سوژه -->
+        <section class="bg-slate-800 rounded-2xl border border-slate-700 shadow-lg overflow-hidden">
+            <button onclick="toggleAccordion('section-subject')" class="w-full flex justify-between items-center p-6 hover:bg-slate-700/30 transition-colors">
+                <h3 class="text-2xl font-bold border-r-4 border-sky-500 pr-4">۱. سوژه و تنظیمات اولیه</h3>
+                <i id="icon-section-subject" class="fas fa-minus text-sky-400"></i>
+            </button>
+            <div id="content-section-subject" class="accordion-content p-6 pt-0 space-y-6">
+                <div>
+                    <label class="block mb-2 text-slate-400">توصیف سوژه به انگلیسی (مثلاً: a figure in a garden):</label>
+                    <input type="text" id="subject-input" oninput="updatePrompt()" placeholder="Subject description..." dir="auto" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 outline-none focus:border-sky-500 text-start">
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-slate-900/50 rounded-xl border border-slate-700">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-shield-alt text-green-500 text-xl"></i>
+                        <div>
+                            <p class="font-bold text-slate-200">حالت ایمنی (Safety Mode)</p>
+                            <p class="text-xs text-slate-500 italic">اضافه کردن محدودیت‌های اخلاقی و پوشش مناسب به تصویر</p>
+                        </div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="safety-toggle" onchange="updatePrompt()" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- گرید گزینه‌ها -->
+        <div id="options-grid" class="space-y-6"></div>
+
+        <!-- بخش تولید گروهی (Batch Generator) -->
+        <section class="bg-slate-800 rounded-2xl border border-slate-700 shadow-lg overflow-hidden mt-12">
+            <button onclick="toggleAccordion('section-batch')" class="w-full flex justify-between items-center p-6 hover:bg-slate-700/30 transition-colors">
+                <h3 class="text-2xl font-bold border-r-4 border-purple-500 pr-4 text-purple-400">
+                    <i class="fas fa-layer-group ml-2"></i> تولید گروهی (Batch Generation)
+                </h3>
+                <i id="icon-section-batch" class="fas fa-plus text-purple-400"></i>
+            </button>
+            
+            <div id="content-section-batch" class="accordion-content closed p-6 pt-0">
+                <p class="text-slate-400 text-sm mb-4">تعداد تصاویر مورد نظر را وارد کنید تا لیست JSON شامل پرامپت‌های کاملاً تصادفی برای شما تولید شود.</p>
+                
+                <div class="flex flex-col md:flex-row gap-4 items-end mb-6">
+                    <div class="w-full md:w-1/4">
+                        <label class="block mb-2 text-slate-300 font-bold">تعداد تصاویر:</label>
+                        <input type="number" id="batch-count" value="10" min="1" max="500" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 outline-none focus:border-purple-500 text-center text-white ltr" placeholder="مثلاً 50">
+                    </div>
+                    <button onclick="generateBatchJson()" class="w-full md:w-3/4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fas fa-cogs fa-lg"></i> تولید فایل JSON
+                    </button>
+                </div>
+                
+                <div class="relative">
+                    <textarea id="batch-output" class="prompt-output w-full h-64 bg-slate-900 border border-slate-700 rounded-xl p-4 text-green-400 text-xs md:text-sm focus:ring-2 focus:ring-purple-500 outline-none resize-none dir-ltr" readonly placeholder="خروجی JSON اینجا نمایش داده می‌شود..."></textarea>
+                    
+                    <div class="absolute top-4 right-4 flex gap-2">
+                        <!-- Download Button -->
+                        <button onclick="downloadBatchJson()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-lg border border-slate-600 transition tooltip-container" title="دانلود فایل JSON">
+                            <i class="fas fa-file-download fa-lg"></i>
+                        </button>
+                        <!-- Copy Button -->
+                        <button onclick="copyBatchJson(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-lg border border-slate-600 transition tooltip-container" title="کپی کردن">
+                            <i class="fas fa-copy fa-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 text-slate-500 text-sm mt-12 border-t border-slate-800">
+            <p class="flex items-center justify-center gap-2">
+                ساخته شده با عشق برای هنرمندان و رویاپردازان
+                <i class="fas fa-heart text-rose-500 animate-pulse"></i>
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        const categories = [
+            {
+                id: 'shot',
+                title: '۲. نوع نما و زاویه دوربین (Shot & Angle)',
+                options: [
+                    { name: 'Extreme Close-up', value: 'Extreme close-up macro portrait focusing on eyes' },
+                    { name: '45-degree Profile', value: '45-degree angle profile shot' },
+                    { name: 'Low Angle', value: 'Dramatic low-angle shot looking up at the subject' },
+                    { name: 'Bird\'s Eye View', value: 'High-angle bird\'s eye view looking down' },
+                    { name: 'Symmetrical Front', value: 'Perfectly symmetrical front view portrait' },
+                    { name: 'Silhouette', value: 'High-contrast silhouette shot against bright light' },
+                    { name: 'Dutch Angle', value: 'Disorienting tilted Dutch angle shot' },
+                    { name: 'Reflection', value: 'Shot captured through a broken mirror reflection' },
+                    { name: 'Over the Shoulder', value: 'Mysterious over-the-shoulder perspective shot' },
+                    { name: 'Double Focus', value: 'Split diopter shot with dual focus points' },
+                    { name: 'Worms Eye View', value: 'Extreme low angle from the ground' },
+                    { name: 'Wide Shot', value: 'Cinematic wide shot establishing context' },
+                    { name: 'Macro Iris', value: 'Macro shot detailed iris texture' },
+                    { name: 'Profile Silhouette', value: 'Side profile silhouette against light' },
+                    { name: 'Overhead Table', value: 'Top-down flat lay view' },
+                    { name: 'Through Object', value: 'View through a glass or foliage foreground' },
+                    { name: 'Fish-Eye Lens', value: 'Distorted artistic fish-eye perspective' },
+                    { name: 'Isometric View', value: 'Isometric architectural composition' },
+                    { name: 'Three-Quarter Back', value: 'Mysterious view from behind and side' },
+                    { name: 'Tilted Horizon', value: 'Artistic slight tilt for unease' }
+                ]
+            },
+            {
+                id: 'metaphor',
+                title: '۳. مفهوم و استعاره بصری (Metaphor)',
+                options: [
+                    { name: 'Dissolving', value: 'body dissolving into golden desert sand particles' },
+                    { name: 'Shattered Glass', value: 'skin texture appearing like shattered porcelain glass' },
+                    { name: 'Bioluminescence', value: 'intertwined with bioluminescent glowing alien flora' },
+                    { name: 'Smoke Veil', value: 'wrapped in a veil of translucent ethereal smoke' },
+                    { name: 'Floating Stones', value: 'surrounded by anti-gravity floating stones' },
+                    { name: 'Liquid Gold', value: 'skin melting into liquid gold texture' },
+                    { name: 'Floral Morph', value: 'human features morphing into blooming flowers' },
+                    { name: 'Digital Glitch', value: 'reality distorting into a digital pixel glitch' },
+                    { name: 'Red Threads', value: 'entangled in complex red fate threads' },
+                    { name: 'Cloud Head', value: 'head replaced by a surreal fluffy cloud' },
+                    { name: 'Melting Clock', value: 'Surreal melting time distortion' },
+                    { name: 'Mirror Face', value: 'Face replaced by a mirror reflection' },
+                    { name: 'Rooted Body', value: 'Legs turning into tree roots' },
+                    { name: 'Butterfly Swarm', value: 'Exploding into a swarm of butterflies' },
+                    { name: 'Stone Statue', value: 'Skin texture turning into marble stone' },
+                    { name: 'Underwater Breath', value: 'Trapped bubbles and underwater distortion' },
+                    { name: 'Origami Fold', value: 'Body folding like paper origami' },
+                    { name: 'Galaxy Skin', value: 'Skin containing a starry galaxy' },
+                    { name: 'Pixel Disintegration', value: 'Pixelated disintegration effect' },
+                    { name: 'Cage Ribs', value: 'Ribcage forming a birdcage' }
+                ]
+            },
+            {
+                id: 'lighting',
+                title: '۴. نورپردازی دراماتیک (Lighting)',
+                options: [
+                    { name: 'Chiaroscuro', value: 'dramatic chiaroscuro lighting with deep shadows' },
+                    { name: 'Volumetric Rays', value: 'volumetric god rays streaming through fog' },
+                    { name: 'Rim Lighting', value: 'cinematic rim lighting creating a glowing outline' },
+                    { name: 'Neon Glow', value: 'vibrant neon pink and blue lightning glow' },
+                    { name: 'Prism Light', value: 'rainbow light refraction through a glass prism' },
+                    { name: 'Double Exposure', value: 'double exposure lighting overlay effect' },
+                    { name: 'Gobo Patterns', value: 'geometric shadow patterns projected via gobo' },
+                    { name: 'Soft Window', value: 'melancholic soft diffuse north-facing window light' },
+                    { name: 'Red Gel', value: 'intense cinematic red color gel lighting' },
+                    { name: 'Silhouette Backlight', value: 'strong backlight creating a total silhouette' },
+                    { name: 'Bioluminescent Skin', value: 'Glowing spots on skin in darkness' },
+                    { name: 'Candlelight', value: 'Warm flickering candlelight from below' },
+                    { name: 'God Rays', value: 'Intense divine light beams from above' },
+                    { name: 'Split Color', value: 'Half red and half blue lighting' },
+                    { name: 'Projector Overlay', value: 'Patterned light from a projector' },
+                    { name: 'Light Painting', value: 'Long exposure light trails surrounding' },
+                    { name: 'Eclipse Light', value: 'Ring of light from a solar eclipse' },
+                    { name: 'Firelight Glow', value: 'Warm dancing orange firelight' },
+                    { name: 'Strobe Motion', value: 'Stroboscopic motion trail lighting' },
+                    { name: 'Moonlight Blue', value: 'Cold pale blue moonlight' }
+                ]
+            },
+            {
+                id: 'env',
+                title: '۵. اتمسفر و محیط (Environment)',
+                options: [
+                    { name: 'White Void', value: 'standing in an endless minimalist white void' },
+                    { name: 'Misty Forest', value: 'misty ancient mysterious forest at twilight' },
+                    { name: 'Dark Water', value: 'submerged in dark obsidian water with ripples' },
+                    { name: 'Brutalist Concrete', value: 'inside a brutalist minimalist concrete architecture' },
+                    { name: 'Mirror Room', value: 'room full of infinite reflecting mirrors' },
+                    { name: 'Desert Dunes', value: 'surreal minimalist sand dunes at dusk' },
+                    { name: 'Abandoned Greenhouse', value: 'overgrown abandoned Victorian greenhouse' },
+                    { name: 'Cosmic Nebula', value: 'floating in deep cosmic nebula space' },
+                    { name: 'Foggy Beach', value: 'lonely foggy beach with black volcanic sand' },
+                    { name: 'Geometric Abstract', value: 'abstract world of floating geometric shapes' },
+                    { name: 'Library of Dust', value: 'Ancient dusty library with flying books' },
+                    { name: 'Ice Cave', value: 'Translucent blue ice cave walls' },
+                    { name: 'Floating Island', value: 'Surreal island floating in the sky' },
+                    { name: 'Clockwork Gear', value: 'Inside a giant clock mechanism' },
+                    { name: 'Glass Maze', value: 'Labyrinth of transparent glass walls' },
+                    { name: 'Overgrown Ruin', value: 'Post-apocalyptic city taken by nature' },
+                    { name: 'Red Planet', value: 'Martian landscape with red dust' },
+                    { name: 'Crystal Cavern', value: 'Cave filled with giant glowing crystals' },
+                    { name: 'Infinite Staircase', value: 'Escher-style infinite stairs' },
+                    { name: 'Paper World', value: 'World made entirely of white paper' }
+                ]
+            },
+            {
+                id: 'tech',
+                title: '۶. سبک هنری و تکنیک فنی (Tech Specs)',
+                options: [
+                    { name: 'Fine Art Photo', value: 'Fine art photography style, shot on Sony A7R IV, 85mm lens' },
+                    { name: 'Kodak Portra', value: 'vintage Kodak Portra 400 film aesthetic with grain' },
+                    { name: 'Double Exposure Art', value: 'artistic double exposure photography technique' },
+                    { name: 'Oil Painting', value: 'heavy oil painting texture on aged canvas' },
+                    { name: 'Infrared', value: 'surreal pink infrared aerochrome film style' },
+                    { name: 'Wet Plate', value: '19th century wet plate collodion photography' },
+                    { name: 'Cyanotype', value: 'blue blueprint cyanotype artistic style' },
+                    { name: 'Polaroid', value: 'vintage Polaroid aesthetic with light leaks' },
+                    { name: 'Charcoal', value: 'rough charcoal sketch on textured paper' },
+                    { name: 'Long Exposure', value: 'dreamy long exposure motion blur effect' },
+                    { name: 'Black Monochrome', value: 'High contrast black and white monochrome photography' },
+                    { name: 'Daguerreotype', value: 'Vintage silver daguerreotype plate style' },
+                    { name: 'HDR Realism', value: 'High dynamic range hyper-realism' },
+                    { name: 'Tilt-Shift', value: 'Tilt-shift lens miniature effect' },
+                    { name: 'Pinhole Camera', value: 'Soft vignetted pinhole camera look' },
+                    { name: 'Watercolor Bleed', value: 'Watercolor painting with ink bleed' },
+                    { name: 'Pointillism', value: 'Dot-based pointillism art style' },
+                    { name: 'Thermal Vision', value: 'Heat map thermal imaging style' },
+                    { name: 'Blueprint', value: 'Architectural white on blue blueprint' },
+                    { name: 'Glitch Art', value: 'Datamoshing video compression artifact style' }
+                ]
+            }
+        ];
+
+        const selections = {};
+
+        function handleImageError(img, optionName) {
+            img.onerror = null;
+            img.src = `https://placehold.co/250x350/1e293b/38bdf8?text=${encodeURIComponent(optionName)}`;
+        }
+
+        function init() {
+            const grid = document.getElementById('options-grid');
+            categories.forEach(cat => {
+                const section = document.createElement('section');
+                section.className = "bg-slate-800 rounded-2xl border border-slate-700 shadow-lg overflow-hidden";
+                
+                const optionsHtml = cat.options.map((opt, index) => {
+                    const filename = opt.name.toLowerCase().replace(/[^a-z0-9]/g, '_') + ".webp";
+                    const primaryUrl = "images3/" + filename;
+                    const escapedName = opt.name.replace(/'/g, "\\'");
+                    
+                    return `
+                        <div class="option-card bg-slate-900 p-3 rounded-xl border border-slate-700" 
+                             onclick="selectOption('${cat.id}', ${index}, this)">
+                            <img src="${primaryUrl}" alt="${opt.name}" loading="lazy" 
+                                 onerror="handleImageError(this, '${escapedName}')">
+                            <p class="text-center mt-2 text-sm text-slate-300">${opt.name}</p>
+                        </div>
+                    `;
+                }).join('');
+
+                section.innerHTML = `
+                    <button onclick="toggleAccordion('${cat.id}')" class="w-full flex justify-between items-center p-6 hover:bg-slate-700/30 transition-colors">
+                        <h3 class="text-2xl font-bold mb-0 border-r-4 border-sky-500 pr-4">${cat.title}</h3>
+                        <i id="icon-${cat.id}" class="fas fa-plus text-sky-400"></i>
+                    </button>
+                    <div id="content-${cat.id}" class="accordion-content closed p-6 pt-0">
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(section);
+            });
+            updatePrompt();
+        }
+
+        function toggleAccordion(id) {
+            const targetContent = document.getElementById('content-' + id);
+            const targetIcon = document.getElementById('icon-' + id);
+
+            if (!targetContent) return;
+
+            if (targetContent.classList.contains('closed')) {
+                targetContent.classList.remove('closed');
+                targetContent.style.maxHeight = targetContent.scrollHeight + "px";
+                if(targetIcon) targetIcon.classList.replace('fa-plus', 'fa-minus');
+            } else {
+                targetContent.classList.add('closed');
+                targetContent.style.maxHeight = "0";
+                if(targetIcon) targetIcon.classList.replace('fa-minus', 'fa-plus');
+            }
+        }
+
+        function selectOption(catId, optIndex, element) {
+            const category = categories.find(c => c.id === catId);
+            if (!category) return;
+            
+            const value = category.options[optIndex].value;
+            const isAlreadySelected = element.classList.contains('selected');
+
+            const siblings = element.parentElement.querySelectorAll('.option-card');
+            siblings.forEach(s => s.classList.remove('selected'));
+            
+            if (isAlreadySelected) {
+                delete selections[catId];
+            } else {
+                element.classList.add('selected');
+                selections[catId] = value;
+            }
+            
+            updatePrompt();
+        }
+
+        function clearSelections() {
+            // Clear selections object
+            for (const key in selections) {
+                delete selections[key];
+            }
+            
+            // Remove 'selected' class from all cards
+            const selectedCards = document.querySelectorAll('.option-card.selected');
+            selectedCards.forEach(card => card.classList.remove('selected'));
+            
+            // Update the prompt text
+            updatePrompt();
+        }
+
+        function updatePrompt() {
+            const subjectInput = document.getElementById('subject-input').value || 'A figure';
+            const isSafetyOn = document.getElementById('safety-toggle').checked;
+            const safetyString = isSafetyOn ? "An adult figure, fully clothed, modest attire, no nudity, no suggestive poses, safe for work" : "";
+            
+            const shot = selections.shot || '';
+            const metaphor = selections.metaphor || '';
+            const lighting = selections.lighting || '';
+            const env = selections.env || '';
+            const tech = selections.tech || '';
+            
+            const fixedQuality = "sharp focus, extremely detailed, no text, no watermark, no logos, plain background";
+            let promptParts = [shot, subjectInput, safetyString, metaphor, env, lighting, tech, fixedQuality];
+            const finalPrompt = promptParts.filter(p => p !== '').join(', ') + ".";
+            
+            document.getElementById('final-prompt').value = finalPrompt;
+        }
+
+        function randomizeAll() {
+            categories.forEach(cat => {
+                const randomIndex = Math.floor(Math.random() * cat.options.length);
+                const contentDiv = document.getElementById('content-' + cat.id);
+                if (contentDiv) {
+                    const cards = contentDiv.querySelectorAll('.option-card');
+                    if (cards[randomIndex]) {
+                        cards.forEach(c => c.classList.remove('selected'));
+                        cards[randomIndex].click();
+                    }
+                }
+            });
+        }
+
+        function generateBatchJson() {
+            const count = parseInt(document.getElementById('batch-count').value) || 10;
+            const output = [];
+            
+            const subjectInput = document.getElementById('subject-input').value || 'A figure';
+            const isSafetyOn = document.getElementById('safety-toggle').checked;
+            const safetyString = isSafetyOn ? "An adult figure, fully clothed, modest attire, no nudity, no suggestive poses, safe for work" : "";
+            const fixedQuality = "sharp focus, extremely detailed, no text, no watermark, no logos, plain background";
+
+            for (let i = 0; i < count; i++) {
+                // انتخاب تصادفی برای هر دسته
+                // توجه: با افزایش گزینه‌ها به 20، عدد رندوم نیز باید تغییر کند.
+                // استفاده از .length برای پویایی کد
+                const randomShot = categories.find(c => c.id === 'shot').options[Math.floor(Math.random() * categories.find(c => c.id === 'shot').options.length)].value;
+                const randomMetaphor = categories.find(c => c.id === 'metaphor').options[Math.floor(Math.random() * categories.find(c => c.id === 'metaphor').options.length)].value;
+                const randomLighting = categories.find(c => c.id === 'lighting').options[Math.floor(Math.random() * categories.find(c => c.id === 'lighting').options.length)].value;
+                const randomEnv = categories.find(c => c.id === 'env').options[Math.floor(Math.random() * categories.find(c => c.id === 'env').options.length)].value;
+                const randomTech = categories.find(c => c.id === 'tech').options[Math.floor(Math.random() * categories.find(c => c.id === 'tech').options.length)].value;
+
+                let promptParts = [randomShot, subjectInput, safetyString, randomMetaphor, randomEnv, randomLighting, randomTech, fixedQuality];
+                const fullPrompt = promptParts.filter(p => p !== '').join(', ') + ".";
+
+                output.push({
+                    "tag": `fineart_image_${i + 1}`,
+                    "Prompt": fullPrompt
+                });
+            }
+
+            const jsonString = JSON.stringify(output, null, 4);
+            document.getElementById('batch-output').value = jsonString;
+        }
+
+        function copyBatchJson(btn) {
+            const textarea = document.getElementById('batch-output');
+            textarea.select();
+            document.execCommand('copy');
+            
+            const icon = btn.querySelector('i');
+            icon.classList.replace('fa-copy', 'fa-check');
+            btn.classList.replace('text-slate-300', 'text-green-400');
+            
+            setTimeout(() => {
+                icon.classList.replace('fa-check', 'fa-copy');
+                btn.classList.replace('text-green-400', 'text-slate-300');
+            }, 2000);
+        }
+
+        function downloadBatchJson() {
+            const text = document.getElementById('batch-output').value;
+            if (!text) {
+                alert("لطفاً ابتدا دکمه تولید فایل JSON را بزنید.");
+                return;
+            }
+            const blob = new Blob([text], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "fineart-prompt.json";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function copyPrompt(btn) {
+            const textarea = document.getElementById('final-prompt');
+            textarea.select();
+            document.execCommand('copy');
+            
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check ml-2"></i> کپی شد!';
+            btn.classList.replace('bg-sky-600', 'bg-green-600');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.replace('bg-green-600', 'bg-sky-600');
+            }, 2000);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
