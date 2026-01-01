@@ -624,7 +624,7 @@
                     // Generate local image filename and placeholder
                     // Assuming images are in "images/" folder and named like "Ads_Advertising.webp"
                     const localImage = `images4/${item.name.replace(/ /g, '_')}.webp`;
-                    const placeholderUrl = `https://placehold.co/544x960/2e1065/a78bfa?text=${encodeURIComponent(item.displayName.replace(/ /g, '\n'))}`;
+                    const placeholderUrl = `https://placehold.co/400x600/2e1065/a78bfa?text=${encodeURIComponent(item.displayName.replace(/ /g, '\n'))}`;
                     
                     const card = document.createElement('div');
                     card.className = 'card-hover bg-[#1e1b2e] rounded-2xl border border-white/5 overflow-hidden cursor-pointer group flex flex-col h-full relative';
