@@ -622,8 +622,8 @@
                 
                 filtered.forEach(item => {
                     // Generate local image filename and placeholder
-                    // Assuming images are in "images/" folder and named like "Ads_Advertising.webp"
-                    const localImage = `images4/${item.name.replace(/ /g, '_')}.webp`;
+                    // Converted to lowercase to match file naming convention (e.g., "ads_advertising.webp")
+                    const localImage = `images4/${item.name.replace(/ /g, '_').toLowerCase()}.webp`;
                     const placeholderUrl = `https://placehold.co/400x600/2e1065/a78bfa?text=${encodeURIComponent(item.displayName.replace(/ /g, '\n'))}`;
                     
                     const card = document.createElement('div');
