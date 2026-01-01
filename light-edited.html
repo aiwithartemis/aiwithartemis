@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>مرجع پرامپت نورپردازی</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body {
+            font-family: 'Vazirmatn', 'Inter', sans-serif;
+            background-color: #111827; /* Gray 900 */
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(255, 193, 7, 0.2), 0 8px 10px -6px rgba(255, 193, 7, 0.1); /* Yellow glow for light */
+        }
+
+        /* Hide scrollbar for category nav */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .prompt-text {
+            font-family: 'Inter', monospace;
+        }
+
+        /* Smooth scrolling for nav */
+        #categoryNav {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <header class="bg-gray-900/80 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center text-gray-900 shadow-[0_0_15px_rgba(245,158,11,0.5)]">
+                        <i class="ph-fill ph-lightbulb text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold tracking-tight text-white">مرجع پرامپت نورپردازی</h1>
+                        <p class="text-xs text-gray-400">کلیک کنید تا پرامپت کامل کپی شود</p>
+                    </div>
+                </div>
+
+                <!-- Inputs Container -->
+                <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto items-center">
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-60">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="جستجو..." 
+                            class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-xl py-2.5 pr-10 pl-4 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all placeholder-gray-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Nav Wrapper -->
+            <div class="relative group mt-4 flex items-center">
+                <!-- Right Scroll Button -->
+                <button id="scrollRightBtn" class="hidden md:flex absolute -right-2 z-10 bg-gray-800/90 border border-gray-700 hover:bg-amber-500 hover:text-gray-900 text-gray-300 rounded-full p-1.5 shadow-lg backdrop-blur transition-all">
+                    <i class="ph-bold ph-caret-right"></i>
+                </button>
+
+                <!-- Nav -->
+                <nav class="flex gap-2 overflow-x-auto no-scrollbar pb-1 w-full px-1" id="categoryNav">
+                    <!-- Categories injected via JS -->
+                </nav>
+
+                <!-- Left Scroll Button -->
+                <button id="scrollLeftBtn" class="hidden md:flex absolute -left-2 z-10 bg-gray-800/90 border border-gray-700 hover:bg-amber-500 hover:text-gray-900 text-gray-300 rounded-full p-1.5 shadow-lg backdrop-blur transition-all">
+                    <i class="ph-bold ph-caret-left"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 md:p-6">
+        
+        <!-- Grid -->
+        <div id="promptsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards injected via JS -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden text-center py-20">
+            <i class="ph ph-lightbulb-filament text-6xl text-gray-700 mb-4"></i>
+            <p class="text-gray-500 text-lg">هیچ موردی پیدا نشد.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-8 text-center mt-12">
+        <p class="text-gray-400 text-sm flex items-center justify-center gap-2">
+             ساخته شده با عشق برای هنرمندان و رویاپردازان <i class="ph-fill ph-heart text-rose-500 animate-pulse"></i>
+        </p>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-800/90 backdrop-blur text-white px-6 py-3 rounded-full shadow-2xl border border-gray-700 flex items-center gap-3 transition-all duration-300 opacity-0 translate-y-10 z-50 pointer-events-none">
+        <div class="bg-emerald-500 rounded-full p-1"><i class="ph-bold ph-check text-white text-xs"></i></div>
+        <div class="flex flex-col items-start">
+            <span class="font-bold text-sm">کپی شد!</span>
+            <span class="text-[10px] text-gray-300 dir-ltr font-mono" id="toastText">Prompt Copied...</span>
+        </div>
+    </div>
+
+    <!-- Data & Logic -->
+    <script>
+        // Database from light.json
+        const database = [
+            // ==========================================
+            // 1. DIRECTION (جهت نور)
+            // ==========================================
+            {
+                category: "DIRECTION",
+                tag: "Front Light",
+                uiDesc: "نور مستقیم از روبرو. کمترین سایه را ایجاد می‌کند و تصویر را تخت نشان می‌دهد.",
+                copyPrompt: ", illuminated by front light directly from the viewing angle. This lighting setup minimizes shadows, flattens features, and provides full visibility."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Side Light",
+                uiDesc: "نور از یک طرف می‌تابد. بافت و عمق را برجسته می‌کند و کنتراست بالایی می‌سازد.",
+                copyPrompt: ", illuminated by side light coming from a 90-degree angle. This emphasizes texture and depth, creating a strong contrast between the lit and shadowed sides."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Backlight",
+                uiDesc: "نور از پشت سوژه. باعث جدا شدن سوژه از پس‌زمینه و ایجاد هاله نور می‌شود.",
+                copyPrompt: ", backlit with the light source positioned behind. This creates a glowing outline (rim light) that separates the figure from the background."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Overhead-Top Light",
+                uiDesc: "نور مستقیم از بالای سر. می‌تواند سایه‌های عمیقی در کاسه چشم ایجاد کند (حس مرموز یا الهی).",
+                copyPrompt: ", lit from overhead with the source directly above. This casts deep dramatic shadows in the eye sockets and under the nose, creating a mysterious look."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Uplight-Bottom Light",
+                uiDesc: "نور از پایین به بالا. سایه‌های غیرطبیعی و ترسناک ایجاد می‌کند (معروف به نور ژانر وحشت).",
+                copyPrompt: ", lit from below (uplighting). This creates unnatural, reversed shadows across the surface, a technique often used for horror or eerie effects."
+            },
+            {
+                category: "DIRECTION",
+                tag: "45-Degree Light",
+                uiDesc: "استانداردترین زاویه نورپردازی. تعادل خوبی بین سایه و روشنایی ایجاد می‌کند.",
+                copyPrompt: ", illuminated by a 45-degree light source. This creates a natural balance of light and shadow, effectively highlighting dimension and form."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Rim Light",
+                uiDesc: "نوری که فقط لبه‌های سوژه را روشن می‌کند و خطوط محیطی را برجسته می‌سازد.",
+                copyPrompt: ", highlighted by rim lighting, where a strong light from behind creates a bright outline around the edges, separating the form from the dark background."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Silhouette",
+                uiDesc: "سوژه کاملاً سیاه در برابر پس‌زمینه‌ای روشن. تاکید بر فرم کلی بدن.",
+                copyPrompt: ", captured as a silhouette, appearing as a solid black shape against a bright background. There are no visible details, placing emphasis entirely on the outline."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Kicker Light",
+                uiDesc: "نور جانبی از پشت که به کناره صورت یا شانه می‌تابد تا برجستگی ایجاد کند.",
+                copyPrompt: ", accentuated by a kicker light hitting the side from the back. This adds a specific 'kick' of brightness and sharply defines the edges."
+            },
+            {
+                category: "DIRECTION",
+                tag: "Hair Light",
+                uiDesc: "نور متمرکز روی موها برای جدا کردن سر از پس‌زمینه تیره و نمایش بافت مو.",
+                copyPrompt: ", featuring a hair light directed solely at the top. This adds shine and texture, providing separation from the dark background."
+            },
+			
+            // ==========================================
+            // 2. QUALITY (کیفیت نور)
+            // ==========================================
+            {
+                category: "QUALITY",
+                tag: "Hard Light",
+                uiDesc: "سایه‌های تیز و لبه‌های مشخص. کنتراست بالا و دراماتیک.",
+                copyPrompt: ", captured under hard light using a direct and intense source. This creates sharp, defined shadows and high contrast for a bold, dramatic look."
+            },
+            {
+                category: "QUALITY",
+                tag: "Soft Light",
+                uiDesc: "سایه‌های محو و ملایم. پوست را صاف‌تر و فضا را آرام‌تر نشان می‌دهد.",
+                copyPrompt: ", bathed in soft light from a large, diffused source. This creates smooth transitions between light and shadow, resulting in a flattering and gentle appearance."
+            },
+            {
+                category: "QUALITY",
+                tag: "Diffused Light",
+                uiDesc: "نوری که از فیلتر رد شده و هیچ سایه تندی ندارد. بسیار یکدست.",
+                copyPrompt: ", illuminated by diffused light scattered by a filter or cloud cover. This provides even illumination with almost no visible shadows for a uniform look."
+            },
+            {
+                category: "QUALITY",
+                tag: "Specular Light",
+                uiDesc: "نوری که نقاط براق (Highlight) شدیدی روی پوست یا سطوح ایجاد می‌کند.",
+                copyPrompt: ", featuring specular lighting which creates small, bright, and intense highlights on the surface. This adds a glossy and shiny aesthetic."
+            },
+            {
+                category: "QUALITY",
+                tag: "Flat Light",
+                uiDesc: "روشنایی کامل بدون سایه. جزئیات را کم می‌کند اما همه‌چیز واضح است.",
+                copyPrompt: ", lit with flat lighting and even illumination. This eliminates shadows and texture, making the subject appear two-dimensional."
+            },
+            {
+                category: "QUALITY",
+                tag: "High Contrast",
+                uiDesc: "تفاوت شدید بین سیاهی مطلق و سفیدی مطلق.",
+                copyPrompt: ", captured with high contrast lighting, featuring an extreme difference between the brightest and darkest parts. This emphasizes deep blacks and bright whites."
+            },
+            {
+                category: "QUALITY",
+                tag: "Low Contrast",
+                uiDesc: "تفاوت کم بین نور و سایه. تصویری خاکستری‌تر و ملایم‌تر.",
+                copyPrompt: ", captured with low contrast lighting, showing minimal difference between tones. This creates a soft, muted, and hazy appearance."
+            },
+            {
+                category: "QUALITY",
+                tag: "Even Lighting",
+                uiDesc: "روشنایی متعادل در تمام صحنه، مناسب برای کارهای شرکتی یا کاتالوگ.",
+                copyPrompt: ", lit with even lighting, providing balanced illumination across the entire scene. There are no harsh shadows or overly bright spots, creating a clean look."
+            },
+
+            // ==========================================
+            // 3. NATURAL & TIME (طبیعت و زمان)
+            // ==========================================
+            {
+                category: "NATURAL",
+                tag: "Golden Hour",
+                uiDesc: "نور گرم و نارنجی قبل از غروب یا بعد از طلوع. سایه‌های کشیده و زیبا.",
+                copyPrompt: ", captured during the golden hour (sunrise/sunset). The warm, soft, golden sunlight creates long shadows and a magical, nostalgic glow."
+            },
+            {
+                category: "NATURAL",
+                tag: "Blue Hour",
+                uiDesc: "نور سرد و آبی‌رنگ قبل از طلوع یا بعد از غروب. حس آرامش و سکوت.",
+                copyPrompt: ", captured during the blue hour (twilight). The cool, deep blue ambient light creates a moody, serene, and cold atmosphere."
+            },
+            {
+                category: "NATURAL",
+                tag: "Midday-Noon",
+                uiDesc: "نور عمودی و خشن خورشید. سایه‌های کوتاه و تیز زیر چشم و بینی.",
+                copyPrompt: ", captured under harsh midday sun with direct vertical sunlight. This creates short, dark shadows and bleached-out highlights for an intense look."
+            },
+            {
+                category: "NATURAL",
+                tag: "Overcast",
+                uiDesc: "نور نرم و یکدست از آسمان پوشیده از ابر. بدون سایه تند، مناسب پرتره.",
+                copyPrompt: ", captured under overcast lighting from a cloudy sky. The soft, diffused light eliminates harsh shadows, saturating colors in a moody atmosphere."
+            },
+            {
+                category: "NATURAL",
+                tag: "Moonlight",
+                uiDesc: "نور نقره‌ای و کم‌رنگ شب. سایه‌های تاریک و حس رازآلود.",
+                copyPrompt: ", illuminated by pale moonlight at night. The cool, silvery light source creates deep shadows and low visibility for a mysterious atmosphere."
+            },
+            {
+                category: "NATURAL",
+                tag: "Sunrise",
+                uiDesc: "نور تازه، روشن و مایل به صورتی/زرد. حس شروع و امید.",
+                copyPrompt: ", captured at sunrise, bathed in fresh, crisp morning light with hints of pink and yellow. The soft long shadows signal a new beginning."
+            },
+            {
+                category: "NATURAL",
+                tag: "Sunset",
+                uiDesc: "نور غلیظ قرمز و نارنجی. حس پایان روز و گرما.",
+                copyPrompt: ", captured at sunset, featuring rich orange, red, and purple hues. The dramatic backlighting creates a romantic and warm atmosphere."
+            },
+            {
+                category: "NATURAL",
+                tag: "Stormy",
+                uiDesc: "نور خاکستری تیره با کنتراست کم و محیطی سنگین.",
+                copyPrompt: ", captured under stormy lighting with dark, grey, and ominous tones. Heavy clouds block the sun, creating low contrast but an intense mood."
+            },
+            {
+                category: "NATURAL",
+                tag: "Window Light",
+                uiDesc: "نور طبیعی که از پنجره وارد اتاق می‌شود. کلاسیک و زیبا برای پرتره داخلی.",
+                copyPrompt: ", lit by soft natural window light streaming indoors. This directional but gentle light illuminates one side of the scene."
+            },
+            {
+                category: "NATURAL",
+                tag: "Dappled Light",
+                uiDesc: "نوری که از بین شاخ و برگ درختان عبور کرده و لکه‌های نور و سایه می‌سازد.",
+                copyPrompt: ", illuminated by dappled sunlight filtering through leaves. This creates a pattern of light spots and shadows, evoking an organic and summery feel."
+            },
+            {
+                category: "NATURAL",
+                tag: "Twilight",
+                uiDesc: "نور بسیار کم و مبهم بین روز و شب.",
+                copyPrompt: ", captured at twilight with dim, fading light between sunset and full night. The low visibility and desaturated colors create a mysterious atmosphere."
+            },
+            {
+                category: "NATURAL",
+                tag: "Aurora",
+                uiDesc: "نورهای رنگارنگ آسمان (سبز و بنفش) در شب.",
+                copyPrompt: ", illuminated by the aurora borealis, featuring the green and purple glow of the Northern Lights in the night sky for a magical effect."
+            },
+			
+            // ==========================================
+            // 4. CLASSIC PORTRAITS (پرتره کلاسیک)
+            // ==========================================
+            {
+                category: "PORTRAIT",
+                tag: "Rembrandt Lighting",
+                uiDesc: "مثلث نوری کوچک زیر چشم در سمت سایه صورت. هنری و باوقار.",
+                copyPrompt: ", lit using Rembrandt lighting techniques. One side is illuminated while the shadowed side features a distinctive small triangle of light on the cheek."
+            },
+            {
+                category: "PORTRAIT",
+                tag: "Butterfly Lighting",
+                uiDesc: "نور از بالا و روبرو، ایجاد سایه پروانه‌ای زیر بینی. برای فشن و زیبایی.",
+                copyPrompt: ", lit with butterfly lighting. The key light is placed above and directly in front, casting a butterfly-shaped shadow under the nose."
+            },
+            {
+                category: "PORTRAIT",
+                tag: "Loop Lighting",
+                uiDesc: "سایه کوچک بینی که به سمت گوشه لب متمایل می‌شود اما بسته نمی‌شود.",
+                copyPrompt: ", featuring loop lighting. The light source is positioned slightly to the side and above, creating a small nose shadow pointing towards the mouth corner."
+            },
+            {
+                category: "PORTRAIT",
+                tag: "Split Lighting",
+                uiDesc: "نور دقیقا از پهلو (۹۰ درجه). نصف صورت روشن و نصف دیگر کاملاً تاریک.",
+                copyPrompt: ", captured with split lighting. The light source hits from a 90-degree angle, dividing the form into equal halves of light and shadow."
+            },
+            {
+                category: "PORTRAIT",
+                tag: "Broad Lighting",
+                uiDesc: "سمت روشن صورت رو به دوربین است. صورت را پهن‌تر نشان می‌دهد.",
+                copyPrompt: ", using broad lighting where the side of the face turned toward the camera is the one being lit. This makes the face appear wider."
+            },
+            {
+                category: "PORTRAIT",
+                tag: "Short Lighting",
+                uiDesc: "سمت سایه‌دار صورت رو به دوربین است. صورت را لاغرتر و مرموزتر می‌کند.",
+                copyPrompt: ", using short lighting where the side turned away from the camera is lit. The side facing the camera is in shadow, creating a slimming look."
+            },
+            {
+                category: "PORTRAIT",
+                tag: "Clamshell Lighting",
+                uiDesc: "دو منبع نور (یکی بالا یکی پایین) برای حذف تمام سایه‌ها. استفاده در آرایش و زیبایی.",
+                copyPrompt: ", lit with clamshell lighting using two lights (above and below). This eliminates almost all shadows for a flawless beauty photography look."
+            },
+            {
+                category: "PORTRAIT",
+                tag: "Three-Point Lighting",
+                uiDesc: "تکنیک استاندارد سینمایی: نور اصلی، نور پرکننده و نور پشت.",
+                copyPrompt: ", lit using a professional three-point lighting setup (Key, Fill, Back). This results in a perfectly balanced and dimensional image."
+            },
+
+            // ==========================================
+            // 5. ATMOSPHERE (اتمسفر و فضا)
+            // ==========================================
+            {
+                category: "ATMOSPHERE",
+                tag: "Volumetric Lighting",
+                uiDesc: "پرتوهای نور قابل مشاهده در هوا (مثل نور در گرد و غبار).",
+                copyPrompt: ", featuring volumetric lighting with visible beams of light streaming through dust or haze in the air, adding 3D depth."
+            },
+            {
+                category: "ATMOSPHERE",
+                tag: "Cinematic Haze",
+                uiDesc: "فضای پر از دود یا مه رقیق که نور را پخش می‌کند و کنتراست را کم می‌کند.",
+                copyPrompt: ", shrouded in cinematic haze. Thin smoke or fog diffuses the light sources, creating a glowing, soft, and moody environment."
+            },
+            {
+                category: "ATMOSPHERE",
+                tag: "Foggy",
+                uiDesc: "دید کم، نور پخش شده و سفید. فضای غمگین یا ترسناک.",
+                copyPrompt: ", set in a foggy atmosphere where thick mist obscures details. The light is scattered and soft, creating a silent and mysterious mood."
+            },
+            {
+                category: "ATMOSPHERE",
+                tag: "Atmospheric Perspective",
+                uiDesc: "اشیاء دورتر به دلیل ذرات هوا کم‌رنگ‌تر و آبی‌تر دیده می‌شوند.",
+                copyPrompt: ", emphasizing atmospheric perspective. Background elements become lighter, bluer, and less distinct due to depth, suggesting a vast scale."
+            },
+            {
+                category: "ATMOSPHERE",
+                tag: "Smoky",
+                uiDesc: "نور در محیط پر از دود غلیظ. بافت‌دار و دراماتیک.",
+                copyPrompt: ", set in a smoky atmosphere with air filled with swirling smoke. The lights catch the smoke textures, creating a gritty look."
+            },
+            {
+                category: "ATMOSPHERE",
+                tag: "Glow-Bloom",
+                uiDesc: "نورها به اطراف پخش می‌شوند و هاله‌ای رویایی می‌سازند.",
+                copyPrompt: ", featuring a soft glow bloom effect. Highlights spread into darker areas, creating a romantic, dreamy, and ethereal aesthetic."
+            },
+
+            // ==========================================
+            // 6. COLOR & TEMPERATURE (رنگ و دما)
+            // ==========================================
+            {
+                category: "COLOR",
+                tag: "Warm Lighting",
+                uiDesc: "توناژ زرد، نارنجی و قرمز. حس راحتی، گرما و صمیمیت.",
+                copyPrompt: ", bathed in warm lighting dominated by yellow, orange, and red tones. This creates a cozy, inviting, and nostalgic atmosphere."
+            },
+            {
+                category: "COLOR",
+                tag: "Cool Lighting",
+                uiDesc: "توناژ آبی، فیروزه‌ای و سفید یخی. حس سرما، تکنولوژی یا غم.",
+                copyPrompt: ", bathed in cool lighting dominated by blue, cyan, and icy white tones. This evokes a clinical, wintery, or technological atmosphere."
+            },
+            {
+                category: "COLOR",
+                tag: "Neon Lighting",
+                uiDesc: "رنگ‌های اشباع و جیغ (صورتی، آبی برقی). استایل سایبرپانک.",
+                copyPrompt: ", illuminated by vibrant neon lighting. Saturated artificial colors like hot pink and electric blue dominate the scene."
+            },
+            {
+                category: "COLOR",
+                tag: "Teal and Orange",
+                uiDesc: "ترکیب رنگی محبوب سینمایی. پوست نارنجی و سایه‌های سبزآبی.",
+                copyPrompt: ", color-graded with a cinematic teal and orange palette. Warm orange highlights are contrasted with cool teal shadows."
+            },
+            {
+                category: "COLOR",
+                tag: "Bi-Color Lighting",
+                uiDesc: "دو منبع نور با رنگ‌های متفاوت (مثلا قرمز و آبی) از دو طرف.",
+                copyPrompt: ", lit by bi-color lighting. The scene is illuminated by two distinct colored light sources (e.g., red and blue) for a stylized effect."
+            },
+            {
+                category: "COLOR",
+                tag: "Ultraviolet-Blacklight",
+                uiDesc: "نور بنفش تیره که باعث درخشش رنگ‌های سفید و نئونی می‌شود.",
+                copyPrompt: ", illuminated by ultraviolet blacklight. Whites and fluorescent colors glow in the dark purple atmosphere, creating a psychedelic effect."
+            },
+            {
+                category: "COLOR",
+                tag: "Infrared",
+                uiDesc: "رنگ‌های سورئال (گیاهان صورتی/سفید). دنیای رویایی و عجیب.",
+                copyPrompt: ", captured in an infrared photography style. Vegetation appears pink or white while skies are dark, creating a dreamlike palette."
+            },
+            {
+                category: "COLOR",
+                tag: "Sepia",
+                uiDesc: "توناژ قهوه‌ای و کرم. حس عکس‌های قدیمی و تاریخی.",
+                copyPrompt: ", presented in a vintage sepia tone. The image uses monochromatic brownish-yellow tones to evoke a historical old-west look."
+            },
+            {
+                category: "COLOR",
+                tag: "Monochrome",
+                uiDesc: "استفاده از طیف‌های مختلف تنها یک رنگ (مثلا فقط قرمز).",
+                copyPrompt: ", presented in a monochromatic color style. The entire scene is bathed in various shades of a single color for an artistic effect."
+            },
+			
+			// ==========================================
+            // 7. ARTIFICIAL SOURCES (منابع مصنوعی)
+            // ==========================================
+            {
+                category: "ARTIFICIAL",
+                tag: "Candlelight",
+                uiDesc: "نور بسیار گرم، لرزان و ضعیف از پایین. صمیمی و رمانتیک.",
+                copyPrompt: ", illuminated solely by candlelight. The warm, flickering, low-intensity light creates an intimate and romantic atmosphere."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Firelight",
+                uiDesc: "نور گرم، نارنجی و رقصان آتش. سایه‌های متحرک.",
+                copyPrompt: ", lit by the warm glow of firelight. The orange light casts dancing shadows, creating a primitive or cozy mood."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Streetlight",
+                uiDesc: "نور زرد/نارنجی یا سفید سرد از بالا در شب. حس شهری.",
+                copyPrompt: ", lit by a single overhead streetlight. It casts a cone of yellow or sodium-vapor light, evoking a lonely urban atmosphere."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Fluorescent",
+                uiDesc: "نور سبز/آبی سرد و بیمارگونه. سوسو زدن ملایم. اداری یا بیمارستانی.",
+                copyPrompt: ", lit by harsh fluorescent lighting. The greenish-blue hue creates a clinical, industrial, or office setting that feels sterile."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Screen Glow",
+                uiDesc: "نور سرد و آبی که از صورت به بالا می‌تابد (کار با گوشی/لپتاپ).",
+                copyPrompt: ", illuminated by the cool blue glow of a digital screen. This lights the subject from below against a dark background."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Flash-Strobe",
+                uiDesc: "انجماد حرکت، روشنایی شدید روبرو، پس‌زمینه تاریک.",
+                copyPrompt: ", captured with a direct flash. The harsh light comes from the camera angle, creating hard shadows and a paparazzi aesthetic."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Ring Light",
+                uiDesc: "نور حلقه‌ای دور لنز. بدون سایه روی صورت، ایجاد حلقه نور در چشم.",
+                copyPrompt: ", lit by a ring light. This creates circular catchlights in the eyes and even, shadowless illumination typical of influencers."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Lantern Light",
+                uiDesc: "نور گرم و محصور در مرکز تصویر.",
+                copyPrompt: ", illuminated by the warm, contained glow of a lantern. The light highlights the immediate surroundings while the rest remains dark."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Car Headlights",
+                uiDesc: "نور شدید و متمرکز از روبرو در شب. خیره‌کننده.",
+                copyPrompt: ", caught in the blinding glare of car headlights. Twin beams of light cut through the darkness, creating high contrast drama."
+            },
+            {
+                category: "ARTIFICIAL",
+                tag: "Bioluminescence",
+                uiDesc: "نور درخشان طبیعی روی بدن موجودات یا گیاهان (آواتار استایل).",
+                copyPrompt: ", glowing with natural bioluminescence. Blue or green light emits from the surface in a dark environment, creating a magical effect."
+            },
+
+            // ==========================================
+            // 8. SHADOWS & PATTERNS (سایه و الگو)
+            // ==========================================
+            {
+                category: "SHADOWS",
+                tag: "Gobo Lighting",
+                uiDesc: "استفاده از شابلون جلوی نور برای ایجاد الگوهای خاص (مثل پنجره، برگ).",
+                copyPrompt: ", lit using Gobo lighting. Light is projected through a stencil to cast distinct patterns (like leaves or slats) onto the scene."
+            },
+            {
+                category: "SHADOWS",
+                tag: "Venetian Blinds",
+                uiDesc: "خطوط راه راه نور و سایه روی صورت. استایل فیلم‌های نوآر.",
+                copyPrompt: ", featuring Venetian blind shadows. A striped pattern of light and shadow is cast across the scene, evoking a film noir aesthetic."
+            },
+            {
+                category: "SHADOWS",
+                tag: "Lace Shadows",
+                uiDesc: "الگوهای پیچیده و ظریف گل و بته روی پوست.",
+                copyPrompt: ", covered in intricate lace shadows. Floral or patterned shadows cast by fabric create a delicate and artistic texture."
+            },
+            {
+                category: "SHADOWS",
+                tag: "Long Shadows",
+                uiDesc: "سایه‌هایی که طولشان بیشتر از خود سوژه است (طلوع/غروب).",
+                copyPrompt: ", featuring dramatic long shadows. Elongated shadows stretch across the scene, indicating a low sun angle and adding depth."
+            },
+            {
+                category: "SHADOWS",
+                tag: "Prism Refraction",
+                uiDesc: "تکه‌های رنگین‌کمانی و شکستگی نور روی تصویر.",
+                copyPrompt: ", distorted by prism refraction. The light is fractured into rainbows and artistic light leaks, creating a dreamy look."
+            },
+            {
+                category: "SHADOWS",
+                tag: "Caustics",
+                uiDesc: "الگوهای رقصان نور که از عبور نور از آب یا شیشه ایجاد می‌شوند.",
+                copyPrompt: ", illuminated by water caustics. Rippling, net-like patterns of light reflect from water, creating an underwater aesthetic."
+            },
+
+            // ==========================================
+            // 9. CINEMATIC & ART (سینمایی و هنری)
+            // ==========================================
+            {
+                category: "CINEMATIC",
+                tag: "Cinematic Lighting",
+                uiDesc: "نورپردازی داستان‌گو، با کیفیت بالا و عمق میدان.",
+                copyPrompt: ", lit with high-budget cinematic lighting. It features rich contrast, intentional shadows, and perfect color grading."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Film Noir",
+                uiDesc: "سیاه و سفید، کنتراست بسیار بالا، سایه‌های خشن. جنایی و مرموز.",
+                copyPrompt: ", styled in a black and white Film Noir aesthetic. High contrast lighting creates deep shadows, evoking a mystery atmosphere."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "High Key",
+                uiDesc: "بسیار روشن، کمترین سایه، زمینه سفید. شاد و پاک.",
+                copyPrompt: ", captured in high-key lighting. The scene is dominated by bright whites, eliminating shadows for an optimistic and clean look."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Low Key",
+                uiDesc: "بسیار تاریک، فقط بخش‌های ضروری روشن هستند. غمگین و جدی.",
+                copyPrompt: ", captured in low-key lighting. The scene is dominated by dark tones and blacks, creating a dramatic and intense atmosphere."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Chiaroscuro",
+                uiDesc: "تکنیک نقاشی رنسانس. تضاد شدید بین نور و تاریکی برای ایجاد حجم.",
+                copyPrompt: ", utilizing Chiaroscuro lighting. Strong contrast between light and dark areas adds volume and drama, like a Renaissance painting."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Cyberpunk",
+                uiDesc: "ترکیب نئون، باران، شب و تکنولوژی. صورتی و آبی.",
+                copyPrompt: ", lit with a Cyberpunk aesthetic. The scene features neon rain-slicked surfaces and a high-tech atmosphere with pink and blue hues."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Vintage",
+                uiDesc: "رنگ‌های شسته شده، نشت نور (Light Leak)، حس نوستالژی.",
+                copyPrompt: ", styled with a vintage aesthetic. It features faded colors, light leaks, and film grain, evoking a nostalgic 1970s look."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Ethereal",
+                uiDesc: "نور بسیار لطیف، درخشان و مقدس. انگار سوژه فرشته است.",
+                copyPrompt: ", bathed in ethereal, divine light. The image has a soft, glowing quality with slightly overexposed whites, feeling angelic."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Moody",
+                uiDesc: "تاریک، با رنگ‌های اشباع کم. حس تنهایی و تفکر.",
+                copyPrompt: ", captured with moody lighting using dark shadows and muted colors. This evokes sadness, mystery, or contemplation."
+            },
+            {
+                category: "CINEMATIC",
+                tag: "Gothic",
+                uiDesc: "تاریک، سرد، با نور شمع یا مهتاب. معماری و فضای سنگین.",
+                copyPrompt: ", lit with a Gothic atmosphere. Dark, shadowy tones mix with cool moonlight or warm candlelight for a dramatic, medieval vibe."
+            },
+						
+			// ==========================================
+            // 10. SPECIAL EFFECTS (جلوه‌های ویژه)
+            // ==========================================
+            {
+                category: "EFFECTS",
+                tag: "Bokeh",
+                uiDesc: "پس‌زمینه تار با دایره‌های نوری رنگی. تمرکز روی سوژه.",
+                copyPrompt: ", featuring a strong bokeh effect. The background dissolves into blurry, glowing orbs of light due to a shallow depth of field."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Lens Flare",
+                uiDesc: "بازتاب نور داخل لنز که باعث ایجاد حلقه‌های نوری می‌شود.",
+                copyPrompt: ", featuring a cinematic lens flare. A bright light source enters the lens, creating geometric artifacts and a soft haze."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Double Exposure",
+                uiDesc: "ترکیب دو تصویر با نور (مثلا صورت و جنگل).",
+                copyPrompt: ", created as a double exposure artistic image. It blends a silhouette with a secondary scene (like a forest) using a light overlay."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Light Painting",
+                uiDesc: "حرکت منبع نور در نوردهی طولانی که خطوط نوری در هوا می‌سازد.",
+                copyPrompt: ", enhanced with light painting. Long-exposure trails of light are drawn in the air surrounding the subject for a creative effect."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Glitch",
+                uiDesc: "نورهای دیجیتالی خراب، جابجایی رنگ RGB.",
+                copyPrompt: ", distorted with glitch lighting effects. The image features digital artifacts, RGB color shifts, and pixelation for a data-moshing look."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Holographic",
+                uiDesc: "نورهای لیزری سه بعدی و شفاف آبی/فیروزه‌ای.",
+                copyPrompt: ", rendered as a holographic projection. The subject appears made of translucent, glowing blue laser lines like a sci-fi interface."
+            },
+            {
+                category: "EFFECTS",
+                tag: "X-Ray",
+                uiDesc: "سیاه و سفید معکوس، نمایش ساختار داخلی.",
+                copyPrompt: ", visualized in an X-ray style. The image features inverted black and white transparency, revealing internal structures."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Thermal",
+                uiDesc: "نمایش دما با رنگ (قرمز گرم، آبی سرد).",
+                copyPrompt: ", visualized through thermal imaging colors. Hot areas appear red/yellow and cold areas blue, creating a predator vision style."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Subsurface Scattering",
+                uiDesc: "نور از پشت گوش یا انگشت رد می‌شود و قرمز می‌درخشد (واقع‌گرایی پوست).",
+                copyPrompt: ", highlighting subsurface scattering. Light penetrates translucent surfaces (like skin), creating a natural warm reddish glow."
+            },
+            {
+                category: "EFFECTS",
+                tag: "Iridescent",
+                uiDesc: "سطوحی که با تغییر زاویه تغییر رنگ می‌دهند (مثل حباب صابون یا روغن).",
+                copyPrompt: ", bathed in iridescent lighting. The surface features shimmering colors that shift like soap bubbles or oil slicks."
+            }
+        ];
+
+        // --- Categories Config ---
+        const categories = [
+            { id: 'DIRECTION', label: 'Direction (جهت نور)' },
+            { id: 'QUALITY', label: 'Quality (کیفیت نور)' },
+            { id: 'NATURAL', label: 'Natural & Time (طبیعت)' },
+            { id: 'PORTRAIT', label: 'Portrait (پرتره)' },
+            { id: 'ATMOSPHERE', label: 'Atmosphere (اتمسفر)' },
+            { id: 'COLOR', label: 'Color (رنگ و دما)' },
+            { id: 'ARTIFICIAL', label: 'Artificial (مصنوعی)' },
+            { id: 'SHADOWS', label: 'Shadows (سایه)' },
+            { id: 'CINEMATIC', label: 'Cinematic (سینمایی)' },
+            { id: 'EFFECTS', label: 'Effects (جلوه‌ها)' },
+        ];
+
+        // --- State ---
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // --- Logic ---
+        function init() {
+            renderCategoryNav();
+            renderGrid();
+            
+            // Search Input Listener
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderGrid();
+            });
+
+            // Scroll Buttons Listeners
+            const nav = document.getElementById('categoryNav');
+            const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+            const scrollRightBtn = document.getElementById('scrollRightBtn');
+
+            scrollLeftBtn.addEventListener('click', () => {
+                nav.scrollBy({ left: -200, behavior: 'smooth' });
+            });
+
+            scrollRightBtn.addEventListener('click', () => {
+                nav.scrollBy({ left: 200, behavior: 'smooth' });
+            });
+        }
+
+        function renderCategoryNav() {
+            const nav = document.getElementById('categoryNav');
+            nav.innerHTML = ''; 
+
+            // Add "Show All" button
+            const allBtn = document.createElement('button');
+            const allCount = database.length;
+            
+            // Base classes
+            const baseClass = "cat-btn whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-colors border flex items-center gap-2";
+            const activeClass = "bg-amber-500 text-gray-900 border-amber-400 shadow-lg shadow-amber-900/20";
+            const inactiveClass = "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white border-gray-700";
+
+            allBtn.className = `${baseClass} ${currentCategory === 'all' ? activeClass : inactiveClass}`;
+            
+            // Inner HTML with count
+            const countClass = currentCategory === 'all' ? "bg-black/10 text-gray-900" : "bg-gray-700 text-gray-500 group-hover:text-gray-300";
+            allBtn.innerHTML = `نمایش همه <span class="text-xs px-1.5 py-0.5 rounded-md ${countClass}">${allCount}</span>`;
+            
+            allBtn.onclick = () => filterCategory('all', allBtn);
+            nav.appendChild(allBtn);
+
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                
+                // Calculate count for this category
+                const catCount = database.filter(item => item.category === cat.id).length;
+
+                btn.className = `${baseClass} ${currentCategory === cat.id ? activeClass : inactiveClass}`;
+                
+                const badgeClass = currentCategory === cat.id ? "bg-black/10 text-gray-900" : "bg-gray-900/50 text-gray-500";
+                
+                btn.innerHTML = `${cat.label} <span class="text-xs px-1.5 py-0.5 rounded-md ${badgeClass}">${catCount}</span>`;
+                
+                btn.onclick = () => filterCategory(cat.id, btn);
+                nav.appendChild(btn);
+            });
+        }
+
+        function filterCategory(catId, btnElement) {
+            currentCategory = catId;
+            renderCategoryNav(); 
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('promptsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            grid.innerHTML = '';
+            
+            const filtered = database.filter(item => {
+                const matchCategory = currentCategory === 'all' || item.category === currentCategory;
+                const matchSearch = item.tag.toLowerCase().includes(searchQuery) || 
+                                    item.uiDesc.toLowerCase().includes(searchQuery);
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                
+                filtered.forEach(item => {
+                    const filename = item.tag.replace(/ /g, '_') + ".webp";
+                    
+                    const primaryUrl = "images2/" + filename;
+                    
+                    // Fallback using placehold.co text, styled for "Light" theme (amber text)
+                    const fallbackUrl = `https://placehold.co/544x960/1f2937/fbbf24?text=${encodeURIComponent(item.tag)}`;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'card-hover bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden cursor-pointer group flex flex-col h-full relative';
+                    
+                    card.onclick = () => {
+                        let textToCopy = item.copyPrompt;
+                        copyToClipboard(textToCopy);
+                    };
+
+                    card.innerHTML = `
+                        <!-- Image Container -->
+                        <div class="relative w-full aspect-[17/30] bg-gray-900 overflow-hidden">
+                            <img src="${primaryUrl}" 
+                                 alt="${item.tag}" 
+                                 loading="lazy"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                                 onerror="this.onerror=null;this.src='${fallbackUrl}';">
+                            
+                            <!-- Overlay on hover -->
+                            <div class="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/20 transition-all duration-300 flex items-center justify-center">
+                                <span class="bg-amber-500 text-gray-900 px-3 py-1 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl">
+                                    کپی پرامپت
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-4 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-2 flex-col gap-2">
+                                <h3 class="text-white font-bold text-lg prompt-text text-center w-full dir-ltr text-amber-50">${item.tag}</h3>
+                                <div class="w-full flex justify-center">
+                                    <span class="text-[10px] uppercase tracking-wider text-amber-500/80 border border-amber-500/30 px-1.5 py-0.5 rounded whitespace-nowrap">${item.category}</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed text-right dir-rtl mt-2">${item.uiDesc}</p>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showToast(text)).catch(err => copyFallback(text));
+            } else {
+                copyFallback(text);
+            }
+        }
+
+        function copyFallback(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast(text);
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toastText');
+            
+            toastText.textContent = text.length > 40 ? text.substring(0, 40) + '...' : text;
+            
+            toast.classList.remove('opacity-0', 'translate-y-10');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
