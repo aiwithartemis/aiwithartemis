@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>مرجع استایل‌های هوش مصنوعی</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            400: '#a78bfa',
+                            500: '#8b5cf6', // Violet 500
+                            600: '#7c3aed',
+                            900: '#4c1d95',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'Inter', 'sans-serif'],
+                        mono: ['Inter', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body {
+            background-color: #0f0a1e; /* Very dark violet/gray */
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.3), 0 8px 10px -6px rgba(139, 92, 246, 0.1);
+        }
+
+        /* Hide scrollbar for category nav but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .prompt-text {
+            font-family: 'Inter', monospace;
+        }
+        
+        /* Gradient masks for scroll buttons */
+        .scroll-mask-right {
+            background: linear-gradient(to left, rgba(26, 22, 37, 1) 40%, rgba(26, 22, 37, 0));
+        }
+        .scroll-mask-left {
+            background: linear-gradient(to right, rgba(26, 22, 37, 1) 40%, rgba(26, 22, 37, 0));
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen flex flex-col selection:bg-primary-500 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="bg-[#1a1625]/80 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                        <i class="ph-fill ph-palette text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold tracking-tight text-white">مرجع استایل‌ها</h1>
+                        <p class="text-xs text-gray-400">کلیک کنید تا پرامپت کپی شود</p>
+                    </div>
+                </div>
+
+                <!-- Inputs Container -->
+                <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto items-center justify-end">
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-64">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="جستجو در استایل‌ها..." 
+                            class="w-full bg-white/5 border border-white/10 text-white text-sm rounded-xl py-2.5 pr-10 pl-4 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all placeholder-gray-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Nav Container -->
+            <div class="relative mt-4 group">
+                <!-- Right Scroll Button (RTL: Start) -->
+                <div class="absolute right-0 inset-y-0 flex items-center z-10 scroll-mask-right pr-1 pl-6">
+                    <button onclick="scrollNav('right')" class="bg-gray-800/80 hover:bg-primary-600 text-white p-1.5 rounded-full shadow-lg backdrop-blur-sm border border-white/10 transition-all active:scale-95">
+                        <i class="ph-bold ph-caret-right"></i>
+                    </button>
+                </div>
+
+                <!-- Categories List -->
+                <nav class="flex gap-2 overflow-x-auto no-scrollbar pb-1 px-10 scroll-smooth" id="categoryNav">
+                    <!-- Categories injected via JS -->
+                </nav>
+
+                <!-- Left Scroll Button (RTL: End) -->
+                <div class="absolute left-0 inset-y-0 flex items-center z-10 scroll-mask-left pl-1 pr-6">
+                    <button onclick="scrollNav('left')" class="bg-gray-800/80 hover:bg-primary-600 text-white p-1.5 rounded-full shadow-lg backdrop-blur-sm border border-white/10 transition-all active:scale-95">
+                        <i class="ph-bold ph-caret-left"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 md:p-6">
+        
+        <!-- Grid -->
+        <div id="promptsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+            <!-- Cards injected via JS -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden text-center py-20">
+            <i class="ph ph-paint-brush-broad text-6xl text-gray-700 mb-4"></i>
+            <p class="text-gray-500 text-lg">هیچ استایلی پیدا نشد.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1625] border-t border-white/5 py-8 text-center mt-12">
+        <p class="text-gray-500 text-sm mb-2">طراحی شده برای دسترسی سریع به استایل‌های متنوع</p>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-800/90 backdrop-blur text-white px-6 py-3 rounded-full shadow-2xl border border-gray-700 flex items-center gap-3 transition-all duration-300 opacity-0 translate-y-10 z-50 pointer-events-none">
+        <div class="bg-emerald-500 rounded-full p-1"><i class="ph-bold ph-check text-white text-xs"></i></div>
+        <div class="flex flex-col items-start">
+            <span class="font-bold text-sm">کپی شد!</span>
+            <span class="text-[10px] text-gray-300 dir-ltr font-mono" id="toastText">Prompt Copied...</span>
+        </div>
+    </div>
+
+    <!-- Data & Logic -->
+    <script>
+        // --- Raw Data from JSON ---
+        const rawData = [
+            { "name": "Ads Advertising", "copyPrompt": ", designed as a professional advertising poster. The style is modern, commercial, and product-focused, featuring an eye-catching layout and high detail to maximize visual impact, avoiding amateurish or sloppy elements." },
+            { "name": "Ads Automotive", "copyPrompt": ", captured in the style of a high-end automotive advertisement. The image is sleek, dynamic, and vehicle-focused, featuring professional lighting and high-resolution details suitable for a commercial campaign." },
+            { "name": "Ads Corporate", "copyPrompt": ", designed with a corporate branding aesthetic. The style is clean, modern, and minimalist, conveying a professional business-oriented vibe with sleek, high-detail graphics." },
+            { "name": "Ads Fashion Editorial", "copyPrompt": ", captured as a high-fashion editorial shot. The image is trendy, stylish, and magazine-quality, featuring professional lighting and posing typical of top-tier fashion photography." },
+            { "name": "Ads Food Photography", "copyPrompt": ", captured as professional food photography. The image is appetizing and culinary-focused, featuring high resolution and commercial quality lighting that highlights texture and freshness." },
+            { "name": "Ads Gourmet Food", "copyPrompt": ", photographed as a gourmet food shot with soft natural lighting. The image highlights macro details of fresh ingredients and glistening textures on a styled wooden tabletop with a bokeh background." },
+            { "name": "Ads Luxury", "copyPrompt": ", styled as a luxury product advertisement. The image is elegant, sophisticated, and high-end, featuring professional lighting and intricate details that convey exclusivity and opulence." },
+            { "name": "Ads Real Estate", "copyPrompt": ", captured as professional real estate photography. The image is inviting and well-lit, focusing on property details with high resolution and a commercial, wide-angle aesthetic." },
+            { "name": "Ads Retail", "copyPrompt": ", designed in a retail packaging style. The image is vibrant, enticing, and product-focused, created to be eye-catching on a shelf with professional, high-detail commercial graphics." },
+            { "name": "Artstyle Abstract", "copyPrompt": ", created in an abstract art style. The artwork is non-representational, using colors and shapes to express feelings and imagination with high detail, avoiding realistic or concrete forms." },
+            { "name": "Artstyle Abstract Expressionism", "copyPrompt": ", painted in the style of Abstract Expressionism. The artwork features energetic brushwork, bold colors, and abstract forms, emphasizing emotion and spontaneity over realism." },
+            { "name": "Artstyle Art Deco", "copyPrompt": ", designed in the Art Deco style. The artwork features luxurious geometric shapes, bold colors, and symmetrical, ornate decorative patterns typical of the 1920s." },
+            { "name": "Artstyle Art Nouveau", "copyPrompt": ", created in the Art Nouveau style. The design features elegant, curvilinear forms inspired by nature, with ornate and detailed decorative elements." },
+            { "name": "Artstyle Constructivist", "copyPrompt": ", designed in the Constructivist style. The artwork features geometric shapes, bold colors, and dynamic composition, reflecting the industrial and propaganda art of the early 20th century." },
+            { "name": "Artstyle Cubist", "copyPrompt": ", created as a Cubist artwork. The subject is fragmented into geometric shapes and abstract planes, presenting an innovative and revolutionary perspective on form." },
+            { "name": "Artstyle Expressionist", "copyPrompt": ", painted in an Expressionist style. The artwork is raw, emotional, and dynamic, using distortion and unusual vibrant colors to convey intense feelings." },
+            { "name": "Artstyle Graffiti", "copyPrompt": ", painted in a vibrant Graffiti street art style. The image features bold colors, urban aesthetics, and detailed mural techniques typical of spray paint art." },
+            { "name": "Artstyle Hyperrealism", "copyPrompt": ", created as a hyperrealistic artwork. The image features extremely high-resolution details and fine textures, pushing realism to the extreme to look incredibly lifelike." },
+            { "name": "Artstyle Impressionist", "copyPrompt": ", painted in an Impressionist style. The artwork features loose brushwork and vibrant colors, focusing on the play of light and shadow to capture the feeling of the scene." },
+            { "name": "Artstyle Pointillism", "copyPrompt": ", created in the Pointillism style. The image is composed entirely of small, distinct dots of color that blend together visually to form a vibrant, highly detailed scene." },
+            { "name": "Artstyle Pop Art", "copyPrompt": ", designed in the Pop Art style. The artwork features bright colors, bold outlines, and themes from popular culture, often with an ironic or kitsch aesthetic." },
+            { "name": "Artstyle Psychedelic", "copyPrompt": ", created in a Psychedelic style. The image features vibrant, swirling patterns, abstract forms, and surreal colors, creating a trippy and hallucinogenic visual experience." },
+            { "name": "Artstyle Renaissance", "copyPrompt": ", painted in the Renaissance style. The artwork features realistic anatomy, precise perspective, and dramatic light and shadow (chiaroscuro), often depicting mythological themes." },
+            { "name": "Artstyle Steampunk", "copyPrompt": ", visualized in a Steampunk aesthetic. The image features antique mechanical elements, brass and copper tones, and intricate gears, blending Victorian style with technology." },
+            { "name": "Artstyle Surrealist", "copyPrompt": ", created as a Surrealist artwork. The image is dreamlike, mysterious, and provocative, featuring symbolic and illogical juxtapositions in a highly detailed style." },
+            { "name": "Artstyle Typography", "copyPrompt": ", designed as typographic art. The image features stylized, intricate, and artistic text-based elements, using letters and words to form the visual composition." },
+            { "name": "Artstyle Watercolor", "copyPrompt": ", painted in a watercolor style. The artwork is vibrant and beautiful, featuring fluid, painterly textures and artistic details typical of water-based media." },
+            { "name": "Futuristic Biomechanical", "copyPrompt": ", designed in a Biomechanical style. The image blends organic and mechanical elements to create a futuristic, cybernetic aesthetic with intricate details." },
+            { "name": "Futuristic Biomechanical Cyberpunk", "copyPrompt": ", visualized as Biomechanical Cyberpunk. The image depicts a dystopian fusion of human and machine, featuring dark, intricate details where organic matter meets artificial cybernetics." },
+            { "name": "Futuristic Cybernetic", "copyPrompt": ", designed in a Cybernetic style. The image features futuristic technological themes, robotics, and artificial intelligence enhancements, creating a high-tech look." },
+            { "name": "Futuristic Cybernetic Robot", "copyPrompt": ", depicted as a Cybernetic Robot. The subject is a highly detailed android or machine featuring metal, wires, and advanced technology." },
+            { "name": "Futuristic Cyberpunk Cityscape", "copyPrompt": ", captured as a Cyberpunk Cityscape. The scene features neon lights, dark alleys, and futuristic skyscrapers with vibrant colors and high contrast." },
+            { "name": "Futuristic Style", "copyPrompt": ", designed in a general Futuristic style. The image is sleek, modern, and ultramodern, featuring high-tech details and a forward-looking aesthetic." },
+            { "name": "Futuristic Retro Cyberpunk", "copyPrompt": ", visualized as Retro Cyberpunk. The image combines 80s Synthwave aesthetics with neon colors and futuristic elements, creating a detailed retro-futurism look." },
+            { "name": "Futuristic Retro Futurism", "copyPrompt": ", designed in a Retro-Futuristic style. The image reflects the vintage sci-fi aesthetics of the 1950s and 60s Atomic Age, featuring vibrant colors and classic future concepts." },
+            { "name": "Futuristic Sci-Fi", "copyPrompt": ", created in a Sci-Fi style. The image depicts futuristic technology, alien worlds, or space themes associated with advanced civilizations." },
+            { "name": "Futuristic Vaporwave", "copyPrompt": ", designed in a Vaporwave style. The image features a retro aesthetic with vibrant neon colors and vintage 80s/90s elements, often mixed with cyberpunk themes." },
+            { "name": "Game Bubble Bobble", "copyPrompt": ", created in the style of Bubble Bobble. The image features 8-bit pixelated graphics, cute characters, and vibrant colors reminiscent of the classic arcade game." },
+            { "name": "Game Cyberpunk", "copyPrompt": ", designed in a Cyberpunk video game style. The image features neon lights, dystopian themes, and high-contrast digital aesthetics similar to the Cyberpunk genre." },
+            { "name": "Game Fighting", "copyPrompt": ", created in a Fighting Game style. The image features dynamic, action-packed composition and detailed character design reminiscent of arcade fighting games." },
+            { "name": "Game GTA", "copyPrompt": ", illustrated in the style of GTA box art. The image features satirical, exaggerated characters with a vibrant pop art aesthetic and bold outlining." },
+            { "name": "Game Mario", "copyPrompt": ", created in the style of Super Mario. The image features vibrant, cute, and cartoony visuals with a playful fantasy aesthetic typical of Nintendo games." },
+            { "name": "Game Minecraft", "copyPrompt": ", rendered in the style of Minecraft. The image features blocky, pixelated 3D assets and vibrant colors, mimicking the game's voxel aesthetic." },
+            { "name": "Game Pokemon", "copyPrompt": ", drawn in the Pokémon art style. The image features vibrant colors, cute anime-style creature designs, and a fantasy adventure aesthetic." },
+            { "name": "Game Retro Arcade", "copyPrompt": ", designed in a Retro Arcade style. The image features 8-bit pixelated graphics and vibrant colors, reminiscent of classic 80s and 90s video games." },
+            { "name": "Game Retro", "copyPrompt": ", created as Retro Game art. The image features 16-bit pixelated graphics, vibrant colors, and a charming nostalgic aesthetic typical of the SNES era." },
+            { "name": "Game RPG Fantasy", "copyPrompt": ", designed in an RPG Fantasy game style. The image is detailed, vibrant, and immersive, reminiscent of high-fantasy role-playing video games." },
+            { "name": "Game Strategy", "copyPrompt": ", designed in a Strategy Game style. The image features an overhead isometric view with detailed maps and units, reminiscent of RTS games." },
+            { "name": "Game Streetfighter", "copyPrompt": ", illustrated in the style of Street Fighter. The image features dynamic, muscular character designs and vibrant 2D arcade aesthetics." },
+            { "name": "Game Zelda", "copyPrompt": ", created in the style of The Legend of Zelda. The image features a vibrant fantasy aesthetic with epic, heroic themes and detailed artistic design." },
+            { "name": "Misc Architectural", "copyPrompt": ", drawn as an architectural sketch. The image features clean lines, geometric shapes, and a minimalist modern style typical of architectural drawings." },
+            { "name": "Misc Disco", "copyPrompt": ", designed with a Disco theme. The image is vibrant and groovy, featuring 70s retro style, shiny disco balls, and neon lights." },
+            { "name": "Misc Dreamscape", "copyPrompt": ", visualized as a Dreamscape. The image is surreal, ethereal, and mysterious, depicting a highly detailed fantasy world." },
+            { "name": "Misc Dystopian", "copyPrompt": ", created in a Dystopian style. The image is bleak, post-apocalyptic, and somber, featuring dramatic lighting and high detail." },
+            { "name": "Misc Fairy Tale", "copyPrompt": ", illustrated as a Fairy Tale. The image is magical, fantastical, and enchanting, resembling a classic storybook illustration." },
+            { "name": "Misc Gothic", "copyPrompt": ", designed in a Gothic style. The image is dark, mysterious, and haunting, featuring ornate details and dramatic atmosphere." },
+            { "name": "Misc Grunge", "copyPrompt": ", created in a Grunge style. The image is textured, distressed, and dirty, featuring a vintage edgy punk rock vibe." },
+            { "name": "Misc Horror", "copyPrompt": ", designed with a Horror theme. The image is eerie, unsettling, and dark, featuring spooky elements and a suspenseful atmosphere." },
+            { "name": "Misc Kawaii", "copyPrompt": ", created in a Kawaii style. The image is cute, adorable, and brightly colored, featuring cheerful characters with anime influence." },
+            { "name": "Misc Lovecraftian", "copyPrompt": ", visualized as Lovecraftian Horror. The image features eldritch, cosmic horror elements that are unknown, mysterious, and surreal." },
+            { "name": "Misc Macabre", "copyPrompt": ", designed in a Macabre style. The image is dark, gothic, and grim, featuring haunting imagery and high detail." },
+            { "name": "Misc Manga", "copyPrompt": ", drawn in a Manga style. The image is vibrant, high-energy, and detailed, featuring iconic Japanese comic book aesthetics." },
+            { "name": "Misc Metropolis", "copyPrompt": ", designed with a Metropolis theme. The image features an urban cityscape with modern skyscrapers and futuristic details." },
+            { "name": "Misc Minimalist", "copyPrompt": ", designed in a Minimalist style. The image is simple, clean, and uncluttered, featuring modern elegance and essential forms." },
+            { "name": "Misc Monochrome", "copyPrompt": ", created in Monochrome. The image is black and white, focusing on contrast, tone, and texture without color." },
+            { "name": "Misc Nautical", "copyPrompt": ", designed with a Nautical theme. The image depicts the sea, ocean, ships, or marine life in a highly detailed style." },
+            { "name": "Misc Space", "copyPrompt": ", created with a Space theme. The image depicts cosmic scenes with stars, galaxies, nebulas, and planets in high detail." },
+            { "name": "Misc Stained Glass", "copyPrompt": ", designed in a Stained Glass style. The image features vibrant, translucent colors and intricate lead outlines typical of church windows." },
+            { "name": "Misc Techwear Fashion", "copyPrompt": ", styled in Techwear Fashion. The image features futuristic, cyberpunk urban clothing that is sleek, tactical, and dark." },
+            { "name": "Misc Tribal", "copyPrompt": ", designed in a Tribal style. The image features indigenous, ethnic patterns and bold natural colors in high detail." },
+            { "name": "Misc Zentangle", "copyPrompt": ", drawn as a Zentangle. The image features intricate, abstract monochrome patterns designed for a meditative visual effect." },
+            { "name": "Papercraft Collage", "copyPrompt": ", created as a Papercraft Collage. The image features mixed media layers, textures, and artistic details typical of cut-and-paste art." },
+            { "name": "Papercraft Flat Papercut", "copyPrompt": ", designed as Flat Papercut art. The image features clean cuts, sharp edges, and minimalist color blocks in a silhouette style." },
+            { "name": "Papercraft Kirigami", "copyPrompt": ", created as Kirigami art. The image features 3D intricate paper folding and cutting, emphasizing symmetry and precision." },
+            { "name": "Papercraft Paper Mache", "copyPrompt": ", modeled as Paper Mache. The image features 3D sculptural forms with a handmade, textured, and vibrant painted finish." },
+            { "name": "Papercraft Paper Quilling", "copyPrompt": ", created as Paper Quilling art. The image features intricate, delicate coils and loops of shaped paper, creating a 3D ornamental effect." },
+            { "name": "Papercraft Papercut Collage", "copyPrompt": ", designed as a Papercut Collage. The image features textured paper layers that are overlapping and asymmetrical, creating a vibrant abstract composition." },
+            { "name": "Papercraft Shadow Box", "copyPrompt": ", created as a 3D Papercut Shadow Box. The image features layered depth and silhouettes, using light and shadow to create a dimensional scene." },
+            { "name": "Papercraft Stacked Papercut", "copyPrompt": ", designed as Stacked Papercut art. The image features deep 3D dimensions created by precisely cut, stacked layers of paper." },
+            { "name": "Papercraft Thick Layered", "copyPrompt": ", created as Thick Layered Papercut art. The image features deep volumetric depth with heavy textures and tangible layers of thick paper." },
+            { "name": "Photo Alien", "copyPrompt": ", captured as an Alien-themed photo. The image depicts extraterrestrial, cosmic, or otherworldly subjects with mysterious sci-fi details." },
+            { "name": "Photo Film Noir", "copyPrompt": ", captured in a Film Noir style. The image is monochrome with high contrast and dramatic shadows, evoking a mysterious 1940s cinematic atmosphere." },
+            { "name": "Photo Glamour", "copyPrompt": ", captured as a Glamour photo. The image is high-fashion, luxurious, and opulent, featuring stunning beauty and professional high-contrast lighting." },
+            { "name": "Photo HDR", "copyPrompt": ", captured as an HDR photo. The image features a high dynamic range with vivid colors, rich details, and clear shadows and highlights." },
+            { "name": "Photo iPhone", "copyPrompt": ", captured as an iPhone photograph. The image features a deep depth of field and sharp details typical of modern smartphone photography." },
+            { "name": "Photo Long Exposure", "copyPrompt": ", captured as a Long Exposure photo. The image features blurred motion, light streaks, and a surreal, dreamy ghosting effect." },
+            { "name": "Photo Neon Noir", "copyPrompt": ", captured in a Neon Noir style. The image features dark, rainy streets illuminated by vibrant neon signs with high contrast." },
+            { "name": "Photo Silhouette", "copyPrompt": ", captured in a Silhouette style. The image features a solid dark subject against a bright background, creating a high-contrast, dramatic look." },
+            { "name": "Photo Tilt-Shift", "copyPrompt": ", captured as a Tilt-Shift photo. The image uses selective focus to create a miniature effect, blurring the background while keeping the subject sharp." },
+            { "name": "Photo Bokeh", "copyPrompt": ", captured with strong bokeh. The subject is sharp while the background is artistically blurred into soft, glowing circles of light, creating a dreamy depth of field." },
+            { "name": "Photo Golden Hour", "copyPrompt": ", captured during the golden hour. The image is bathed in warm, soft, and directional sunlight just before sunset, creating long shadows and a magical, nostalgic glow." },
+            { "name": "SAI 3D Model", "copyPrompt": ", rendered as a professional 3D model. The image mimics a highly detailed Octane render with dramatic volumetric lighting, strictly avoiding low-poly meshes, noise, or painterly effects." },
+            { "name": "SAI Analog Film", "copyPrompt": ", captured as an analog film photo. The image features a faded, desaturated vintage aesthetic typical of 35mm Kodachrome, with noticeable grain, vignetting, and a found-footage vibe, avoiding digital illustration or painting styles." },
+            { "name": "SAI Anime", "copyPrompt": ", drawn as a high-quality anime artwork. The style is vibrant and detailed, resembling a professional studio anime key visual, avoiding photorealism, monochrome photography, or low-contrast sketching." },
+            { "name": "SAI Cinematic", "copyPrompt": ", captured as a high-budget cinematic film still. The image features a shallow depth of field, anamorphic bokeh, and a moody, epic atmosphere with film grain, strictly avoiding anime, cartoon, or illustrative styles." },
+            { "name": "SAI Comic Book", "copyPrompt": ", illustrated in a vibrant comic book style. The artwork features bold graphic lines typical of graphic novels and comic art, avoiding realistic photography, stock photo aesthetics, or glitch effects." },
+            { "name": "SAI Craft Clay", "copyPrompt": ", sculpted in a Play-Doh or Claymation style. The composition is centered, featuring soft clay textures and modeling, avoiding photorealism, messy details, or ultra-high-resolution textures." },
+            { "name": "SAI Digital Art", "copyPrompt": ", created as digital concept art. The style is illustrative and painterly, resembling a highly detailed matte painting, avoiding photorealism or photography." },
+            { "name": "SAI Enhance", "copyPrompt": ", rendered as a breathtaking, award-winning professional image. The visual quality is highly detailed and polished, ensuring clarity and avoiding noise, blur, or distortion." },
+            { "name": "SAI Fantasy Art", "copyPrompt": ", depicted as ethereal fantasy concept art. The scene is magnificent, celestial, and majestic with a painterly style suitable for epic cover art, avoiding photorealism, text, or glitch effects." },
+            { "name": "SAI Isometric", "copyPrompt": ", designed in a crisp isometric style. The image is vibrant, intricate, and ultra-detailed, featuring a specific 3D parallel projection, avoiding blur, noise, or standard perspective photography." },
+            { "name": "SAI Line Art", "copyPrompt": ", drawn as a professional line art illustration. The design is sleek, modern, and minimalist with vector-like graphic lines, avoiding photorealism, shading, oil painting, or anime styles." },
+            { "name": "SAI Lowpoly", "copyPrompt": ", rendered in a low-poly style. The subject is composed of a polygon mesh with jagged, blocky shapes and wireframe edges typical of retro game art, avoiding high-resolution textures or photorealism." },
+            { "name": "SAI Neonpunk", "copyPrompt": ", stylized in a Neonpunk aesthetic. The image features cyberpunk and vaporwave vibes with vibrant magenta highlights and dark purple shadows, creating a sleek, ultramodern cinematic look, avoiding painterly or illustrative styles." },
+            { "name": "SAI Origami", "copyPrompt": ", crafted in an Origami style. The subject appears made of folded, pleated paper with precise cut-and-fold techniques and a centered composition, avoiding messy textures or realistic photography." },
+            { "name": "SAI Photographic", "copyPrompt": ", captured as a professional 35mm cinematic photograph. The image is 4k resolution with natural bokeh and highly detailed realistic lighting, strictly avoiding drawings, paintings, or sketches." },
+            { "name": "SAI Pixel Art", "copyPrompt": ", designed as retro Pixel Art. The image features low-resolution, blocky 8-bit graphics, strictly avoiding anti-aliasing, blur, or high-resolution photorealism." },
+            { "name": "SAI Texture", "copyPrompt": ", captured as a top-down close-up texture shot. The image focuses entirely on surface details and patterns, filling the frame without a specific subject focus, avoiding blur or deformation." },
+            { "name": "MRE Cinematic Dynamic", "copyPrompt": ", captured as an epic, high-budget cinematic action shot. The subject is in dynamic motion with realistic motion blur. The image has a raw, authentic photo quality, avoiding any static or sluggish feeling." },
+            { "name": "MRE Spontaneous Picture", "copyPrompt": ", captured as a spontaneous, natural photograph taken by a talented amateur. The image captures a magical, candid moment with a simple but beautiful aesthetic, avoiding an overthought or staged look." },
+            { "name": "MRE Artistic Vision", "copyPrompt": ", rendered as a breathtaking artistic masterpiece. The image represents a powerful artistic vision created by a great master, featuring impeccable quality and profound aesthetic value." },
+            { "name": "MRE Dark Dream", "copyPrompt": ", visualized as a dark and unsettling dream. The artwork possesses a grim beauty, as if created by a genius but depressed mad artist, strictly avoiding cheerful or comfortable themes." },
+            { "name": "MRE Gloomy Art", "copyPrompt": ", created as an astonishing piece of gloomy art using chiaroscuro. The image is formed mainly of heavy shadows and dramatic lighting, drawing from darkness to create a masterful, emotional atmosphere." },
+            { "name": "MRE Bad Dream", "copyPrompt": ", depicted as a bone-chilling vision from a terrifying nightmare. The scene represents true horror in a mad world that shouldn't exist, avoiding any pleasant or comforting elements." },
+            { "name": "MRE Underground", "copyPrompt": ", illustrated as an uncanny, caliginous vision by a remarkable underground artist. The style is raw, brutal, and careless but impressive, inspired by darkness and chaos." },
+            { "name": "MRE Surreal Painting", "copyPrompt": ", painted as a mind-bending surrealist masterpiece. The image represents harmonious madness and magical surrealism, featuring a unique art style that defies logic and reality." },
+            { "name": "MRE Dynamic Illustration", "copyPrompt": ", drawn as an insanely dynamic illustration. The art style is crazy, emotional, and fun, featuring careless but energetic brushstrokes that convey speed and action, avoiding static poses." },
+            { "name": "MRE Undead Art", "copyPrompt": ", depicted as long-forgotten art created by an undead artist. The image is a tribute to death and decay, illustrating a miserable, wretched, and decaying world." },
+            { "name": "MRE Elemental Art", "copyPrompt": ", illustrating insane amounts of raging elemental energy. The subject appears as an avatar of elements within a magical surrealist setting, showcasing wizardry and raw power." },
+            { "name": "MRE Space Art", "copyPrompt": ", illustrated as the winner of an inter-galactic art contest. The image is a symbol of interstellar singularity, featuring a unique art style previously unseen in the galaxy." },
+            { "name": "MRE Ancient Illustration", "copyPrompt": ", drawn as a sublime ancient illustration predating human civilization. The artwork is crude and simple yet surprisingly beautiful, as if made by a genius primeval artist." },
+            { "name": "MRE Brave Art", "copyPrompt": ", depicted as brave, shocking, and brutally true art. The image is inspired by courage and unlimited creativity, finding truth within chaos." },
+            { "name": "MRE Heroic Fantasy", "copyPrompt": ", painted as a heroic fantasy masterpiece. The technique resembles airbrush over oil on canvas, depicting a dangerous fantasy world with epic quality." },
+            { "name": "MRE Dark Cyberpunk", "copyPrompt": ", illustrated as a dark cyberpunk scene. The image depicts a brutal world without hope, ruled by ruthless criminal corporations, with a gritty, high-tech aesthetic." },
+            { "name": "MRE Lyrical Geometry", "copyPrompt": ", created as a geometric and lyrical abstraction painting. The medium appears to be oil on metal, focusing on abstract forms and composition rather than realism." },
+            { "name": "MRE Sumi-e Symbolic", "copyPrompt": ", painted with big, long brushstrokes of deep black Sumi-e ink. The image turns into a symbolic painting, showcasing master-level raw art and spontaneity." },
+            { "name": "MRE Sumi-e Detailed", "copyPrompt": ", painted as a highly detailed black Sumi-e ink wash. The artwork is an in-depth study of perfection, created with the precision of a master calligrapher." },
+            { "name": "MRE Manga", "copyPrompt": ", drawn as high-quality manga artwork. Created by a Japanese manga artist, the image is highly emotional and features authentic comic shading and screening." },
+            { "name": "MRE Anime", "copyPrompt": ", produced as high-quality anime artwork. Created by a Japanese animation studio, the image is vibrant, highly emotional, and polished." },
+            { "name": "MRE Comic", "copyPrompt": ", illustrated as a breathtaking panel from an adult comic book. The artwork is fabulous and detailed, featuring dynamic composition and graphic storytelling." },
+            { "name": "MK Chromolithography", "copyPrompt": ", created as a Chromolithograph print. The artwork features rich color saturation, intricate details, and meticulous registration, typical of multi-layered printing. It includes decorative elements and an ornate composition, evoking a nostalgic historical charm." },
+            { "name": "MK Cross Processing Print", "copyPrompt": ", developed as a Cross Processing print. The image features experimental color shifts, vibrant surreal hues, and heightened contrasts. The result is unpredictable and dynamic, with an abstract, dreamlike, and vintage feel." },
+            { "name": "MK Dufaycolor Photograph", "copyPrompt": ", captured as a vintage Dufaycolor photograph. The image has a distinctive color rendering with a soft, dreamy atmosphere and grainy texture. It evokes a nostalgic mood with a hand-tinted appearance and artistic patina." },
+            { "name": "MK Herbarium", "copyPrompt": ", drawn as a scientific Herbarium illustration. The artwork features delicate and precise linework, botanical accuracy, and pressed plant details typical of old botanical books. The composition is organic and educational, with a timeless aesthetic." },
+            { "name": "MK Punk Collage", "copyPrompt": ", designed in a Punk Collage style. The artwork is a chaotic mix of ripped posters, textured paper, safety pins, and graffiti elements. It features a cut-and-paste aesthetic with bold typography, distressed textures, and vivid colors, embodying a rebellious DIY spirit." },
+            { "name": "MK Mosaic", "copyPrompt": ", created as a highly detailed mosaic. The image is composed of fragmented, colorful pieces assembled to form a cohesive whole, avoiding unbroken or monochromatic surfaces." },
+            { "name": "MK Van Gogh", "copyPrompt": ", painted in the style of Vincent van Gogh. The artwork features expressive, swirling impasto brushwork and vibrant, dynamic colors. The composition is dramatic and textured, with a luminous, atmospheric quality typical of Post-Impressionism." },
+            { "name": "MK Coloring Book", "copyPrompt": ", designed as a coloring book page. The image is a centered, high-contrast black and white line drawing on a blank white background, devoid of any shading, gradients, or colors." },
+            { "name": "MK Singer Sargent", "copyPrompt": ", painted in the style of John Singer Sargent. The artwork is elegant and refined, featuring masterful technique, a realistic portrayal, and a subtle play of light (chiaroscuro). The composition is harmonious with rich details." },
+            { "name": "MK Pollock", "copyPrompt": ", painted in the style of Jackson Pollock. The artwork is an abstract expressionist drip painting, featuring a chaotic, energetic composition. It uses spontaneous, unconventional techniques with dynamic, bold, and non-representational forms." },
+            { "name": "MK Basquiat", "copyPrompt": ", created in the style of Jean-Michel Basquiat. The artwork is Neo-expressionist and graffiti-inspired, featuring raw, energetic brushstrokes, bold colors, and chaotic, symbolic compositions." },
+            { "name": "MK Andy Warhol", "copyPrompt": ", designed in the style of Andy Warhol. The artwork is Pop Art featuring vibrant colors, bold compositions, and the repetition of iconic imagery. It reflects commercial aesthetics and mass production with stylized simplicity." },
+            { "name": "MK Halftone Print", "copyPrompt": ", printed as a Halftone image. The artwork features a dot matrix pattern with grayscale tones, evoking a vintage newspaper vibe. It uses stylized dots and black-and-white contrasts, similar to Roy Lichtenstein's style." },
+            { "name": "MK Gond Painting", "copyPrompt": ", painted in the Gond tribal art style. The artwork features intricate patterns, vibrant colors, and detailed nature-inspired motifs. It uses fine lines and storytelling compositions rich in cultural folklore." },
+            { "name": "MK Albumen Print", "copyPrompt": ", produced as an antique Albumen print. The image features sepia tones, fine details, and delicate highlights with a soft, muted atmosphere. It has a vintage aesthetic with vignetting and rich textures." },
+            { "name": "MK Aquatint Print", "copyPrompt": ", created as an Aquatint print. The artwork features soft tonal gradations, velvety textures, and an atmospheric effect. It uses the etching process to create delicate lines and nuanced shading with artistic depth." },
+            { "name": "MK Anthotype Print", "copyPrompt": ", created as an Anthotype print. The image uses monochrome vegetable dyes, resulting in soft, muted colors and organic textures. It has an ephemeral, delicate appearance with low contrast and a silhouette effect on textured paper." },
+            { "name": "MK Inuit Carving", "copyPrompt": ", carved as an Inuit ivory sculpture. The artwork features intricate carvings of arctic wildlife and storytelling motifs. It uses natural materials and earthy tones, reflecting cultural traditions and mythology." },
+            { "name": "MK Bromoil Print", "copyPrompt": ", produced as a Bromoil print. The image has a painterly effect with sepia tones and textured surfaces. It features expressive brushwork and rich contrasts, creating a vintage, atmospheric mood." },
+            { "name": "MK Calotype Print", "copyPrompt": ", created as a vintage Calotype print. The image features soft focus, a paper negative texture, and a subtle tonal range. It evokes early photographic charm with a handmade quality and vignetting." },
+            { "name": "MK Color Sketchnote", "copyPrompt": ", drawn as a colorful Sketchnote. The image features hand-drawn elements, playful illustrations, and varied typography. The layout is organic and dynamic, using graphic icons and vibrant colors for engaging storytelling." },
+            { "name": "MK Cibulak Porcelain", "copyPrompt": ", crafted as Cibulak Blue Onion porcelain. The object features a classic blue and white color scheme with intricate floral motifs and onion-shaped elements. It reflects traditional Meissen craftsmanship and elegance." },
+            { "name": "MK Alcohol Ink Art", "copyPrompt": ", created with Alcohol Ink. The artwork features fluid, vibrant colors and unpredictable organic patterns. It has translucent layers and an ethereal, dreamy effect on wet textured paper." },
+            { "name": "MK One Line Art", "copyPrompt": ", drawn as One Line art. The image consists of a single, continuous, unbroken black line on a white background. It is minimalistic, fluid, and dynamic, focusing on simplicity and economical use of space." },
+            { "name": "MK Blacklight Paint", "copyPrompt": ", painted with Blacklight fluorescent pigments. The artwork features vibrant, surreal colors that glow ethereally. The composition is dynamic and psychedelic, transforming under ultraviolet light." },
+            { "name": "MK Carnival Glass", "copyPrompt": ", crafted from Carnival Glass. The object features iridescent surfaces, vibrant opalescent hues, and intricate patterns. It reflects Art Nouveau influences with a lustrous, prismatic appearance." },
+            { "name": "MK Cyanotype Print", "copyPrompt": ", produced as a Cyanotype print. The image is characterized by distinctive Prussian blue tones and high contrast (blueprint aesthetic). It features silhouette effects and delicate details on sun-exposed paper." },
+            { "name": "MK Cross-Stitching", "copyPrompt": ", created as a Cross-Stitching embroidery piece. The artwork features intricate patterns made of precise X-shaped stitches on canvas. It uses a varied thread color palette to create traditional or contemporary motifs." },
+            { "name": "MK Encaustic Paint", "copyPrompt": ", painted with Encaustic wax. The artwork features textured surfaces, translucent layers, and a luminous quality. It uses rich color saturation and fluid, organic shapes with mixed media elements." },
+            { "name": "MK Embroidery", "copyPrompt": ", created as an Embroidery piece. The artwork features intricate stitching and fine details using varied thread textures. It is tactile and ornate, displaying textile artistry with a diverse color palette." },
+            { "name": "MK Gyotaku", "copyPrompt": ", created using the Gyotaku method. The image features a realistic fish impression or ink rubbing on textured paper. It is a traditional Japanese nature print with black and white contrasts." },
+            { "name": "MK Luminogram", "copyPrompt": ", created as a Luminogram. The image is an abstract photogram produced by direct light exposure on paper. It features ethereal light and shadow interplay with a luminous, experimental quality." },
+            { "name": "MK Lite Brite Art", "copyPrompt": ", designed as Lite Brite art. The image features luminous, colorful pixelated designs created by glowing pegs. It has a retro, playful aesthetic with vibrant and dynamic patterns." },
+            { "name": "MK Mokume-gane", "copyPrompt": ", crafted in the Mokume-gane style. The object features mixed metal layers simulating wood-grain patterns. It showcases intricate, organic designs and harmonious color combinations typical of Japanese metalwork." },
+            { "name": "MK Pebble Art", "copyPrompt": ", created as Pebble Art. The sculpture is made of natural pebbles arranged in balanced, organic compositions. It features textured surfaces and a tactile, beach-inspired aesthetic." },
+            { "name": "MK Palekh", "copyPrompt": ", painted in the Palekh miniature style. The artwork features intricate details, vivid colors, and gold accents on a black lacquer background, depicting Russian folkloric themes." },
+            { "name": "MK Suminagashi", "copyPrompt": ", created using Suminagashi marbling. The image features floating ink patterns and delicate, ethereal designs. It has a fluid, unpredictable composition typical of Japanese paper marbling." },
+            { "name": "MK Scrimshaw", "copyPrompt": ", engraved as Scrimshaw art. The artwork features intricate scenes carved into material resembling whale teeth or bone. It uses black ink for contrast, depicting nautical and maritime themes." },
+            { "name": "MK Shibori", "copyPrompt": ", created using Shibori dyeing. The fabric features intricate resist-dye patterns, often in indigo or vibrant colors. The design is organic and flowing, reflecting Japanese textile traditions." },
+            { "name": "MK Vitreous Enamel", "copyPrompt": ", crafted from Vitreous Enamel. The object features a smooth, glossy, glass-like finish with vibrant colors. It is durable and resilient, showcasing intricate artistic craftsmanship." },
+            { "name": "MK Ukiyo-e", "copyPrompt": ", created in the Ukiyo-e woodblock print style. The artwork features vibrant colors, intricate outlines, and traditional Japanese themes like landscapes or kabuki actors." },
+            { "name": "MK Vintage Airline Poster", "copyPrompt": ", designed as a vintage airline poster. The artwork features classic aviation fonts, pastel colors, and elegant aircraft illustrations. It evokes a retro travel allure with scenic destinations and distressed textures." },
+            { "name": "MK Vintage Travel Poster", "copyPrompt": ", designed as a vintage travel poster. The artwork features retro fonts, muted colors, and scenic illustrations of iconic landmarks. It has a nostalgic vibe with distressed textures." },
+            { "name": "MK Bauhaus Style", "copyPrompt": ", designed in the Bauhaus style. The artwork emphasizes minimalism, geometric precision, and functionality. It uses primary colors, sans-serif typography, and asymmetrical layouts." },
+            { "name": "MK Afrofuturism", "copyPrompt": ", illustrated in an Afrofuturism style. The artwork features vibrant colors, futuristic technology, and cosmic imagery blended with African cultural symbolism and empowering narratives." },
+            { "name": "MK Atompunk", "copyPrompt": ", illustrated in an Atompunk style. The artwork features retro-futuristic Atomic Age aesthetics, sleek lines, and metallic textures. It conveys optimism and energy with futuristic technology." },
+            { "name": "MK Constructivism", "copyPrompt": ", designed in the Constructivism style. The artwork features geometric abstraction, bold colors, and industrial aesthetics. It emphasizes dynamic compositions and a utilitarian, revolutionary spirit." },
+            { "name": "MK Chicano Art", "copyPrompt": ", painted in the Chicano art style. The artwork features bold colors, cultural symbolism, and muralist aesthetics. It depicts lowrider culture or barrio life with political or social messages." },
+            { "name": "MK De Stijl", "copyPrompt": ", created in the De Stijl art style. The artwork features geometric abstraction with horizontal and vertical lines. It uses only primary colors and black/white, emphasizing simplicity and harmony." },
+            { "name": "MK Dayak Art", "copyPrompt": ", carved in the Dayak art style. The sculpture features intricate patterns, nature-inspired motifs, and vibrant colors. It reflects traditional craftsmanship and cultural symbolism." },
+            { "name": "MK Fayum Portrait", "copyPrompt": ", painted as a Fayum mummy portrait. The artwork uses encaustic wax to create realistic facial features with warm earth tones and serene expressions, reflecting ancient Egyptian influences." },
+            { "name": "MK Illuminated Manuscript", "copyPrompt": ", designed as an Illuminated Manuscript page. The artwork features intricate calligraphy, rich colors, and detailed illustrations with gold leaf accents and ornate borders." },
+            { "name": "MK Kalighat Painting", "copyPrompt": ", painted in the Kalighat style. The artwork features bold flowing lines, vibrant colors, and expressive characters. It depicts narrative storytelling and cultural motifs in a flat composition." },
+            { "name": "MK Madhubani Painting", "copyPrompt": ", painted in the Madhubani folk style. The artwork features intricate geometric patterns, vibrant colors, and nature-inspired motifs. It fills all gaps with designs, reflecting cultural storytelling." },
+            { "name": "MK Pictorialism", "copyPrompt": ", captured in the Pictorialism photography style. The image features soft focus, atmospheric effects, and muted colors. It emphasizes artistic interpretation and tonality over sharp realism." },
+            { "name": "MK Pichwai Painting", "copyPrompt": ", painted in the Pichwai style. The artwork features intricate detailing, vibrant colors, and gold leaf accents. It depicts religious themes and nature motifs like lotuses and cows." },
+            { "name": "MK Patachitra Painting", "copyPrompt": ", painted in the Patachitra style. The artwork features bold outlines, vibrant colors, and intricate detailing. It depicts mythological themes and storytelling on a scroll-like format." },
+            { "name": "MK Samoan Art Inspired", "copyPrompt": ", carved as a Samoan-inspired wooden sculpture. The artwork features traditional Polynesian motifs, natural elements, and bold forms. It reflects cultural symbolism and craftsmanship." },
+            { "name": "MK Tlingit Art", "copyPrompt": ", designed in the Tlingit art style. The artwork features formline designs, bold colors (red, black, teal), and animal motifs like ravens or eagles. It reflects the traditional totem art of Alaska." },
+            { "name": "MK Adnate Style", "copyPrompt": ", painted in the style of Adnate. The artwork features large-scale realistic portraits, often of indigenous people, with a subdued color palette and street art mural aesthetic." },
+            { "name": "MK Ron English Style", "copyPrompt": ", created in the style of Ron English. The artwork is Pop-Surrealism featuring cultural subversion and iconic mash-ups. It uses vibrant, bold colors and satirical commentary." },
+            { "name": "MK Shepard Fairey Style", "copyPrompt": ", designed in the style of Shepard Fairey. The artwork features iconic stencils, bold typography, and high contrast. It uses a strict red, black, and cream color palette typical of political street art." },
+            { "name": "Cinematic Diva", "copyPrompt": ", captured as an ultra-detailed 8K cinematic photograph. The image features beautiful, dramatic lighting and a perfectly balanced composition, delivering a high-end UHD aesthetic." },
+            { "name": "Abstract Expressionism", "copyPrompt": ", created in the style of Abstract Expressionism. The artwork is minimalistic yet dramatic, featuring high contrast, stark forms, and colorful expressionist elements, avoiding realism." },
+            { "name": "Academia", "copyPrompt": ", stylized with a chic Academia aesthetic. It evokes a preppy Ivy League boarding school vibe, featuring stark and dramatic tones that are polished and sophisticated, avoiding any grunge or unkempt elements." },
+            { "name": "Action Figure", "copyPrompt": ", rendered as a plastic collectible action figure. The subject appears as a high-quality toy with visible joints and a glossy plastic texture, presented in a clean style." },
+            { "name": "Adorable 3D Character", "copyPrompt": ", designed as an adorable 3D character render. The style is cute and charming, typical of modern 3D character art, avoiding photorealism or gritty textures." },
+            { "name": "Adorable Kawaii", "copyPrompt": ", stylized in an Adorable Kawaii aesthetic. The image is pretty, cute, and charming, featuring soft colors and a happy atmosphere, strictly avoiding dark, moody, or gothic tones." },
+            { "name": "Art Deco", "copyPrompt": ", designed in the Art Deco style. The artwork features sleek, geometric forms and decorative patterns typical of the 1920s, emphasizing elegance and symmetry." },
+            { "name": "Art Nouveau", "copyPrompt": ", created in the Art Nouveau style. The design features sleek, organic forms with long, sinuous lines and decorative botanical elements, avoiding industrial or mechanical aesthetics." },
+            { "name": "Astral Aura", "copyPrompt": ", depicting an astral aura. The subject radiates vibrant energy and colorful, ethereal light, creating a spiritual and mystical atmosphere." },
+            { "name": "Avant-garde", "copyPrompt": ", stylized as an avant-garde art piece. The image is unusual, experimental, and pushes artistic boundaries with unconventional forms and concepts." },
+            { "name": "Baroque", "copyPrompt": ", created in the Baroque art style. The image is dramatic and exuberant, emphasizing grandeur, rich details, and emotional intensity." },
+            { "name": "Bauhaus-Style Poster", "copyPrompt": ", designed as a Bauhaus-style poster. The composition uses simple geometric shapes, clean lines, and primary colors, adhering to the principles of functional modernism." },
+            { "name": "Blueprint Schematic", "copyPrompt": ", drawn as a technical blueprint schematic. The image features white lines on a blue background, detailing the structural and mechanical components in a precise, engineering style." },
+            { "name": "Caricature", "copyPrompt": ", drawn as a comical caricature. The subject's features are exaggerated for humorous effect, creating a stylized and expressive portrait that avoids realism." },
+            { "name": "Cel Shaded Art", "copyPrompt": ", rendered in a Cel Shaded art style. The image features 2D flat colors with distinct toon shading outlines, typical of anime or comic book aesthetics." },
+            { "name": "Character Design Sheet", "copyPrompt": ", presented as a character design reference sheet. It shows the character from multiple angles (turnaround) with clean lines and flat colors, suitable for animation reference." },
+            { "name": "Classicism Art", "copyPrompt": ", inspired by Classicism art and Greco-Roman culture. The image emphasizes clarity, harmony, and idealized proportions, reflecting the aesthetics of antiquity." },
+            { "name": "Color Field Painting", "copyPrompt": ", created in the Color Field Painting style. The artwork is abstract and geometric, featuring large areas of flat, solid color to create a meditative visual experience." },
+            { "name": "Colored Pencil Art", "copyPrompt": ", drawn with colored pencils. The image features visible pencil strokes, light shading, and the texture of paper, creating a soft, hand-drawn aesthetic." },
+            { "name": "Conceptual Art", "copyPrompt": ", visualized as conceptual art. The image focuses on conveying an idea or mood with broad strokes and imaginative elements, often used for film or game development." },
+            { "name": "Constructivism", "copyPrompt": ", designed in the Constructivism art style. The composition is minimalistic and abstract, using industrial materials and geometric forms to serve a social purpose." },
+            { "name": "Cubism", "copyPrompt": ", created in the Cubism art style. The subject is fragmented into flat geometric forms and abstract planes, showing multiple viewpoints simultaneously." },
+            { "name": "Dadaism", "copyPrompt": ", stylized as Dadaism art. The image is satirical, nonsensical, and irrational, using collage-like elements to challenge traditional artistic aesthetics." },
+            { "name": "Dark Fantasy", "copyPrompt": ", depicted in a Dark Fantasy style. The atmosphere is moody, mysterious, and somber, featuring supernatural elements and avoiding bright, sunny tones." },
+            { "name": "Dark Moody Atmosphere", "copyPrompt": ", enveloped in a dark, moody atmosphere. The lighting is dramatic and mysterious, creating a somber and intense emotional tone without vibrant colors." },
+            { "name": "DMT Art Style", "copyPrompt": ", visualized in a DMT art style. The image features bright colors, surreal visuals, and intricate swirling patterns, evoking a psychedelic experience." },
+            { "name": "Doodle Art", "copyPrompt": ", drawn in a freeform Doodle Art style. The image consists of spontaneous, swirling patterns and playful sketches, creating a busy and creative texture." },
+            { "name": "Double Exposure", "copyPrompt": ", created using a Double Exposure effect. Two images are blended together to create a ghost-like overlay, combining silhouettes with secondary scenes." },
+            { "name": "Dripping Paint Splatter", "copyPrompt": ", created with dripping paint and splatters. The artwork is dramatic and expressive, featuring chaotic drips and splashes of paint for a raw, energetic look." },
+            { "name": "Expressionism", "copyPrompt": ", painted in the Expressionism art style. The image emphasizes emotional experience over realism, using distorted forms, movement, and high contrast." },
+            { "name": "Faded Polaroid Photo", "copyPrompt": ", captured as a faded Polaroid photo. The image has an analog, vintage quality with muted colors and soft focus, resembling an old instant photograph." },
+            { "name": "Fauvism", "copyPrompt": ", painted in the Fauvism art style. The artwork features wild, bold colors and textured brushwork, prioritizing painterly qualities over realistic representation." },
+            { "name": "Flat 2D Art", "copyPrompt": ", designed as Flat 2D art. The image uses simple flat colors and shapes without gradients or 3D shading, creating a clean, modern graphical look." },
+            { "name": "Fortnite Art Style", "copyPrompt": ", rendered in the Fortnite art style. The character is a colorful 3D cartoon with stylized proportions and vibrant textures, typical of modern stylized games." },
+            { "name": "Futurism", "copyPrompt": ", stylized in the Futurism art style. The image is dynamic and dramatic, emphasizing speed, technology, and movement through fragmented forms." },
+            { "name": "Glitchcore", "copyPrompt": ", visualized in a Glitchcore art style. The image features digital distortion, vibrant colors, and pixelated artifacts, creating a chaotic, high-tech aesthetic." },
+            { "name": "Glo-fi", "copyPrompt": ", created in a Glo-fi art style. The image is dynamic and dramatic, using low-fidelity aesthetics mixed with glowing, vibrant colors for a dreamy, retro feel." },
+            { "name": "Googie Art Style", "copyPrompt": ", designed in the Googie art style. The image reflects 1950s futurism with bold boomerang angles, atomic shapes, and dynamic forms." },
+            { "name": "Graffiti Art", "copyPrompt": ", painted in a Graffiti art style. The image is dynamic and dramatic, featuring vibrant spray-paint colors and bold street-art lettering." },
+            { "name": "Harlem Renaissance", "copyPrompt": ", styled in the Harlem Renaissance art tradition. The image is dynamic and dramatic, reflecting the cultural vibrancy of 1920s African American art." },
+            { "name": "High Fashion", "copyPrompt": ", captured as a High Fashion editorial. The image is dramatic and elegant, featuring ornate haute couture clothing and a sophisticated pose." },
+            { "name": "Idyllic", "copyPrompt": ", depicted in an Idyllic style. The scene is peaceful, happy, and picturesque, creating a harmonious and charming atmosphere." },
+            { "name": "Impressionism", "copyPrompt": ", painted in the Impressionism style. The artwork features visible, small brushstrokes and focuses on capturing light and movement rather than fine details." },
+            { "name": "Infographic Drawing", "copyPrompt": ", designed as an infographic drawing. The image presents information clearly using diagrams, icons, and structured layouts." },
+            { "name": "Ink Dripping Drawing", "copyPrompt": ", drawn as an ink dripping illustration. The image features stark ink lines with dramatic drips and splatters, creating a raw and fluid aesthetic." },
+            { "name": "Japanese Ink Drawing", "copyPrompt": ", created as a Japanese ink drawing. The artwork uses sumi-e style ink wash techniques, emphasizing simplicity, brush texture, and negative space." },
+            { "name": "Knolling Photography", "copyPrompt": ", captured using Knolling photography. Objects are arranged at 90-degree angles in a neat, flat-lay composition against a clean background." },
+            { "name": "Light Cheery Atmosphere", "copyPrompt": ", bathed in a light, cheery atmosphere. The scene is happy, joyful, and lighthearted, featuring bright colors and avoiding any dark or moody tones." },
+            { "name": "Logo Design", "copyPrompt": ", designed as a professional logo. The image is a dynamic vector graphic art piece, minimalist and clean, suitable for corporate branding." },
+            { "name": "Luxurious Elegance", "copyPrompt": ", styled with luxurious elegance. The image is extravagant, ornate, and opulent, featuring lavish details and a high-end designer aesthetic." },
+            { "name": "Macro Photography", "copyPrompt": ", captured with Macro photography. The image is an extreme close-up taken with a 100mm macro lens, revealing minute details and textures." },
+            { "name": "Mandala Art", "copyPrompt": ", designed in a Mandala art style. The image features a complex, circular geometric design with repetitive patterns radiating from the center." },
+            { "name": "Marker Drawing", "copyPrompt": ", drawn with markers. The image features bold marker lines and visible paper texture, creating a vibrant, hand-drawn look." },
+            { "name": "Medievalism", "copyPrompt": ", inspired by Medievalism and the Middle Ages. The art features elaborate patterns, decorations, and stylistic elements reminiscent of illuminated manuscripts." },
+            { "name": "Minimalism", "copyPrompt": ", designed in a Minimalism style. The image is abstract and simple, using geometric shapes, hard edges, and sleek contours with limited elements." },
+            { "name": "Neo-Baroque", "copyPrompt": ", created in the Neo-Baroque style. The image is ornate, elaborate, and dynamic, reviving the grandeur of the Baroque era with a modern twist." },
+            { "name": "Neo-Byzantine", "copyPrompt": ", designed in the Neo-Byzantine style. The image features grand, decorative religious aesthetics inspired by Orthodox Christian art and gold mosaics." },
+            { "name": "Neo-Futurism", "copyPrompt": ", styled in Neo-Futurism. The image depicts an idealistic future with high-tech curves, spirals, and flowing lines, emphasizing advanced technology." },
+            { "name": "Neo-Impressionism", "copyPrompt": ", painted in the Neo-Impressionism style. The artwork uses Pointillism techniques with tiny dabs of distinct color to create a vibrant, painterly effect." },
+            { "name": "Neo-Rococo", "copyPrompt": ", created in the Neo-Rococo style. The image is elaborate, decorative, and gaudy, featuring curved forms and naturalistic ornamentation." },
+            { "name": "Neoclassicism", "copyPrompt": ", painted in the Neoclassicism style. Inspired by ancient Rome and Greece, the image features sober colors, idealized forms, and a noble atmosphere." },
+            { "name": "Op Art", "copyPrompt": ", created in the Op Art style. The image uses abstract geometric patterns to create optical illusions and the impression of movement." },
+            { "name": "Ornate and Intricate", "copyPrompt": ", designed to be ornate and intricate. The image is highly detailed and decorative, featuring elaborate patterns and complex textures." },
+            { "name": "Pencil Sketch", "copyPrompt": ", drawn as a pencil sketch. The image is a black and white graphite drawing with visible shading and sketch lines." },
+            { "name": "Pop Art", "copyPrompt": ", created in the Pop Art style. The image features vivid, flat 2D colors and strong outlines, inspired by comic books and commercial culture." },
+            { "name": "Rococo", "copyPrompt": ", painted in the Rococo style. The image is flamboyant and decorative, featuring pastel colors, curved lines, and elaborate details." },
+            { "name": "Silhouette Art", "copyPrompt": ", created as Silhouette art. The subject appears as a solid dark shape against a bright background, featuring high contrast and well-defined edges." },
+            { "name": "Simple Vector Art", "copyPrompt": ", designed as simple vector art. The image is a professional 2D graphic with flat colors, simple shapes, and high contrast, avoiding gradients." },
+            { "name": "Sketchup", "copyPrompt": ", rendered in a Sketchup style. The image resembles a professional CAD design or architectural model with clean lines and geometric forms." },
+            { "name": "Steampunk", "copyPrompt": ", visualized in a Steampunk aesthetic. The image features retro-futuristic steam-powered technology, gears, and Neo-Victorian industrial elements." },
+            { "name": "Surrealism", "copyPrompt": ", painted in the Surrealism style. The image is dreamlike and mysterious, featuring expressive, organic lines and bizarre, illogical juxtapositions." },
+            { "name": "Suprematism", "copyPrompt": ", created in the Suprematism art style. The artwork is abstract, using a limited color palette and simple geometric forms like circles and squares." },
+            { "name": "Terragen", "copyPrompt": ", rendered in the style of Terragen software. The image depicts a beautiful, massive landscape with epic scenery and photorealistic natural details." },
+            { "name": "Tranquil Atmosphere", "copyPrompt": ", enveloped in a tranquil, relaxing atmosphere. The scene is calming, peaceful, and idyllic, utilizing soothing colors to create a serene mood." },
+            { "name": "Sticker Designs", "copyPrompt": ", designed as professional vector art stickers. The image features clean lines and bold colors, suitable for a sticker sheet layout." },
+            { "name": "Vibrant Rim Light", "copyPrompt": ", illuminated by vibrant rim lighting. A bright light outlines the subject's edges, creating high contrast and bold separation from the background." },
+            { "name": "Volumetric Lighting", "copyPrompt": ", featuring dramatic volumetric lighting. Visible beams of light add depth and atmospheric quality to the scene." },
+            { "name": "Watercolor", "copyPrompt": ", painted in a watercolor style. The image features visible paper texture and fluid color washes, creating a soft, artistic look without photorealism." },
+            { "name": "Whimsical and Playful", "copyPrompt": ", designed to be whimsical and playful. The image is imaginative and fantastical, featuring bright colors and stylized forms that evoke happiness." },
+            { "name": "InstantID Spring Festival", "copyPrompt": ", depicted as a flat Chinese illustration in an ancient style. The figure is wearing red cloth with a smiling expression and white skin, set against a clean background featuring blooming fireworks and red lanterns. The style is strictly 2D and illustrative, avoiding photorealism." },
+            { "name": "InstantID Watercolor", "copyPrompt": ", rendered as a vibrant watercolor painting. The artwork is beautiful and painterly, emphasizing artistic textures and details. It captures the fluid nature of watercolor, avoiding photorealism, sharp vector lines, or digital noise." },
+            { "name": "InstantID Film Noir", "copyPrompt": ", stylized in a Film Noir aesthetic with an ink sketch and vector quality. The image is monochrome with high contrast and dramatic shadows, evoking a mysterious 1940s cinematic atmosphere. It is highly detailed and sharp, strictly black and white." },
+            { "name": "InstantID Neon", "copyPrompt": ", created as a masterpiece painting featuring a cinematic double exposure effect. The background shows buildings within a kaleidoscope of bright, vivid gradient colors like lilac, orange, blue, and fuchsia. The style blends watercolor, ink, and pencil with magic realism, featuring intricate motifs and organic tracery." },
+            { "name": "InstantID Jungle", "copyPrompt": ", depicted in a waist-up shot set within a jungle, inspired by the style of Syd Mead. The image features a tangerine and cold color palette with muted tones. It blends a 3D toon style with realistic details and dripping paint effects, resembling a high-quality movie still." },
+            { "name": "InstantID Mars", "copyPrompt": ", set in a post-apocalyptic Mars Colony. The scene depicts a wasteland where scavengers and rovers roam under bright morning sunlight. The lighting is cinematic and sharp, capturing intricate details of the Martian environment in 8k HDR quality." },
+            { "name": "InstantID Vibrant Color", "copyPrompt": ", illustrated as a vibrant, colorful ink sketch with vector-like 2D colors. The scene takes place at nightfall with colorful clouds in the background. The image is highly detailed and ultra-sharp, focusing on vivid hues and distinct lines." },
+            { "name": "InstantID Snow", "copyPrompt": ", rendered as a high-quality 3D Cinema 4D masterpiece. The subject is surrounded by a magical glow, floating ice shards, and snow crystals against a cold, windy, frozen landscape. The style is photorealistic and epic with dramatic lighting, resembling a high-budget movie still created in Unreal Engine." },
+            { "name": "InstantID Line Art", "copyPrompt": ", drawn as a professional line art illustration. The design is sleek, modern, and minimalist, utilizing clean graphic lines and vector aesthetics. It is strictly black and white, avoiding shading, realism, or painterly effects." },
+            { "name": "PhotoMaker Cinematic", "copyPrompt": ", captured as a high-budget cinematic still. The image is emotional and moody, featuring a harmonious composition with a subtle vignette. It has a gorgeous, epic quality with high detail, anamorphic bokeh, and noticeable film grain, resembling a Cinemascope movie frame." },
+            { "name": "PhotoMaker Disney Character", "copyPrompt": ", designed as a high-quality 3D animation character in the style of Pixar or Disney studios. The render is vibrant, expressive, and polished, typical of modern studio animation, avoiding any photorealistic textures or grainy noise." },
+            { "name": "PhotoMaker Digital Art", "copyPrompt": ", created as a piece of digital concept art. The style is illustrative and painterly, resembling a highly detailed matte painting with smooth brushwork and artistic lighting, distinct from photorealism." },
+            { "name": "PhotoMaker Photographic", "copyPrompt": ", captured as a professional 35mm cinematic photograph. The image is highly detailed and sharp (4k), featuring natural film bokeh and realistic lighting, strictly avoiding any painterly, sketched, or impressionist effects." },
+            { "name": "PhotoMaker Fantasy Art", "copyPrompt": ", depicted as ethereal fantasy concept art. The scene is magnificent and celestial, with a painterly, epic, and majestic atmosphere. It feels magical and dreamy, suitable for high-fantasy cover art, avoiding realism or photography." },
+            { "name": "PhotoMaker Neonpunk", "copyPrompt": ", stylized in a neonpunk aesthetic. The image features cyberpunk and vaporwave vibes with vibrant magenta highlights and dark purple shadows. It is sleek, ultramodern, and high contrast, delivering a stunningly beautiful and intricate cinematic look." },
+            { "name": "PhotoMaker Enhance", "copyPrompt": ", rendered as a breathtaking, award-winning professional image. The composition is highly detailed and polished, ensuring clarity and visual impact while avoiding any noise, blur, or deformation." },
+            { "name": "PhotoMaker Comic Book", "copyPrompt": ", illustrated in a vibrant comic book style. The artwork resembles a graphic novel with bold graphic illustration techniques, featuring high detail and dynamic composition, distinct from realistic photography." },
+            { "name": "PhotoMaker Lowpoly", "copyPrompt": ", rendered in a low-poly game art style. The subject is composed of a polygon mesh with blocky shapes and jagged edges, featuring a centered composition and wireframe aesthetic, avoiding high-resolution textures or photorealism." },
+            { "name": "PhotoMaker Line Art", "copyPrompt": ", drawn as a professional line art illustration. The style is sleek, modern, and minimalist, featuring clean graphic lines and vector-like precision. It is strictly black and white graphic art, avoiding any photorealism, shading, or painterly techniques." },
+            { "name": "Vector Illustration", "copyPrompt": ", designed as a clean black and white vector illustration. The style is simple line art with high contrast, sharp edges, and a flat 2-bit look. The composition is minimalist and graphical, strictly avoiding any shading, gradients, dithering, or colors." },
+            { "name": "Vector Logo", "copyPrompt": ", designed as a professional vector logo. The artwork features high-contrast line art, negative space, and a centered composition typical of modern branding. The style is flat, 2-bit, and sharp, suitable for a stencil or Dribbble trend, with no shading or background noise." },
+            { "name": "Vector Drawing", "copyPrompt": ", created as a simple vector drawing in the style of a children's book illustration. It features clean line art, high contrast, and flat 2-bit graphics. The design uses negative space effectively and avoids complexity, shading, or gradients." },
+            { "name": "Vector Artistic", "copyPrompt": ", rendered as an artistic monochrome vector painting. The image relies on precise line art, high contrast, and a flat 2-bit aesthetic. It utilizes negative space creatively to create a sophisticated, sharp look without any shading or colors." },
+            { "name": "Vector Tattoo", "copyPrompt": ", designed as a vector tattoo template. The style is sharp ink on paper with uniform lighting, featuring high-contrast line art and clean negative space. It is a flat, 2-bit design optimized for stenciling, avoiding any shading or gradients." },
+            { "name": "Vector Gothic", "copyPrompt": ", illustrated in a Gothic vector style reminiscent of H.P. Lovecraft or Arthur Rackham. The artwork features intricate yet high-contrast ink lines on paper, with a sharp, 2-bit flat aesthetic. It avoids shading to maintain a pure, dark graphical look." },
+            { "name": "Vector Anime", "copyPrompt": ", drawn as a clean ink anime illustration. The style blends the line art precision of Studio Ghibli and Hayao Miyazaki with a high-contrast, flat 2-bit vector aesthetic. It is simple and sharp, avoiding colors and shading for a pure manga ink look." },
+            { "name": "Vector Cartoon", "copyPrompt": ", designed as a funny vector comic cartoon. The illustration features clean, high-contrast ink lines with a simple, flat 2-bit style. It is sharp and minimalist, strictly avoiding shading, gradients, or complex details." },
+            { "name": "Vector Sticker", "copyPrompt": ", designed as a die-cut kawaii sticker. The style is minimalist vector illustration with simple line art, high contrast, and sharp edges. It features a contrasting background and may include soft pastel tones while maintaining a flat, 2-bit graphical look without noise." },
+            { "name": "Vector Gold Pendant", "copyPrompt": ", visualized as a gold Dia de los Muertos pendant design. The image is an intricate 2D vector geometric cutout shape with sharp blueprint-style frame lines. It mimics an SVG vector style product shoot, featuring high contrast and sharp edges without shading." }
+        ];
+
+        // --- Categories Configuration ---
+        const categoryMap = {
+            'Ads': { id: 'ADS', label: 'تبلیغاتی (Ads)' },
+            'Artstyle': { id: 'ARTSTYLE', label: 'سبک هنری (Art Style)' },
+            'Futuristic': { id: 'FUTURISTIC', label: 'علمی تخیلی (Futuristic)' },
+            'Game': { id: 'GAME', label: 'گیم (Game)' },
+            'Misc': { id: 'MISC', label: 'ژانر و متفرقه (Misc)' },
+            'Papercraft': { id: 'PAPERCRAFT', label: 'کاغذی (Papercraft)' },
+            'Photo': { id: 'PHOTO', label: 'عکاسی (Photo)' },
+            'SAI': { id: 'SAI', label: 'مدل SAI' },
+            'MRE': { id: 'MRE', label: 'مدل MRE' },
+            'MK': { id: 'MK', label: 'مدل MK' },
+            'InstantID': { id: 'INSTANTID', label: 'InstantID' },
+            'PhotoMaker': { id: 'PHOTOMAKER', label: 'PhotoMaker' },
+            'Vector': { id: 'VECTOR', label: 'وکتور (Vector)' }
+        };
+
+        const categories = Object.values(categoryMap);
+        // Add "General" manually for unmatched items
+        categories.push({ id: 'GENERAL', label: 'عمومی (General)' });
+
+        // --- Process Data ---
+        let database = rawData.map(item => {
+            let category = 'GENERAL';
+            
+            // Determine category by prefix
+            for (const prefix in categoryMap) {
+                if (item.name.startsWith(prefix + ' ')) {
+                    category = categoryMap[prefix].id;
+                    break;
+                }
+            }
+            
+            return {
+                ...item,
+                category: category,
+                // Clean up name for display (optional)
+                displayName: item.name
+            };
+        });
+
+        // --- Calculate Category Counts ---
+        const categoryCounts = {};
+        // Initialize counts
+        categories.forEach(cat => categoryCounts[cat.id] = 0);
+        categoryCounts['all'] = database.length; // Total count
+
+        // Count items
+        database.forEach(item => {
+            if (categoryCounts[item.category] !== undefined) {
+                categoryCounts[item.category]++;
+            } else {
+                 // Fallback for safety, though everything should map to a valid category or GENERAL
+                 if (!categoryCounts['GENERAL']) categoryCounts['GENERAL'] = 0;
+                 categoryCounts['GENERAL']++;
+            }
+        });
+
+        // --- State ---
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // --- Logic ---
+        function init() {
+            renderCategoryNav();
+            renderGrid();
+            
+            // Search Input Listener
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderGrid();
+            });
+        }
+
+        function renderCategoryNav() {
+            const nav = document.getElementById('categoryNav');
+            nav.innerHTML = ''; 
+
+            // Add "Show All" button with count
+            const allCount = categoryCounts['all'];
+            const allBtn = document.createElement('button');
+            allBtn.id = 'cat-btn-all';
+            allBtn.className = currentCategory === 'all' 
+                ? 'whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-primary-500 text-white border border-primary-400 transition-colors shadow-lg shadow-primary-900/20'
+                : 'whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white transition-colors border border-white/10';
+            allBtn.textContent = `نمایش همه (${allCount})`;
+            allBtn.onclick = (e) => filterCategory('all', e.target);
+            nav.appendChild(allBtn);
+
+            // Add Category Buttons (Sorted alphabetically by ID or keep logical order)
+            categories.forEach(cat => {
+                const count = categoryCounts[cat.id] || 0;
+                // Only show category button if it has items (optional, but good UX)
+                if (count > 0) {
+                    const btn = document.createElement('button');
+                    btn.id = `cat-btn-${cat.id}`;
+                    btn.className = currentCategory === cat.id 
+                        ? 'whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-primary-500 text-white border border-primary-400 transition-colors shadow-lg shadow-primary-900/20'
+                        : 'whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white transition-colors border border-white/10';
+                    btn.textContent = `${cat.label} (${count})`;
+                    btn.onclick = (e) => filterCategory(cat.id, e.target);
+                    nav.appendChild(btn);
+                }
+            });
+        }
+
+        function filterCategory(catId, btnElement) {
+            currentCategory = catId;
+            renderCategoryNav(); 
+            renderGrid();
+
+            // Center the active button
+            // If btnElement is not passed (re-render), find it by ID
+            if (!btnElement) {
+                const id = catId === 'all' ? 'cat-btn-all' : `cat-btn-${catId}`;
+                btnElement = document.getElementById(id);
+            }
+
+            if (btnElement) {
+                btnElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }
+        
+        function scrollNav(direction) {
+            const nav = document.getElementById('categoryNav');
+            const scrollAmount = 200; // Adjust as needed
+            
+            if (direction === 'left') {
+                // In RTL, "left" visually means moving scroll position negatively (to the end) usually?
+                // Actually in RTL: scrollLeft = 0 is rightmost. Negative goes left (in some browsers) or positive goes left (in others).
+                // scrollBy({left: -200}) usually moves LEFT.
+                nav.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                // Move RIGHT
+                nav.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('promptsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            grid.innerHTML = '';
+            
+            const filtered = database.filter(item => {
+                const matchCategory = currentCategory === 'all' || item.category === currentCategory;
+                const matchSearch = item.displayName.toLowerCase().includes(searchQuery);
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                
+                filtered.forEach(item => {
+                    // Generate local image filename and placeholder
+                    // Assuming images are in "images/" folder and named like "Ads_Advertising.webp"
+                    const localImage = `images4/${item.name.replace(/ /g, '_')}.webp`;
+                    const placeholderUrl = `https://placehold.co/544x960/2e1065/a78bfa?text=${encodeURIComponent(item.displayName.replace(/ /g, '\n'))}`;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'card-hover bg-[#1e1b2e] rounded-2xl border border-white/5 overflow-hidden cursor-pointer group flex flex-col h-full relative';
+                    
+                    card.onclick = () => {
+                        // Logic: Copy only prompt
+                        let textToCopy = item.copyPrompt;
+                        copyToClipboard(textToCopy);
+                    };
+
+                    card.innerHTML = `
+                        <!-- Image Container -->
+                        <div class="relative w-full aspect-[2/3] bg-gray-900 overflow-hidden">
+                            <img src="${localImage}" 
+                                 onerror="this.onerror=null;this.src='${placeholderUrl}';"
+                                 alt="${item.displayName}" 
+                                 loading="lazy"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+                            
+                            <!-- Overlay on hover -->
+                            <div class="absolute inset-0 bg-primary-500/0 group-hover:bg-primary-900/40 transition-all duration-300 flex items-center justify-center">
+                                <span class="bg-primary-500 text-white px-3 py-1.5 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl border border-white/20">
+                                    کپی پرامپت
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-4 flex flex-col items-center justify-center flex-grow text-center">
+                            <h3 class="text-white font-bold text-sm md:text-base prompt-text dir-ltr mb-2">${item.displayName}</h3>
+                            
+                            <span class="text-[10px] uppercase tracking-wider text-primary-400/70 border border-primary-500/20 px-1.5 py-0.5 rounded whitespace-nowrap bg-primary-500/5">
+                                ${item.category}
+                            </span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showToast(text)).catch(err => copyFallback(text));
+            } else {
+                copyFallback(text);
+            }
+        }
+
+        function copyFallback(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast(text);
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toastText');
+            
+            toastText.textContent = text.length > 50 ? text.substring(0, 50) + '...' : text;
+            
+            toast.classList.remove('opacity-0', 'translate-y-10');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        init();
+    </script>
+</body>
+</html>
